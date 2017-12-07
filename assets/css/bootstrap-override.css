@@ -1,0 +1,69 @@
+.form-control{
+    box-shadow: none;
+    height: 25px;
+    padding: 6px 8px;
+}
+.alert{
+    padding: 8px;
+}
+textarea.form-control{
+    height: 60px;
+}
+/* Flat */
+.img-thumbnail,
+.btn,
+.btn-group .btn,
+.btn-group .dropdown-menu,
+.btn-group .btn,
+.btn-group .btn:first-child:not(:last-child),
+.btn-group .btn:last-child:not(:first-child),
+.table-bordered,
+.table-bordered tr:first-child th:first-child,
+.table-bordered tr:first-child th:last-child,
+.table-bordered tr:last-child td:first-child,
+.table-bordered tr:last-child td:last-child,
+.input-group .btn,
+.input-group .dropdown-menu,
+.input-group .form-control,
+.input-group .input-group-addon,
+.dropdown-menu,
+.dropdown-menu .dropdown-submenu .dropdown-menu,
+.form .form-control,
+.form .btn,
+.form-control,
+.label,
+.badge,
+.alert,
+.alert .btn,
+.progress,
+.breadcrumb,
+.tooltip .tooltip-inner,
+.popover,
+.nav-list-panel,
+.nav-tabs li > a,
+.tabs-below .nav-tabs li > a,
+.tabs-right .nav-tabs li > a,
+.tabs-left .nav-tabs li > a,
+.nav-tabs .dropdown-menu,
+.tabs-below .nav-tabs .dropdown-menu,
+.nav-pills li a,
+.nav-pills .dropdown-menu,
+.navbar,
+.navbar .dropdown-menu,
+.pagination,
+.pagination li:first-child a,
+.pagination li:first-child span,
+.pagination li:last-child a, 
+.pagination li:last-child span,
+.pager li a,
+.pager li a:hover,
+.pager li a:focus,
+.panel,
+.panel-group .panel,
+.panel-group .panel-heading,
+.panel-group .panel-body,
+.breadcrumb-arrow li:first-child a {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}

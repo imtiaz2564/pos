@@ -1,0 +1,220 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald:300);
+body,html{
+    height: 100%;
+}
+body {
+    font-family: 'Oswald', sans-serif;
+    background-color: #333;
+    font-weight: 300;
+}
+
+/* Login */
+
+.page-login{
+    height: 100%;
+    background-image: url(../images/login-bg.jpg);
+}
+.page-login > div > div > div{
+    margin-left: 24%;
+}
+.page-login .login-box{
+    margin-top: 180px;
+    background: rgba(0,0,0,0.3);
+}
+/* iframe */
+iframe{
+    width: 100%;
+    height: 100%;
+    border: none;
+    overflow: hidden;
+}
+/* Core */
+
+#wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+#page-wrapper {
+    height: 100%;
+    background-color: #F1F4F9;
+}
+
+@media(min-width:768px) {
+    #page-wrapper {
+        position: inherit;
+        margin: 0 0 0 160px;
+    }
+}
+#page-wrapper > .container-fluid {
+    padding: 0;
+}
+#page-wrapper > .container-fluid, #page-wrapper > .container-fluid > .tab-content, #page-wrapper > .container-fluid > .tab-content > .tab-pane {
+    height: 97%;
+} 
+/* Logo */
+
+.logo{
+    padding:15px;
+    background: #333;
+}
+
+/* Profile */
+
+.profile{
+    padding: 15px;
+    background: #2B384E;
+}
+.profile img{
+    float: left;
+    width: 65px;
+    border: 3px solid #395079;
+}
+.profile h3{
+    float: right;
+    color: #fff;
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+.profile span{
+    float: right;
+    color: #aaa;
+    font-size: 12px;
+}
+
+
+/* Table Inside Table*/
+.table-inside, .table-inside input{
+    width: 100%;
+}
+.table-inside .chosen-container{
+    width: 100% !important;
+}
+/* Sidebar Menu */
+
+.sidebar {
+    display: block;
+    float: left;
+    width: 160px;
+}
+@media(min-width:768px) {
+    .sidebar {
+        z-index: 1;
+        position: absolute;
+    }
+}
+.sidebar-nav {
+    padding: 0;
+    background-color: #333;
+}
+.sidebar-nav ul a {
+    padding: 10px 20px;
+    color: #fff;
+}
+.sidebar-nav ul ul a {
+    padding: 10px 30px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.sidebar-nav ul ul a:hover, .sidebar-nav ul ul a:focus, .sidebar-nav ul ul a:active, .sidebar-nav ul ul a.active {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.sidebar-nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.sidebar-nav a, .sidebar-nav a:hover, .sidebar-nav a:focus, .sidebar-nav a:active {
+  outline: none;
+}
+.sidebar-nav ul li, .sidebar-nav ul a {
+  display: block;
+}
+.sidebar-nav ul a:hover, .sidebar-nav ul a:focus, .sidebar-nav ul a:active {
+  color: #fff;
+  text-decoration: none;
+}
+.sidebar-nav-item {
+  padding-left: 5px;
+}
+.sidebar-nav-item-icon {
+  padding-right: 5px;
+}
+.sidebar-nav .nav>li>a:focus, .nav>li>a:hover {
+    background-color: #222;
+}
+.sidebar .arrow {
+    float: right;
+}
+
+.sidebar .fa.arrow:before {
+    content: "\f104";
+}
+
+.sidebar .active>a>.fa.arrow:before {
+    content: "\f107";
+}
+.container.white{
+    background-color: #fff;
+    padding: 20px 20px;
+}
+
+
+table.dataTable thead th, table.dataTable tfoot th{
+    background-color: #333;
+    color: #fff;
+    font-weight: 300;
+}
+table.dataTable.compact thead th, table.dataTable.compact thead td {
+    padding: 4px 17px 4px 10px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+    background: #eee;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+    background: #eee;
+    border-color:#ccc;
+}
+.dataTables_wrapper .dataTables_paginate{
+    padding-top: 15px;
+}
+#loader{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    background: url(../images/gears.gif) center center no-repeat;
+    background-color: rgba(255,255,255,0.85);
+}
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #print, #print * {
+        visibility: visible;
+    }
+    #print {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
+.multiline-textarea .input-group-addon{
+    background: #fff;
+    text-align: right;
+    line-height: 1.5;
+    padding: 3px 12px;
+}
+.input-group{
+    margin-bottom: 12px;
+}
+.input-group-addon{
+    padding: 6px 12px 6px 12px;
+    /*
+    min-width: 75px;
+    text-align: left;
+    */
+    font-size: 11px;
+    font-weight: 700;
+    vertical-align: top;
+}

@@ -1,0 +1,14 @@
+[28-Dec-2015 12:17:12 UTC] PHP Fatal error:  Call to undefined function mysqli_init() in /home/tangents/public_html/ashoka/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[28-Dec-2015 12:17:15 UTC] PHP Fatal error:  Call to undefined function mysqli_init() in /home/tangents/public_html/ashoka/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[28-Dec-2015 12:19:26 UTC] PHP Fatal error:  Call to undefined function mysqli_init() in /home/tangents/public_html/ashoka/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[28-Dec-2015 12:34:36 UTC] PHP Fatal error:  Call to undefined function mysqli_init() in /home/tangents/public_html/ashoka/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[28-Dec-2015 12:39:28 UTC] PHP Fatal error:  Call to undefined function mysqli_init() in /home/tangents/public_html/ashoka/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[28-Dec-2015 12:40:37 UTC] PHP Fatal error:  Call to undefined function mysqli_init() in /home/tangents/public_html/ashoka/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[28-Dec-2015 12:50:31 UTC] PHP Fatal error:  Call to undefined function mysqli_init() in /home/tangents/public_html/ashoka/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[28-Dec-2015 12:54:00 UTC] PHP Fatal error:  Call to undefined function mysqli_init() in /home/tangents/public_html/ashoka/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[28-Dec-2015 13:09:17 UTC] PHP Fatal error:  Call to undefined function mysqli_init() in /home/tangents/public_html/ashoka/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[28-Dec-2015 13:09:20 UTC] PHP Fatal error:  Call to undefined function mysqli_init() in /home/tangents/public_html/ashoka/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[28-Dec-2015 13:15:16 UTC] PHP Fatal error:  Call to undefined function mysqli_init() in /home/tangents/public_html/ashoka/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[28-Dec-2015 13:15:26 UTC] PHP Fatal error:  Call to undefined function mysqli_init() in /home/tangents/public_html/ashoka/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[28-Dec-2015 13:17:55 UTC] PHP Fatal error:  Call to undefined function mysqli_init() in /home/tangents/public_html/ashoka/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[28-Dec-2015 13:17:57 UTC] PHP Fatal error:  Call to undefined function mysqli_init() in /home/tangents/public_html/ashoka/system/database/drivers/mysqli/mysqli_driver.php on line 126
