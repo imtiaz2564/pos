@@ -15,16 +15,16 @@ class Crud{
 	
     private $fields;
 	private $hidden_fields;
-    private $default_fields; 
+    private $default_fields = []; 
 	private $display_fields;
 	private $extra_fields;
-	private $search_field=null;
+	private $search_field = null;
 	
     private $where;
 	private $types;
 	private $order;
 	
-    private $form_extra=null;
+    private $form_extra = null;
 	
     private $relations;
 	private $options = [];
