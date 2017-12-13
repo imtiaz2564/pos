@@ -1,4 +1,4 @@
-deploy: // You can name your task however you like
+deploy:
     stage: deploy
     only:
         - master
