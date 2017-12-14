@@ -3,5 +3,5 @@ deployment:
     only:
         - master
     script:
-        - apt-get update -qq && apt-get install -y -qq lftp
-        - lftp -c "set ftp:ssl-allow no; open -u $USERNAME,$PASSWORD $HOST; mirror -R ./ ./pos.kichai.com  --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
+        - apt-get install lftp
+        - lftp -e "mirror -R $LOCAL_DIR $REMOTE_DIR" -u $USERNAME,$PASSWORD $HOST
