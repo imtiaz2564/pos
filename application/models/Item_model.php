@@ -21,9 +21,12 @@ class Item_Model extends CI_Model{
         $price_type = $this->db->select('price_type')->where('id', $journal_id)->get('journals')->row()->price_type;
         if( $price_type == 1) $type = 'tp';
         $items = $this->db->where('journal_id',$journal_id)->get('stock')->result();
+        $price = 0;
         $total = 0;
         $type = 'mrp';
         foreach($items as $item){
+            print_r($item->item_id);
+            die();
             $price = $this->db->select($type)->where('id',$item->item_id)->get('items')->row()->$type;
             $total += $price*$item->quantity;
         }
@@ -104,5 +107,16 @@ class Item_Model extends CI_Model{
           $count = $query->num_rows();
           if($count > 0) return true; return false;
           
-      }
+    }
+    function getLabourCost($id) {
+        $query =  $this->db->where('id', $id)->get('uom');
+        return $query->row();
+
+    }
+    function getTotal($id){
+        $query =  $this->db->where('id', $id)->get('stock')->row();
+        $uomCost = $this->db->where('id', $query->uom)->get('uom')->row();//$query->uom;
+        return $uomCost->labourCost+($query->unit_price	*  $query->quantity);
+        
+    }
 }

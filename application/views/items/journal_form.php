@@ -33,7 +33,7 @@
 </div>
 <script>
 $.ajaxSetup({ cache: false });
-$('#transactions').load('<?=site_url('medicine/ajax_itemlist/')?>');
+$('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
 
 $('#formJournal').submit(function() {
     $.ajax({

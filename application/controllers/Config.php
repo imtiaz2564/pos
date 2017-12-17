@@ -17,12 +17,12 @@ class Config extends CI_Controller {
     }
 	public function index(){
         $data['title'] = 'Unit Of Measurement';
-        $this->crud->init('measurementtype',[
-            'unitOfmeasurement' => 'Unit Of Measurement',
+        $this->crud->init('uom',[
+            'uom' => 'Unit Of Measurement',
             'labourCost' => 'Labour Cost',
         ]);
         $this->crud->use_modal();
-        $this->crud->set_rule('unitOfmeasurement','required');
+        $this->crud->set_rule('uom','required');
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }

@@ -17,7 +17,7 @@ class Master extends CI_Controller {
         $this->load->model('item_model');
     }
 	public function index(){
-        redirect('medicine/index');
+        redirect('item/index');
     }
 	public function suppliers(){
         $data['title'] = 'Suppliers List';
@@ -65,7 +65,7 @@ class Master extends CI_Controller {
         $this->crud->ci->db->where('type','0'); // Customer
         $this->crud->set_rule('name','required');
         
-        $this->crud->extra_fields($this, ['getDue'=>'Current Due']);
+     //  $this->crud->extra_fields($this, ['getDue'=>'Current Due']);
         
         $this->crud->use_modal();
         $data['content']=$this->crud->run();
@@ -91,6 +91,7 @@ class Master extends CI_Controller {
             //'purchase_price' => 'Purchase Price',
             'mrp' => 'MRP',
             'pack' => 'Pack',
+            'discount' => 'Discount',
         ]);
         //$this->crud->display_fields(['Medicine Name','Medicine Code','Pack']);
         //$this->crud->set_hidden('type','0'); // 1 for Medicine
@@ -99,6 +100,7 @@ class Master extends CI_Controller {
         //$this->crud->set_rule('code','required');
         //$this->crud->set_search('name');
         $this->crud->use_modal();
+        $this->crud->set_rule('name','required');
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }

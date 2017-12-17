@@ -63,7 +63,7 @@ $(document).ready(function() {
     });
     initialize();
     
-    $('#transactionRow').load('<?=site_url('medicine/ajax_itemlist/insert')?>');
+    $('#transactionRow').load('<?=site_url('item/ajax_itemlist/insert')?>');
 });
 function reloadData(){
     var table = $('#crud-table').DataTable(); <?php // Yes it's capital "D" ?>

@@ -168,6 +168,7 @@ class Raw extends CI_Controller {
             'item_id' => 'Item Code',
             'date' => 'Date',
             'unit_price' => 'Unit Price',
+            
             'quantity' => 'Quantity',
         ]);
         $this->crud->change_type('date','date');
