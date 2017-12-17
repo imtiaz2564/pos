@@ -1,0 +1,7 @@
+deployment:
+    type: deploy
+    only:
+        - master
+    script:
+        - apt-get update -qq && apt-get install -y -qq lftp
+        - lftp -e "mirror -R $LOCAL_DIR $REMOTE_DIR" -u $USERNAME,$PASSWORD $HOST
