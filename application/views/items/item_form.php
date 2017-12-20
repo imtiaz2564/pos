@@ -58,6 +58,11 @@ $('form').submit(function() {
 });
 function clearFields(){
    // $('input[name=item_id]').val('');
-    $('input[name=quantity]').val('');
+    $('input[name=quantity]').val(' ');
+    $('input[name=unit_price]').val(' ');
+    $('input[name=total]').val(' ');
+    $('input[name=item_name]').val(' ');
+    $('input[name=date]').val(' ');
+    $('input[name=uom]').val(' ');
 }    
 </script>

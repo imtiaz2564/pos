@@ -28,42 +28,85 @@ class Item extends CI_Controller {
 //            'tp' => 'TP Price',
 //            'mrp' => 'MRP',
 //            'pack' => 'Pack',
+//             'code' => 'Item Code',
             'name' => 'Item Name',
-            //'code' => 'Item Code',
             'uom'=>'UoM',
-            'type' => 'Type',
+//            'type' => 'Type',
             'parent' => 'Parent',
             //'purchase_price' => 'Purchase Price',
             //'mrp' => 'MRP',
             //'pack' => 'Pack',
         ]);
         //$this->crud->display_fields(['Medicine Name','Medicine Code','Pack']);
-        // $this->crud->set_hidden('type','0'); // 1 for Medicine
-        // $this->crud->ci->db->where('type','0'); // 1 for Medicine
-        $this->crud->join('uom','uom','id','uom');
-        $this->crud->join('parent','items','id','name','items.type=0');
-        //$this->crud->join('supplier','people','id','name','people.type=1');
+         $this->crud->set_hidden('type','1'); // 1 for Medicine
+        if($this->uri->segment(3) == 'ajax') {   
+       $this->crud->ci->db->where('items.type','1'); // 1 for Medicine
+        }
+    $this->crud->join('uom','uom','id','uom');
+       
+  $this->crud->join('parent','items','id','name','items.type=0');
+  
+  //$this->crud->join('supplier','people','id','name','people.type=1');
         $this->crud->set_rule('name','required');
     //    $this->crud->set_rule('code','required');
-        $this->crud->set_option('type',['1'=>'Item','0'=>'Category']);
+     //   $this->crud->set_option('type',['1'=>'Item','0'=>'Category']);
         $this->crud->set_search('name');
-        $this->crud->custom_form('items/item_create_form');
+     //   $this->crud->custom_form('items/item_create_form');
         $this->crud->use_modal();
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }
+    public function category(){
+        //if($this->uri->segment(2)=='') redirect('item/index'); // datatable ajax list issue.
+        
+        //$data['title'] = 'Medicines List';
+        $data['title'] = 'Category List';
+
+        $this->crud->init('items',[
+//            'name' => 'Medicine Name',
+//            'code' => 'Medicine Code',
+//            'cp' => 'CP Price',
+//            'tp' => 'TP Price',
+//            'mrp' => 'MRP',
+//            'pack' => 'Pack',
+//             'code' => 'Item Code',
+            'name' => 'Category Name',
+ //           'uom'=>'UoM',
+  //          'type' => 'Type',
+     //       'parent' => 'Parent',
+            //'purchase_price' => 'Purchase Price',
+            //'mrp' => 'MRP',
+            //'pack' => 'Pack',
+        ]);
+        //$this->crud->display_fields(['Medicine Name','Medicine Code','Pack']);
+         $this->crud->set_hidden('type','0'); // 1 for Medicine
+            $this->crud->ci->db->where('type','0'); // 1 for Medicine
+
+        //$this->crud->join('uom','uom','id','uom');
+       // $this->crud->join('parent','items','id','name','items.type=0');
+        //$this->crud->join('supplier','people','id','name','people.type=1');
+        $this->crud->set_rule('name','required');
+    //    $this->crud->set_rule('code','required');
+     //   $this->crud->set_option('type',['1'=>'Item','0'=>'Category']);
+        $this->crud->set_search('name');
+        //$this->crud->custom_form('items/item_create_form');
+        $this->crud->use_modal();
+        $data['content']=$this->crud->run();
+        $this->load->view('template',$data);
+    } 
 	public function stock(){
         $data['title'] = 'Item Stock';
 
         $this->crud->init('items',[
             'name' => 'Item Name',
-            'code' => 'Item Code',
-            'pack' => 'Pack',
+//            'code' => 'Item Code',
+   //         'pack' => 'Pack',
+
         ]);
-        $this->crud->display_fields(['Item Code','Item Name','Stock Amount']);
+ //       $this->crud->display_fields(['Item Code','Item Name','Stock Amount']);
         $this->crud->set_hidden('type','0'); // 1 for Medicine
         
-        $this->crud->ci->db->where('type','0'); // 1 for Medicine
+        $this->crud->ci->db->where('type','1'); // 1 for Medicine
 
         $this->crud->extra_fields($this,['getRemaining'=>'Stock Amount']);
 
@@ -198,13 +241,13 @@ class Item extends CI_Controller {
        //  $this->crud->display_fields(['item_name','date','unit_price','quantity']);
        // $this->crud->join('item_id','items','id','code','type=0'); // Medicine only
         
-        $this->crud->join('item_name','items','id','name','type=0'); // Medicine only
+        $this->crud->join('item_name','items','id','name','type=1'); // Medicine only
         $this->crud->join('uom','uom','id','uom');
-        // !important    
+        //!important    
         $this->crud->where(['journal_id='.$id]);
         $this->crud->extra_fields($this,['getTotal'=>'Total']);
        //$this->crud->order(['2','0','1','3','4']); // don't forget, we have a hidden field
-       $this->crud->order(['3','0','4','1','2','5']);
+        $this->crud->order(['3','0','4','1','2','5','6']);
         $this->crud->set_hidden('journal_id',$id);
         $this->crud->set_hidden('type',$this->session->userdata('type')); // Stock type. 0: in, 1: out
         

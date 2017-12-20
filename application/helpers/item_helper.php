@@ -6,16 +6,17 @@ function printTransactions($journal_id){
     ?><table class="table table-bordered">
         <thead>
             <tr>
-                <th>Date</th><th>Item Code</th><th>Item Name</th><th>Item Quantity</th>
+                <th>Date</th><th>Item Name</th><th>Item Quantity</th>
             </tr>
         </thead>
     <?
     $total = 0;
     foreach($rows as $row){
+        
         $total += 0;
         ?>
         <tr>
-            <td><?=$row['date']?></td><td><?=$row['code']?></td><td><?=$row['name']?></td><td><?=$row['quantity']?></td>
+            <td><?=$row['date']?></td><td><?=$row['name']?></td><td><?=$row['quantity']?></td>
         </tr>
         <?
     }
@@ -29,7 +30,7 @@ function printInTransactions($journal_id){
     ?><table class="table table-bordered">
         <thead>
             <tr>
-                <th>Date</th><th>Item Code</th><th>Item Name</th><th>Unit Price</th><th>Item Quantity</th><th>Total</th>
+                <th>Date</th><th>Item Name</th><th>Unit Price</th><th>Item Quantity</th><th>Total</th>
             </tr>
         </thead>
     <?
@@ -38,7 +39,7 @@ function printInTransactions($journal_id){
         $total += $row['quantity']*$row['unit_price'];
         ?>
         <tr>
-            <td><?=$row['date']?></td><td><?=$row['code']?></td><td><?=$row['name']?></td><td><?=$row['unit_price']?></td><td><?=$row['quantity']?></td><td><?=$row['quantity']*$row['unit_price']?></td>
+            <td><?=$row['date']?></td><td><?=$row['name']?></td><td><?=$row['unit_price']?></td><td><?=$row['quantity']?></td><td><?=$row['quantity']*$row['unit_price']?></td>
         </tr>
         <?
     }

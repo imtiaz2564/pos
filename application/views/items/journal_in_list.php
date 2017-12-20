@@ -4,7 +4,7 @@
     </div>
     <div id="print">
     <div class="row">
-        <center><h1>Ashoka  Ltd.</h1></center>
+        <center><h1>Sylhet POS</h1></center>
     </div>
     <?
     foreach( $labels as $label ){

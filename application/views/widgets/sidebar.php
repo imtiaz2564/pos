@@ -17,7 +17,7 @@
                 <ul class="nav nav-second-level">
                     <li><a href="<?=site_url('item/in/')?>">Purchase Register</a></li>
                     <li><a href="<?=site_url('item/out')?>">Sales Register</a></li>
-                    <li><a href="<?=site_url('item/stock')?>">Stock Status</a></li>
+                    <li><a href="<?=site_url('item/stock')?>">Item Stock</a></li>
                 </ul>
             </li>
 <!--
@@ -41,6 +41,7 @@
                 <a href="#"><i class="fa fa-database"></i> Master Data<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li><a href="<?=site_url('item/index')?>">Items List</a></li>
+                    <li><a href="<?=site_url('item/category')?>">Category List</a></li>
                     <li><a href="<?=site_url('master/sales')?>">Sale Price Revision</a></li>
 <!--                    <li><a href="<?//=site_url('raw/index')?>">Raw Materials</a></li>-->
                     <li><a href="<?=site_url('master/suppliers')?>">Suppliers List</a></li>

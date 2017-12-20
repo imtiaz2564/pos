@@ -4,10 +4,11 @@ class Item_Model extends CI_Model{
         parent::__construct();
     }
     function getRemaining($id){
-        $query = $this->db->select('sum(quantity) as total')->where('item_id',$id)->where('type','0')->get('stock');
+        //return $id;
+        $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type','0')->get('stock');
         $in = $query->row()->total;
 
-        $query = $this->db->select('sum(quantity) as total')->where('item_id',$id)->where('type','1')->get('stock');
+        $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type','1')->get('stock');
         $out = $query->row()->total;
         
         return $in-$out;
@@ -41,7 +42,7 @@ class Item_Model extends CI_Model{
         return $total;
     }
     function getTransactions($journal_id){
-        return $this->db->where('journal_id',$journal_id)->join('items','items.id=item_id','left')->get('stock')->result_array();
+        return $this->db->where('journal_id',$journal_id)->join('items','items.id=item_name','left')->get('stock')->result_array();
     }
     function getDue( $people_id ){
         $journals = $this->db->where('customer_id',$people_id)->get('journals')->result();
@@ -114,6 +115,7 @@ class Item_Model extends CI_Model{
 
     }
     function getTotal($id){
+        //return $id;
         $query =  $this->db->where('id', $id)->get('stock')->row();
         $uomCost = $this->db->where('id', $query->uom)->get('uom')->row();//$query->uom;
         return $uomCost->labourCost+($query->unit_price	*  $query->quantity);

@@ -87,15 +87,15 @@ class Master extends CI_Controller {
         $data['title'] = 'Sale Price Revision';
         $this->crud->init('items',[
             'name' => 'Item Name',
-            'code' => 'Item Code',
+            // 'code' => 'Item Code',
             //'purchase_price' => 'Purchase Price',
             'mrp' => 'MRP',
-            'pack' => 'Pack',
+            // 'pack' => 'Pack',
             'discount' => 'Discount',
         ]);
         //$this->crud->display_fields(['Medicine Name','Medicine Code','Pack']);
         //$this->crud->set_hidden('type','0'); // 1 for Medicine
-        $this->crud->ci->db->where('type','0'); // 1 for Medicine
+        $this->crud->ci->db->where('type','1'); // 1 for Medicine
         //$this->crud->set_rule('name','required');
         //$this->crud->set_rule('code','required');
         //$this->crud->set_search('name');
