@@ -32,10 +32,17 @@ $(function(){
         var unit_price = $('input[name=unit_price]').val();
         var quantity = $('input[name=quantity]').val();
         
-        var total = labourCost + (unit_price * quantity);
+        var total = (labourCost * quantity) + (unit_price * quantity);
          
         $('input[name=total]').val(total);
     });
+     
+     <? if($this->uri->segment(2) == 'out') { ?> 
+         $('select[name=item_name]').on('change', function() {
+            alert();
+
+         });
+        <? } ?>
 
 });
 

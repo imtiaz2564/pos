@@ -81,7 +81,6 @@ class Item extends CI_Controller {
         //$this->crud->display_fields(['Medicine Name','Medicine Code','Pack']);
          $this->crud->set_hidden('type','0'); // 1 for Medicine
             $this->crud->ci->db->where('type','0'); // 1 for Medicine
-
         //$this->crud->join('uom','uom','id','uom');
        // $this->crud->join('parent','items','id','name','items.type=0');
         //$this->crud->join('supplier','people','id','name','people.type=1');
@@ -107,6 +106,7 @@ class Item extends CI_Controller {
         $this->crud->set_hidden('type','0'); // 1 for Medicine
         
         $this->crud->ci->db->where('type','1'); // 1 for Medicine
+        //$this->crud->extra_buttons($this,['getRemaining'=>'Stock']);
 
         $this->crud->extra_fields($this,['getRemaining'=>'Stock Amount']);
 
@@ -115,7 +115,7 @@ class Item extends CI_Controller {
         
         $this->crud->use_modal();
         
-        $this->crud->hide_controls();
+        //$this->crud->hide_controls();
         
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
@@ -197,12 +197,14 @@ class Item extends CI_Controller {
         
         $this->crud->init('journals',[
             'date' => 'Posting Date',
-            'customer_id' => 'Customer',
+            'customer_id' => 'Customer ID',
+            'phone' => 'Phone',
+            'customer' => 'Customer Name',
             'description' => 'Description',
             //'price_type' => 'Price Type',
         ]);
 //        $this->crud->set_option('price_type',['0'=>'CP Price','1'=>'TP Price']);
-        $this->crud->join('customer_id','people','id','name','type=0'); // Customer
+//        $this->crud->join('customer','people','id','name','type=0'); // Customer
     
         $this->crud->custom_form('items/journal_form');
         $this->crud->custom_view('items/journalViewOut');
@@ -225,6 +227,7 @@ class Item extends CI_Controller {
     }
     public function ajax_itemlist(){
         $id = $this->session->userdata('journal_id');
+        // $this->session->userdata('out',$this->uri->segment(2));
 
         $this->crud->init('stock', [
             //'item_id' => 'Item Code',
@@ -282,5 +285,21 @@ class Item extends CI_Controller {
     }
     public function beforeSave($post){
         unset($post['total']); return $post;
+    }
+    function getCustomerData($cusid){
+        $this->load->model('item_model');
+        $data = [];
+        $result = $this->item_model->getCustomerData($cusid);
+        $data['name'] = $result->name;
+        $data['phone'] = $result->phone;
+        $data['code'] = $result->code;
+        $data['businessName'] = $result->businessName;
+        $data['address'] = $result->address;
+        $data['email'] = $result->email;
+        $data['businessAddress'] = $result->businessAddress;
+        $data['area'] = $result->area;
+        $data['district'] = $result->district;
+        $data['openingBalance'] = $result->openingBalance;
+        echo json_encode($data);
     }
 }

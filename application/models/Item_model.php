@@ -115,10 +115,18 @@ class Item_Model extends CI_Model{
 
     }
     function getTotal($id){
-        //return $id;
         $query =  $this->db->where('id', $id)->get('stock')->row();
         $uomCost = $this->db->where('id', $query->uom)->get('uom')->row();//$query->uom;
-        return $uomCost->labourCost+($query->unit_price	*  $query->quantity);
-        
+        return ($uomCost->labourCost *  $query->quantity)+($query->unit_price	*  $query->quantity);
+    }
+    function getSubTotal($id){
+        $query =  $this->db->where('journal_id', $id)->get('stock')->row();
+        $uomCost = $this->db->where('id', $query->uom)->get('uom')->row();//$query->uom;
+        return $uomCost->labourCost;
+        // return ($uomCost->labourCost *  $query->quantity)+($query->unit_price	*  $query->quantity);
+    }
+    function getCustomerData($id){
+        $query = $this->db->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people');
+        return $query->row();
     }
 }

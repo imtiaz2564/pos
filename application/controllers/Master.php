@@ -98,7 +98,9 @@ class Master extends CI_Controller {
         $this->crud->ci->db->where('type','1'); // 1 for Medicine
         //$this->crud->set_rule('name','required');
         //$this->crud->set_rule('code','required');
-        //$this->crud->set_search('name');
+        //$this->crud->set_search('name')
+        $this->crud->disable_insert();
+        $this->crud->disable_update();
         $this->crud->use_modal();
         $this->crud->set_rule('name','required');
         $data['content']=$this->crud->run();

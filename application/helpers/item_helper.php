@@ -6,17 +6,18 @@ function printTransactions($journal_id){
     ?><table class="table table-bordered">
         <thead>
             <tr>
-                <th>Date</th><th>Item Name</th><th>Item Quantity</th>
+                <th>Date</th><th>Item Name</th><th>Item Quantity</th><th>Unit price</th><th>Total Price</th>
             </tr>
         </thead>
     <?
     $total = 0;
     foreach($rows as $row){
-        
+                
         $total += 0;
+        $subtotal = $ci->item_model->getSubTotal($row['journal_id']);
         ?>
         <tr>
-            <td><?=$row['date']?></td><td><?=$row['name']?></td><td><?=$row['quantity']?></td>
+            <td><?=$row['date']?></td><td><?=$row['name']?></td><td><?=$row['quantity']?></td><td><?=$row['unit_price']?></td><td><?=($subtotal*$row['quantity'])+($row['quantity']*$row['unit_price'])?></td>
         </tr>
         <?
     }

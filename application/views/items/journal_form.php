@@ -20,8 +20,41 @@
                     ?></div><?php
                 }?>
         </div>
-        <?=$form_close?>
-        <div id="transactions"></div>
+    <?=$form_close?>
+    <div><h1>Customer Info</h1></div>
+    <div>
+    <label>Customer Name: </label>
+    <label style="color:#0000FF" id="cusName"></label>
+    </div>
+    <div>
+    <div>
+    <label>Business Name: </label>
+    <label style="color:#0000FF" id="businessName"></label>
+    </div>
+    <label>Customer Email: </label>
+    <label style="color:#0000FF" id="email"></label>
+    </div>
+    <div>
+    <label>Address: </label>
+    <label style="color:#0000FF" id="address"></label>
+    </div>
+    <div>
+    <label>Business Address: </label>
+    <label style="color:#0000FF" id="businessAddress"></label>
+    </div>
+    <div>
+    <label>Area: </label>
+    <label style="color:#0000FF" id="area"></label>
+    </div>
+    <div>
+    <label>District: </label>
+    <label style="color:#0000FF" id="district"></label>
+    </div>
+    <div>
+    <label>Opening Balance: </label>
+    <label style="color:#0000FF" id="openingBalance"></label>
+    </div>
+    <div id="transactions"></div>
     </div>
     <div class="panel-footer">
         <div class="btn-group pull-right">
@@ -34,8 +67,42 @@
 <script>
 $.ajaxSetup({ cache: false });
 $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
+$('input[name=customer_id],input[name=phone],input[name=customer]').keypress(function(e) {
+    if(e.which == 13) {
+        $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '<?=site_url('item/getCustomerData')?>'+'/'+$(this).val()+'/', 
+        success: function (data) {
+             phone = data["phone"];
+             name = data["name"];
+             customer_id = data["code"];
+             businessName = data["businessName"];
+             email = data["email"];
+             address = data["address"];
+             businessAddress = data["businessAddress"];
+             area = data["area"];
+             district = data["district"];
+             openingBalance = data["openingBalance"];
 
+             $('input[name=customer_id]').val(customer_id);
+             $('input[name=phone]').val(phone);
+             $('input[name=customer]').val(name);
+
+             $('#cusName').html(name);
+              $('#businessName').html(businessName);
+              $('#email').html(email);
+             $('#address').html(address);
+             $('#businessAddress').html(businessAddress);
+             $('#area').html(area);
+             $('#district').html(district);
+             $('#openingBalance').html(openingBalance);
+            }
+        });
+    }
+});
 $('#formJournal').submit(function() {
+    
     $.ajax({
        type: "POST",
        dataType: "json",
