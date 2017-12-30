@@ -21,13 +21,12 @@
                 }?>
         </div>
     <?=$form_close?>
-    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
+ 
     <div><h1>Customer Info</h1></div>
     <div>
     <label>Customer Name: </label>
     <label style="color:#0000FF" id="cusName"></label>
     </div>
-    <div>
     <div>
     <label>Business Name: </label>
     <label style="color:#0000FF" id="businessName"></label>
@@ -55,21 +54,17 @@
     <label>Opening Balance: </label>
     <label style="color:#0000FF" id="openingBalance"></label>
     </div>
-    <? } ?>
-    <div id="transactions"></div>
-    </div>
     <div class="panel-footer">
         <div class="btn-group pull-right">
             <?=anchor($this->uri->segment(1).'/'.$this->uri->segment(2),'Cancel','class="btn btn-default"');?>
-            <a href="#" onclick="$('#formJournal').submit();" class="btn btn-primary">Save</a>
+            <a href="#" onclick="$('#customerAccounts').submit();" class="btn btn-primary">Save</a>
         </div>
         <div class="clearfix"></div>
     </div>
-</div>
-<script>
-$.ajaxSetup({ cache: false });
-$('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
-$('input[name=customer_id],input[name=phone],input[name=customer]').keypress(function(e) {
+    </div>
+    </div>
+   <script>
+    $('input[name=peopleID],input[name=phone],input[name=name]').keypress(function(e) {
     if(e.which == 13) {
         $.ajax({
         type: 'POST',
@@ -87,9 +82,9 @@ $('input[name=customer_id],input[name=phone],input[name=customer]').keypress(fun
              district = data["district"];
              openingBalance = data["openingBalance"];
 
-             $('input[name=customer_id]').val(customer_id);
+             $('input[name=peopleID]').val(customer_id);
              $('input[name=phone]').val(phone);
-             $('input[name=customer]').val(name);
+             $('input[name=name]').val(name);
 
              $('#cusName').html(name);
              $('#businessName').html(businessName);
@@ -103,13 +98,13 @@ $('input[name=customer_id],input[name=phone],input[name=customer]').keypress(fun
         });
     }
 });
-$('#formJournal').submit(function() {
+$('#customerAccounts').submit(function() {
     
     $.ajax({
        type: "POST",
        dataType: "json",
-       url: $('#formJournal').attr('action'),
-       data: $('#formJournal').serialize(),
+       url: $('#customerAccounts').attr('action'),
+       data: $('#customerAccounts').serialize(),
        success: function(data){
            if( typeof data['error'] !== 'undefined' ){
                $('.error').html(data['error']).slideDown();

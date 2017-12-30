@@ -21,10 +21,10 @@
                 }?>
         </div>
     <?=$form_close?>
-    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
-    <div><h1>Customer Info</h1></div>
+    </div>
+    <div><h1>Supplier Info</h1></div>
     <div>
-    <label>Customer Name: </label>
+    <label>Supplier Name: </label>
     <label style="color:#0000FF" id="cusName"></label>
     </div>
     <div>
@@ -32,7 +32,7 @@
     <label>Business Name: </label>
     <label style="color:#0000FF" id="businessName"></label>
     </div>
-    <label>Customer Email: </label>
+    <label>Supplier Email: </label>
     <label style="color:#0000FF" id="email"></label>
     </div>
     <div>
@@ -55,26 +55,23 @@
     <label>Opening Balance: </label>
     <label style="color:#0000FF" id="openingBalance"></label>
     </div>
-    <? } ?>
-    <div id="transactions"></div>
-    </div>
     <div class="panel-footer">
         <div class="btn-group pull-right">
             <?=anchor($this->uri->segment(1).'/'.$this->uri->segment(2),'Cancel','class="btn btn-default"');?>
-            <a href="#" onclick="$('#formJournal').submit();" class="btn btn-primary">Save</a>
+            <a href="#" onclick="$('#supplierAccounts').submit();" class="btn btn-primary">Save</a>
         </div>
         <div class="clearfix"></div>
     </div>
-</div>
-<script>
+    </div>
+   <script>
+   
 $.ajaxSetup({ cache: false });
-$('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
-$('input[name=customer_id],input[name=phone],input[name=customer]').keypress(function(e) {
+    $('input[name=peopleID],input[name=phone],input[name=name]').keypress(function(e) {
     if(e.which == 13) {
         $.ajax({
         type: 'POST',
         dataType: 'json',
-        url: '<?=site_url('item/getCustomerData/')?>'+'/'+$(this).val()+'/', 
+        url: '<?=site_url('item/getSupplierData/')?>'+'/'+$(this).val()+'/', 
         success: function (data) {
              phone = data["phone"];
              name = data["name"];
@@ -87,9 +84,9 @@ $('input[name=customer_id],input[name=phone],input[name=customer]').keypress(fun
              district = data["district"];
              openingBalance = data["openingBalance"];
 
-             $('input[name=customer_id]').val(customer_id);
+             $('input[name=peopleID]').val(customer_id);
              $('input[name=phone]').val(phone);
-             $('input[name=customer]').val(name);
+             $('input[name=name]').val(name);
 
              $('#cusName').html(name);
              $('#businessName').html(businessName);
@@ -103,13 +100,13 @@ $('input[name=customer_id],input[name=phone],input[name=customer]').keypress(fun
         });
     }
 });
-$('#formJournal').submit(function() {
+$('#supplierAccounts').submit(function() {
     
     $.ajax({
        type: "POST",
        dataType: "json",
-       url: $('#formJournal').attr('action'),
-       data: $('#formJournal').serialize(),
+       url: $('#supplierAccounts').attr('action'),
+       data: $('#supplierAccounts').serialize(),
        success: function(data){
            if( typeof data['error'] !== 'undefined' ){
                $('.error').html(data['error']).slideDown();

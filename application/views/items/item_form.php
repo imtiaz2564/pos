@@ -1,3 +1,4 @@
+<?=$this->session->flashdata('');?>
 <?=$form_open?>
     <table class="table-inside">
         <tr>
@@ -12,11 +13,28 @@
         <td><input type="text" name="total" value="" class="form-control" placeholder="total"></td>
         </tr>
     </table>
+    
 <?=$form_close?>
-<script>
-<?php // Bind this on show, to trigger it each time a modal shows. ?>
-initialize();
 
+<script>
+<?php   // Bind this on show, to trigger it each time a modal shows. ?>
+initialize();
+<?php  if( $this->session->userdata('type') == 1 ) { ?>  
+         $('select[name=item_name]').on('change', function() {
+            $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '<?=site_url('item/getUnitPrice')?>'+'/'+$(this).val()+'/', 
+            success: function (data) {
+                mrp = parseInt(data["mrp"]);
+
+    $('input[name=unit_price]').val(mrp);
+            }
+        });  
+
+         });
+         
+        <?  } ?> 
 $(function(){
     $('select[name=uom]').on('change', function() {
         $.ajax({
@@ -29,21 +47,13 @@ $(function(){
         });
         });
        $('input[name=unit_price],input[name=quantity]').on('keyup',function(){
-        var unit_price = $('input[name=unit_price]').val();
+        //var unit_price = $('input[name=unit_price]').val(mrp);
         var quantity = $('input[name=quantity]').val();
         
-        var total = (labourCost * quantity) + (unit_price * quantity);
+        var total = (labourCost * quantity) + (mrp * quantity);
          
         $('input[name=total]').val(total);
     });
-     
-     <? if($this->uri->segment(2) == 'out') { ?> 
-         $('select[name=item_name]').on('change', function() {
-            alert();
-
-         });
-        <? } ?>
-
 });
 
 $('form').submit(function() {
@@ -69,7 +79,7 @@ function clearFields(){
     $('input[name=unit_price]').val(' ');
     $('input[name=total]').val(' ');
     $('input[name=item_name]').val(' ');
-    $('input[name=date]').val(' ');
+  //  $('input[name=date]').val(' ');
     $('input[name=uom]').val(' ');
 }    
 </script>

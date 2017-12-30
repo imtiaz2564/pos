@@ -21,7 +21,9 @@ class Finance extends CI_Controller {
         $data['title'] = 'Payments';
         
         $this->crud->init('finance',[
-            'peopleID' => 'Suplier Name',
+            'peopleID' => 'Suplier ID',
+            'name' => 'Suplier Name',
+            'phone' => 'Phone',
             'date' => 'Date',
             'amount' => 'Amount',
             'paymentType' => 'Payment Type',
@@ -29,7 +31,7 @@ class Finance extends CI_Controller {
         ]);
         $this->crud->set_option('paymentType',['0'=>'Cash','1'=>'TT','2'=>'Online','3'=>'bKash']);
         
-        $this->crud->join('peopleID','people','id','name','type=1'); // Supplier
+        //$this->crud->join('peopleID','people','id','name','type=1'); // Supplier
 
         $this->crud->set_hidden('type','1'); // Payment
         
@@ -40,9 +42,11 @@ class Finance extends CI_Controller {
         $this->crud->set_rule('amount','required');
         $this->crud->change_type('date','date');
         $this->crud->change_type('description','textarea');
-        $this->crud->order([3,0,1,4,2,5]);
+       $this->crud->order([0,1,3,4,2,5,6,7]);
         
-        $this->crud->use_modal();
+        //$this->crud->use_modal();
+        $this->crud->custom_form('accounts/Supplier_Accounts_Form');
+        $this->crud->form_extra('id="supplierAccounts"');
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
 	}
@@ -50,7 +54,9 @@ class Finance extends CI_Controller {
         $data['title'] = 'Receives';
         
         $this->crud->init('finance',[
-            'peopleID' => 'Customer Name',
+            'peopleID' => 'Customer ID',
+            'name' => 'Customer Name',
+            'phone' => 'Phone',
             'date' => 'Date',
             'amount' => 'Amount',
             'paymentType' => 'Payment Type',
@@ -58,7 +64,7 @@ class Finance extends CI_Controller {
         ]);
         $this->crud->set_option('paymentType',['0'=>'Cash','1'=>'TT','2'=>'Online','3'=>'bKash']);
 
-        $this->crud->join('peopleID','people','id','name','type=0'); // Customer
+        //$this->crud->join('peopleID','people','id','name','type=0'); // Customer
 
         $this->crud->set_hidden('type','0'); // Receive
         
@@ -69,10 +75,25 @@ class Finance extends CI_Controller {
         $this->crud->set_rule('amount','required');
         $this->crud->change_type('date','date');
         $this->crud->change_type('description','textarea');
-        $this->crud->order([3,0,1,4,2,5]);
+        $this->crud->order([0,1,3,4
+        ,2,5,6,7]);
         
-        $this->crud->use_modal();
+        //$this->crud->use_modal();
+        $this->crud->custom_form('accounts/Customer_Accounts_Form');
+        $this->crud->form_extra('id="customerAccounts"');
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
-	}
+    }
+    public function statement() {
+        $data['title'] = '';
+        $data['content'] = $this->load->view('statement',[],true);
+        $this->load->view('template',$data);
+    }
+    function getSalesReport( $customerID) {
+        $this->load->model('item_model');
+        $data = $this->item_model->getSalesData( $customerID  );
+        // print_r($data);
+        // die();
+        $this->load->view('TotalSalesReport',$data);
+    }
 }

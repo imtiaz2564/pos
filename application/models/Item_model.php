@@ -126,7 +126,27 @@ class Item_Model extends CI_Model{
         // return ($uomCost->labourCost *  $query->quantity)+($query->unit_price	*  $query->quantity);
     }
     function getCustomerData($id){
-        $query = $this->db->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people');
+        $query = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people');
         return $query->row();
+    }
+    function getSupplierData($id){
+        $query = $this->db->where('type',1)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people');
+        return $query->row();
+    }
+    function getUnitPrice($item){
+        $query = $this->db->where('id',$item)->get('items');
+        return $query->row();
+    }
+    function getSalesData( $customerID  ){
+        $salesData = $this->db->where('customer_id', $customerID)->get('journals')->result();
+         $total = [];
+        foreach( $salesData as $salesData ) {
+           $data = $this->db->where('journal_id', $salesData->id)->get('stock')->result();
+           array_push($total , $data);  
+        }
+        // foreach($total as $data){
+
+        // }
+        return $total;
     }
 }

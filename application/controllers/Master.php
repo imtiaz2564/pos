@@ -92,6 +92,8 @@ class Master extends CI_Controller {
             'mrp' => 'MRP',
             // 'pack' => 'Pack',
             'discount' => 'Discount',
+            'baseCount' => 'Offer Base Count',
+            'offer' => 'Offer ( count )',
         ]);
         //$this->crud->display_fields(['Medicine Name','Medicine Code','Pack']);
         //$this->crud->set_hidden('type','0'); // 1 for Medicine

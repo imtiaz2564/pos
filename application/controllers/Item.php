@@ -227,15 +227,20 @@ class Item extends CI_Controller {
     }
     public function ajax_itemlist(){
         $id = $this->session->userdata('journal_id');
+        // echo $uri;
+        // echo $uri;
+        // echo $uri;
+        // die();
         // $this->session->userdata('out',$this->uri->segment(2));
-
-        $this->crud->init('stock', [
+    //    $this->session->set_userdata('seg',$ur);
+     $this->crud->init('stock', [
             //'item_id' => 'Item Code',
             'item_name' => 'Item Name',
             'date' => 'Date',
             'uom' => 'UoM',
             'unit_price' => 'Unit Price',
             'quantity' => 'Quantity',
+            'offer' => 'Offer',
             
             
         ]);
@@ -250,18 +255,17 @@ class Item extends CI_Controller {
         $this->crud->where(['journal_id='.$id]);
         $this->crud->extra_fields($this,['getTotal'=>'Total']);
        //$this->crud->order(['2','0','1','3','4']); // don't forget, we have a hidden field
-        $this->crud->order(['3','0','4','1','2','5','6']);
+        $this->crud->order(['4','0','5','1','2','3','6','7']);
         $this->crud->set_hidden('journal_id',$id);
         $this->crud->set_hidden('type',$this->session->userdata('type')); // Stock type. 0: in, 1: out
         
         $this->crud->before_save($this, 'beforeSave');
-       // $this->crud->set_rule('item_id','is_natural_no_zero');
-
+       // $this->crud->set_rule('item_id','is_natural_no_zero'); 
         $this->crud->set_rule('item_name','is_natural_no_zero');
         $this->crud->custom_form('items/item_form');
         $this->crud->custom_list('items/item_list');
         
-        $this->crud->hide_controls();
+        //$this->crud->hide_controls();
         
         $this->crud->use_modal();
         $this->crud->ajax_list();
@@ -277,10 +281,10 @@ class Item extends CI_Controller {
     }
     public function getLabourCost($id){
         $this->load->model('item_model');
-       $data = [];
+        $data = [];
         $result  = $this->item_model->getLabourCost($id);
-      $data['labourCost'] = $result->labourCost;
-       echo json_encode($data); 
+        $data['labourCost'] = $result->labourCost;
+        echo json_encode($data); 
     
     }
     public function beforeSave($post){
@@ -300,6 +304,29 @@ class Item extends CI_Controller {
         $data['area'] = $result->area;
         $data['district'] = $result->district;
         $data['openingBalance'] = $result->openingBalance;
+        echo json_encode($data);
+    }
+    function getSupplierData($cusid){
+        $this->load->model('item_model');
+        $data = [];
+        $result = $this->item_model->getSupplierData($cusid);
+        $data['name'] = $result->name;
+        $data['phone'] = $result->phone;
+        $data['code'] = $result->code;
+        $data['businessName'] = $result->businessName;
+        $data['address'] = $result->address;
+        $data['email'] = $result->email;
+        $data['businessAddress'] = $result->businessAddress;
+        $data['area'] = $result->area;
+        $data['district'] = $result->district;
+        $data['openingBalance'] = $result->openingBalance;
+        echo json_encode($data);
+    }
+    function getUnitPrice($item){
+        $this->load->model('item_model');
+        $data = [];
+        $result = $this->item_model->getUnitPrice($item);
+        $data['mrp'] = $result->mrp;
         echo json_encode($data);
     }
 }

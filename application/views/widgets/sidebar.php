@@ -31,10 +31,11 @@
             </li>
 -->
             <li>
-                <a href="#"><i class="fa fa-dollar"></i> Financial<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-dollar"></i> Accounts<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li><a href="<?=site_url('finance/receives')?>">Receives</a></li>
-                    <li><a href="<?=site_url('finance/payments')?>">Payments</a></li>
+                    <li><a href="<?=site_url('finance/receives')?>">Customer</a></li>
+                    <li><a href="<?=site_url('finance/payments')?>">Supplier</a></li>
+                    <li><a href="<?=site_url('finance/statement')?>">Statement</a></li>
                 </ul>
             </li>
             <li>
