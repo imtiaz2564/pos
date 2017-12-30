@@ -86,7 +86,7 @@ class Finance extends CI_Controller {
     }
     public function statement() {
         $data['title'] = '';
-        $data['content'] = $this->load->view('statement',[],true);
+        $data['content'] = $this->load->view('statement.php',[],true);
         $this->load->view('template',$data);
     }
     function getSalesReport( $customerID) {
@@ -94,6 +94,6 @@ class Finance extends CI_Controller {
         $data = $this->item_model->getSalesData( $customerID  );
         // print_r($data);
         // die();
-        $this->load->view('TotalSalesReport',$data);
+        $this->load->view('TotalSalesReport.php',$data);
     }
 }
