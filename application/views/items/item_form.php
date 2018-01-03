@@ -11,7 +11,9 @@
         }?>
         <input type="submit" style="display:none"/>
         <td><input type="text" name="total" value="" class="form-control" placeholder="total"></td>
+        <td><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost"></td>
         </tr>
+        
     </table>
     
 <?=$form_close?>
@@ -27,16 +29,13 @@ initialize();
             url: '<?=site_url('item/getUnitPrice')?>'+'/'+$(this).val()+'/', 
             success: function (data) {
                 mrp = parseInt(data["mrp"]);
-
-    $('input[name=unit_price]').val(mrp);
+                $('input[name=unit_price]').val(mrp);
             }
         });  
-
-         });
-         
-        <?  } ?> 
+        });
+     
 $(function(){
-    $('select[name=uom]').on('change', function() {
+    $('select[name=item_name]').on('change', function() {
         $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -50,12 +49,24 @@ $(function(){
         //var unit_price = $('input[name=unit_price]').val(mrp);
         var quantity = $('input[name=quantity]').val();
         
-        var total = (labourCost * quantity) + (mrp * quantity);
-         
+        var total = mrp * quantity;
+        var cost = labourCost * quantity;
+
         $('input[name=total]').val(total);
+        $('input[name=labourCost]').val(cost);
     });
 });
+<?  } else { ?>
+    $('input[name=unit_price],input[name=quantity]').on('keyup',function(){
+        //var unit_price = $('input[name=unit_price]').val(mrp);
+        var quantity = $('input[name=quantity]').val();
+        var unit_price = $('input[name=unit_price]').val();
 
+        var total = unit_price * quantity;
+
+        $('input[name=total]').val(total);
+    });
+<? } ?>
 $('form').submit(function() {
     $.ajax({
            type: "POST",
@@ -81,5 +92,6 @@ function clearFields(){
     $('input[name=item_name]').val(' ');
   //  $('input[name=date]').val(' ');
     $('input[name=uom]').val(' ');
+    $('input[name=labourCost]').val(' ');
 }    
 </script>

@@ -18,7 +18,7 @@ class Finance extends CI_Controller {
 	public function index(){
     }
 	public function payments(){
-        $data['title'] = 'Payments';
+        $data['title'] = 'Suplier Payments';
         
         $this->crud->init('finance',[
             'peopleID' => 'Suplier ID',
@@ -42,7 +42,7 @@ class Finance extends CI_Controller {
         $this->crud->set_rule('amount','required');
         $this->crud->change_type('date','date');
         $this->crud->change_type('description','textarea');
-       $this->crud->order([0,1,3,4,2,5,6,7]);
+        $this->crud->order([0,1,3,4,2,5,6,7]);
         
         //$this->crud->use_modal();
         $this->crud->custom_form('accounts/Supplier_Accounts_Form');
@@ -50,8 +50,8 @@ class Finance extends CI_Controller {
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
 	}
-	public function receives(){
-        $data['title'] = 'Receives';
+	public function receives() {
+        $data['title'] = 'Customer Receives';
         
         $this->crud->init('finance',[
             'peopleID' => 'Customer ID',
@@ -86,14 +86,13 @@ class Finance extends CI_Controller {
     }
     public function statement() {
         $data['title'] = '';
-        $data['content'] = $this->load->view('statement.php',[],true);
+        $data['content'] = $this->load->view('Statement.php',[],true);
         $this->load->view('template',$data);
     }
-    function getSalesReport( $customerID) {
+    function getSalesReport( $customerID ) {
         $this->load->model('item_model');
         $data = $this->item_model->getSalesData( $customerID  );
-        // print_r($data);
-        // die();
         $this->load->view('TotalSalesReport.php',$data);
     }
+    
 }

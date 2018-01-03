@@ -64,8 +64,8 @@ class Master extends CI_Controller {
         $this->crud->set_hidden('type','0'); // Customer
         $this->crud->ci->db->where('type','0'); // Customer
         $this->crud->set_rule('name','required');
-        
-     //  $this->crud->extra_fields($this, ['getDue'=>'Current Due']);
+        $this->crud->before_save($this , 'beforeSave');
+        //$this->crud->extra_fields($this, ['getDue'=>'Current Due']);
         
         $this->crud->use_modal();
         $data['content']=$this->crud->run();
@@ -92,8 +92,6 @@ class Master extends CI_Controller {
             'mrp' => 'MRP',
             // 'pack' => 'Pack',
             'discount' => 'Discount',
-            'baseCount' => 'Offer Base Count',
-            'offer' => 'Offer ( count )',
         ]);
         //$this->crud->display_fields(['Medicine Name','Medicine Code','Pack']);
         //$this->crud->set_hidden('type','0'); // 1 for Medicine
@@ -102,7 +100,7 @@ class Master extends CI_Controller {
         //$this->crud->set_rule('code','required');
         //$this->crud->set_search('name')
         $this->crud->disable_insert();
-        $this->crud->disable_update();
+        $this->crud->disable_delete();
         $this->crud->use_modal();
         $this->crud->set_rule('name','required');
         $data['content']=$this->crud->run();
@@ -113,5 +111,16 @@ class Master extends CI_Controller {
     }
     function getPayable( $people_id ){
         return $this->item_model->getPayable( $people_id );
+    }
+    function beforeSave($post){
+        $data = $this->item_model->checkPhoneNumber($post['phone']);
+        if( isset( $data->phone ) ){
+             die( json_encode(['error'=>'Phone Number is exist already']));
+        }
+        $query = $this->item_model->checkBusinessName($post['businessName']);
+        if( isset( $query->businessName ) ){
+            die( json_encode(['error'=>'Business Name is exist already']));
+       }
+        return $post;
     }
 }

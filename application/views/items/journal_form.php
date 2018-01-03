@@ -54,13 +54,28 @@
     <div>
     <label>Opening Balance: </label>
     <label style="color:#0000FF" id="openingBalance"></label>
+    <div>
+    <label>Current Balance: </label>
+    <label style="color:#0000FF" id="currentBalance"></label>
     </div>
     <? } ?>
     <div id="transactions"></div>
+    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
+    <div class="form-group" style='float: right;'>
+        <label>Total Discount: </label>
+        <label><input type="text" name="totalDiscount" value="" class="form-control" placeholder="Total Discount"></label>
+    </div>
+    <? } ?>
+    <!-- <div class="form-group" style='float: right;'>
+        <label>Grand Total: </label>
+        <label></label>
+    </div> -->
+    </div>
     </div>
     <div class="panel-footer">
         <div class="btn-group pull-right">
-            <?=anchor($this->uri->segment(1).'/'.$this->uri->segment(2),'Cancel','class="btn btn-default"');?>
+            <?//=anchor($this->uri->segment(1).'/'.$this->uri->segment(2),'Cancel','class="btn btn-default"');?>
+            <a href="<?=site_url()?>" class="btn btn-default">Close</a>
             <a href="#" onclick="$('#formJournal').submit();" class="btn btn-primary">Save</a>
         </div>
         <div class="clearfix"></div>
@@ -86,6 +101,7 @@ $('input[name=customer_id],input[name=phone],input[name=customer]').keypress(fun
              area = data["area"];
              district = data["district"];
              openingBalance = data["openingBalance"];
+             currentBalance = data["totalBalance"]; 
 
              $('input[name=customer_id]').val(customer_id);
              $('input[name=phone]').val(phone);
@@ -99,22 +115,32 @@ $('input[name=customer_id],input[name=phone],input[name=customer]').keypress(fun
              $('#area').html(area);
              $('#district').html(district);
              $('#openingBalance').html(openingBalance);
+             $('#currentBalance').html(currentBalance);
             }
         });
     }
 });
 $('#formJournal').submit(function() {
-    
+    date = $('input[name=date]').val();
+    customer_id = $('input[name=customer_id]').val();
+    phone = $('input[name=phone]').val();
+    customer = $('input[name=customer]').val();
+    description = $('input[name=description]').val();
+    totalDiscount = $('input[name=totalDiscount]').val();
     $.ajax({
        type: "POST",
        dataType: "json",
        url: $('#formJournal').attr('action'),
-       data: $('#formJournal').serialize(),
+       // data: $('#formJournal').serialize(),
+        data:{ date: date, customer_id:customer_id, phone:phone, customer:customer, description:description, totalDiscount:totalDiscount},
        success: function(data){
            if( typeof data['error'] !== 'undefined' ){
                $('.error').html(data['error']).slideDown();
            }else{
-               window.location = '<?=site_url($this->uri->segment(1).'/'.$this->uri->segment(2));?>';
+            <? if( $this->uri->segment(2) == 'out' ) { ?>
+               window.location = '<?=site_url('item/out/insert');?>';
+            <? } ?>   
+            window.location = '<?=site_url('item/in/insert');?>';
            }
        }
      });

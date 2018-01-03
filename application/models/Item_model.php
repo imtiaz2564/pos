@@ -110,14 +110,15 @@ class Item_Model extends CI_Model{
           
     }
     function getLabourCost($id) {
-        $query =  $this->db->where('id', $id)->get('uom');
+        // $query =  $this->db->where('id', $id)->get('uom');
+        $query =  $this->db->where('id', $id)->get('items');
         return $query->row();
-
-    }
+     }
     function getTotal($id){
-        $query =  $this->db->where('id', $id)->get('stock')->row();
-        $uomCost = $this->db->where('id', $query->uom)->get('uom')->row();//$query->uom;
-        return ($uomCost->labourCost *  $query->quantity)+($query->unit_price	*  $query->quantity);
+         $query =  $this->db->where('id', $id)->get('stock')->row();
+        // $uomCost = $this->db->where('id', $query->uom)->get('uom')->row();//$query->uom;
+        // return ($uomCost->labourCost *  $query->quantity)+($query->unit_price	*  $query->quantity);
+        return $query->unit_price*$query->quantity;
     }
     function getSubTotal($id){
         $query =  $this->db->where('journal_id', $id)->get('stock')->row();
@@ -144,9 +145,38 @@ class Item_Model extends CI_Model{
            $data = $this->db->where('journal_id', $salesData->id)->get('stock')->result();
            array_push($total , $data);  
         }
-        // foreach($total as $data){
-
-        // }
         return $total;
+    }
+    function checkPhoneNumber($phone) {
+        $query = $this->db->where('phone', $phone)->get('people');
+        return $query->row();
+    
+    }
+    // function getCustomerBalance($id) {
+    //     $query = $this->db->select('sum(amount) as total')->where('type',0)->where('peopleID',$id)->or_where('name',$id)->or_where('phone',$id)->get('finance');
+    //     return $query->row();
+    //  }   
+function getCustomerBalance($id) {
+    $subTotal = 0;
+    $total = 0;
+    $query = $this->db->select('sum(amount) as total')->where('type',0)->where('peopleID',$id)->or_where('name',$id)->or_where('phone',$id)->get('finance')->row();
+    $openingBalance = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row();
+    $data = $this->db->where('customer_id', $id)->or_where('customer',$id)->or_where('phone',$id)->get('journals')->result();
+    $total = $openingBalance->openingBalance+$query->total;
+    foreach($data as $data) {
+        $stock = $this->db->where('journal_id' , $data->id)->get('stock')->result();
+        foreach($stock as $stock){
+            $subTotal += $stock->quantity*$stock->unit_price;}
+          
+    }
+    return $total - $subTotal; 
+} 
+    function checkBusinessName($businessName) {
+        $query = $this->db->where('businessName', $businessName)->get('people');
+        return $query->row();
+    }
+    function getTotalLabourCost($id){
+        $query =  $this->db->where('id', $id)->get('stock');
+        return $query->row();
     }
 }

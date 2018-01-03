@@ -31,6 +31,7 @@
     <label>Business Name: </label>
     <label style="color:#0000FF" id="businessName"></label>
     </div>
+    <div>
     <label>Customer Email: </label>
     <label style="color:#0000FF" id="email"></label>
     </div>
@@ -54,13 +55,16 @@
     <label>Opening Balance: </label>
     <label style="color:#0000FF" id="openingBalance"></label>
     </div>
+    <div>
+    <label>Current Balance: </label>
+    <label style="color:#0000FF" id="totalBalance"></label>
+    </div>
     <div class="panel-footer">
         <div class="btn-group pull-right">
-            <?=anchor($this->uri->segment(1).'/'.$this->uri->segment(2),'Cancel','class="btn btn-default"');?>
+            <?//=anchor($this->uri->segment(1).'/'.$this->uri->segment(2),'Cancel','class="btn btn-default"');?>
             <a href="#" onclick="$('#customerAccounts').submit();" class="btn btn-primary">Save</a>
         </div>
         <div class="clearfix"></div>
-    </div>
     </div>
     </div>
    <script>
@@ -81,6 +85,7 @@
              area = data["area"];
              district = data["district"];
              openingBalance = data["openingBalance"];
+             totalBalance = data["totalBalance"];
 
              $('input[name=peopleID]').val(customer_id);
              $('input[name=phone]').val(phone);
@@ -94,6 +99,7 @@
              $('#area').html(area);
              $('#district').html(district);
              $('#openingBalance').html(openingBalance);
+             $('#totalBalance').html(totalBalance);
             }
         });
     }
@@ -109,7 +115,7 @@ $('#customerAccounts').submit(function() {
            if( typeof data['error'] !== 'undefined' ){
                $('.error').html(data['error']).slideDown();
            }else{
-               window.location = '<?=site_url($this->uri->segment(1).'/'.$this->uri->segment(2));?>';
+               window.location = '<?=site_url('finance/receives/insert');?>';
            }
        }
      });
