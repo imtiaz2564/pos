@@ -131,10 +131,17 @@ class Item extends CI_Controller {
         $this->load->model('item_model');
         
         if($this->uri->segment(3) == 'insert'){
-            $id = $this->item_model->insertDraft();
-            $this->session->set_userdata('journal_id',$id);
-            redirect('item/in/edit/'.$id);
-        
+            $id = $this->item_model->getUnsavedItem();
+            if($id->id){
+                $this->session->set_userdata('journal_id',$id->id);
+                redirect('item/in/edit/'.$id->id);
+            }
+            else{
+                $id = $this->item_model->insertDraft();
+                $this->session->set_userdata('journal_id',$id);
+                redirect('item/in/edit/'.$id);
+            }
+            
         }elseif($this->uri->segment(3) == 'edit'){
             $this->session->set_userdata('journal_id',$this->uri->segment(4));        
             $this->session->set_userdata('type','0'); // Stock Type: IN
@@ -168,6 +175,7 @@ class Item extends CI_Controller {
 
         $this->crud->set_hidden('type','0'); // Journal Type: IN
         //$this->crud->set_hidden('item_type','1'); // Item Type: Medicine
+        $this->crud->set_hidden('status',1);
         $this->crud->join('supplier_id','people','id','name','people.type=1');
         $this->crud->change_type('description','textarea');
         $this->crud->change_type('date','date');
@@ -183,9 +191,19 @@ class Item extends CI_Controller {
         $this->load->model('item_model');
         
         if($this->uri->segment(3) == 'insert'){
-            $id = $this->item_model->insertDraft();
-            $this->session->set_userdata('journal_id',$id);
-            redirect('item/out/edit/'.$id);
+            // $id = $this->item_model->insertDraft();
+            // $this->session->set_userdata('journal_id',$id);
+            // redirect('item/out/edit/'.$id);
+            $id = $this->item_model->getUnsavedItem();
+            if($id->id){
+                $this->session->set_userdata('journal_id',$id->id);
+                redirect('item/out/edit/'.$id->id);
+            }
+            else{
+                $id = $this->item_model->insertDraft();
+                $this->session->set_userdata('journal_id',$id);
+                redirect('item/out/edit/'.$id);
+            }
         
         }elseif($this->uri->segment(3) == 'edit'){
             $this->session->set_userdata('journal_id',$this->uri->segment(4));        
@@ -215,7 +233,7 @@ class Item extends CI_Controller {
         //$this->crud->extra_fields($this, ['getJournalOutTotal'=>'Total']);
         $this->crud->set_rule('date','required');
         $this->crud->set_hidden('type','1'); // Journal Type: OUT
-        
+        $this->crud->set_hidden('status',1);
         //$this->crud->set_hidden('item_type','1'); // Item Type: Medicine
 
         $this->crud->change_type('description','textarea');
@@ -248,19 +266,25 @@ class Item extends CI_Controller {
             
         ]);
         // $this->crud->change_type('date','date');
-        
-         $this->crud->display_fields(['Item Name','Unit Price','Quantity','Total','Labour Cost']);
-        //$this->crud->join('item_id','items','id','code','type=0'); // Medicine only
+        if( $this->session->userdata('type') == 1 ) {
+         $this->crud->display_fields(['Item Name','Unit Price','Quantity','Discount','Total','Labour Cost']);
+        }
+        else{
+            $this->crud->display_fields(['Item Name','Unit Price','Quantity','Total','Labour Cost']);
+
+        }
+         //$this->crud->join('item_id','items','id','code','type=0'); // Medicine only
         
         $this->crud->join('item_name','items','id','name','type=1'); // Medicine only
         //$this->crud->join('uom','uom','id','uom');
         //!important    
         $this->crud->where(['journal_id='.$id]);
-        $this->crud->extra_fields($this,['getTotal'=>'Total' , 'getTotalLabourCost'=>'Labour Cost']);
+        $this->crud->extra_fields($this,['getDiscount'=>'Discount','getTotal'=>'Total' , 'getTotalLabourCost'=>'Labour Cost']);
         //$this->crud->order(['2','0','1','3','4']); // don't forget, we have a hidden field
         // $this->crud->order(['4','0','5','1','2','3','6','7']);
         $this->crud->order(['2','4','0','1','3','5']);
         $this->crud->set_hidden('journal_id',$id);
+        
         $this->crud->set_hidden('type',$this->session->userdata('type')); // Stock type. 0: in, 1: out
         $this->crud->set_hidden('date',date('Y-m-d'));
         // $this->crud->display_fields(['Item Name','Item Code','Unit']);
@@ -317,7 +341,7 @@ class Item extends CI_Controller {
         $data['totalBalance'] = $balance;
         echo json_encode($data);
     }
-    function getSupplierData($cusid){
+    function getSupplierData($cusid) {
         $this->load->model('item_model');
         $data = [];
         $result = $this->item_model->getSupplierData($cusid);
@@ -333,15 +357,23 @@ class Item extends CI_Controller {
         $data['openingBalance'] = $result->openingBalance;
         echo json_encode($data);
     }
-    function getUnitPrice($item){
+    function getUnitPrice($item) {
         $this->load->model('item_model');
         $data = [];
         $result = $this->item_model->getUnitPrice($item);
         $data['mrp'] = $result->mrp;
+        $data['discount'] = $result->discount;
+        $data['labourCost'] = $result->labourCost;
         echo json_encode($data);
     }
-    function getTotalLabourCost($id){
+    function getTotalLabourCost($id) {
+        $this->load->model('item_model');
         $query = $this->item_model->getTotalLabourCost($id);
         return $query->labourCost; 
+    }
+    function getDiscount($id) {
+        $this->load->model('item_model');
+        $query = $this->item_model->getDiscount($id);
+        return $query->discount;
     } 
 }

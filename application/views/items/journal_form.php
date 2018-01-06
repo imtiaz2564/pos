@@ -65,6 +65,17 @@
         <label>Total Discount: </label>
         <label><input type="text" name="totalDiscount" value="" class="form-control" placeholder="Total Discount"></label>
     </div>
+    <!-- <div class="form-group" style='float: right;'>
+        <label>Delivery Type: </label>
+        <label><select></select></label>
+    </div> -->
+    <div class="form-group" style='float: right;'>
+    <label>Delivery Type: </label> 
+    <select>
+    <option value="Track">Track</option>
+    <option value="Thela">Thela</option>
+  </select>
+  </div>
     <? } ?>
     <!-- <div class="form-group" style='float: right;'>
         <label>Grand Total: </label>
@@ -84,6 +95,7 @@
 <script>
 $.ajaxSetup({ cache: false });
 $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
+
 $('input[name=customer_id],input[name=phone],input[name=customer]').keypress(function(e) {
     if(e.which == 13) {
         $.ajax({
@@ -139,8 +151,9 @@ $('#formJournal').submit(function() {
            }else{
             <? if( $this->uri->segment(2) == 'out' ) { ?>
                window.location = '<?=site_url('item/out/insert');?>';
-            <? } ?>   
+            <? } else if($this->uri->segment(2) == 'in') {?>   
             window.location = '<?=site_url('item/in/insert');?>';
+            <? } ?>
            }
        }
      });

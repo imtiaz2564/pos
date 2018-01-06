@@ -175,8 +175,16 @@ function getCustomerBalance($id) {
         $query = $this->db->where('businessName', $businessName)->get('people');
         return $query->row();
     }
-    function getTotalLabourCost($id){
+    function getTotalLabourCost($id) {
         $query =  $this->db->where('id', $id)->get('stock');
         return $query->row();
     }
+    function getUnsavedItem() {
+        $query =  $this->db->where('status',0)->get('journals');
+        return $query->row();  
+    }
+    function getDiscount($id) {
+        $query =  $this->db->where('id',$id)->get('stock');
+        return $query->row();
+    } 
 }
