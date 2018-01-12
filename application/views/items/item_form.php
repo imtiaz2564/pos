@@ -14,7 +14,7 @@
         <td><input type="text" name="discount" value="" class="form-control" placeholder="Discount"></td>
         <? } ?>
         <td><input type="text" name="total" value="" class="form-control" placeholder="total"></td>
-        <td><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost"></td>
+        <!-- <td><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost"></td> -->
         </tr>
         
     </table>
@@ -36,7 +36,7 @@ initialize();
                 mrp = parseInt(data["mrp"]);
                 $('input[name=unit_price]').val(mrp);
                 discount = parseInt(data["discount"]);
-                labourCost = parseInt(data["labourCost"]);
+            //    labourCost = parseInt(data["labourCost"]);
             }
         });  
         });
@@ -56,11 +56,11 @@ initialize();
         var quantity = $('input[name=quantity]').val();
        
         var total = mrp * quantity;
-        var cost = labourCost * quantity;
+        //var cost = labourCost * quantity;
         var dis = discount * quantity;
         
         $('input[name=total]').val(total);
-        $('input[name=labourCost]').val(cost);
+       // $('input[name=labourCost]').val(cost);
         $('input[name=discount]').val(dis);
     });
 
@@ -98,7 +98,7 @@ function clearFields(){
     $('input[name=total]').val(' ');
     $('input[name=item_name]').val(' ');
     $('input[name=uom]').val(' ');
-    $('input[name=labourCost]').val(' ');
+   // $('input[name=labourCost]').val(' ');
     $('input[name=discount]').val(' ');
 }    
 </script>

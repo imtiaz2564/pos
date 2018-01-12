@@ -43,7 +43,7 @@
                 <ul class="nav nav-second-level">
                     <li><a href="<?=site_url('item/index')?>">Items List</a></li>
                     <li><a href="<?=site_url('item/category')?>">Category List</a></li>
-                    <li><a href="<?=site_url('master/sales')?>">Sale Price Revision</a></li>
+                    <!-- <li><a href="<?//=site_url('master/sales')?>">Sale Price Revision</a></li> -->
 <!--                    <li><a href="<?//=site_url('raw/index')?>">Raw Materials</a></li>-->
                     <li><a href="<?=site_url('master/suppliers')?>">Suppliers List</a></li>
                     <li><a href="<?=site_url('master/customers')?>">Customers List</a></li>
@@ -52,7 +52,7 @@
             <li>
                 <a href="#"><i class="fa fa-wrench fa-fw"></i> Configuration <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <!-- <li><a href="<?//=site_url('config/index')?>">UoM</a></li> -->
+                        <li><a href="<?=site_url('config/index')?>">Delivery Type</a></li>
                         <li><a href="<?=site_url('master/warehouse')?>">Warehouse</a></li>
                     </ul> 
             </li>

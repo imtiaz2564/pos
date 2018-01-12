@@ -16,9 +16,9 @@ class Config extends CI_Controller {
         //$this->output->enable_profiler(TRUE);
     }
 	public function index(){
-        $data['title'] = 'Unit Of Measurement';
+        $data['title'] = 'Delivery Type';
         $this->crud->init('uom',[
-            'uom' => 'Unit Of Measurement',
+            'uom' => 'Delivery Type',
             'labourCost' => 'Labour Cost',
         ]);
         $this->crud->use_modal();

@@ -33,7 +33,9 @@ class Item extends CI_Controller {
  //           'uom'=>'UoM',
 //            'type' => 'Type',
             'parent' => 'Parent',
-            'labourCost' => 'Labour Cost',
+            //'labourCost' => 'Labour Cost',
+            'mrp' => 'MRP',
+            'discount' => 'Discount',
             //'purchase_price' => 'Purchase Price',
             //'mrp' => 'MRP',
             //'pack' => 'Pack',
@@ -268,7 +270,7 @@ class Item extends CI_Controller {
         ]);
         // $this->crud->change_type('date','date');
         if( $this->session->userdata('type') == 1 ) {
-         $this->crud->display_fields(['Item Name','Unit Price','Quantity','Discount','Total','Labour Cost']);
+         $this->crud->display_fields(['Item Name','Unit Price','Quantity','Discount','Total']);
         }
         else{
             $this->crud->display_fields(['Item Name','Unit Price','Quantity','Total','Labour Cost']);

@@ -61,9 +61,14 @@
     <? } ?>
     <div id="transactions"></div>
     <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
+    
     <div class="form-group" style='float: right;'>
         <label>Total Discount: </label>
         <label><input type="text" name="totalDiscount" value="" class="form-control" placeholder="Total Discount"></label>
+    </div>
+    <div class="form-group" style='float: right;'>
+        <label>Labour Cost: </label>
+        <label><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost"></label>
     </div>
     <!-- <div class="form-group" style='float: right;'>
         <label>Delivery Type: </label>
