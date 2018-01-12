@@ -186,5 +186,9 @@ function getCustomerBalance($id) {
     function getDiscount($id) {
         $query =  $this->db->where('id',$id)->get('stock');
         return $query->row();
+    }
+    function getStockData($journalId) {
+        $query =  $this->db->where('journal_id',$journalId)->get('stock');
+        return $query->result();
     } 
 }

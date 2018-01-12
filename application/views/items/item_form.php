@@ -22,6 +22,7 @@
 <?=$form_close?>
 
 <script>
+
 $(function(){
 <?php   // Bind this on show, to trigger it each time a modal shows. ?>
 initialize();
@@ -52,8 +53,6 @@ initialize();
     //     });
     //     });
        $('input[name=unit_price],input[name=quantity]').on('keyup',function(){
-        //var unit_price = $('input[name=unit_price]').val(mrp);
-       
         var quantity = $('input[name=quantity]').val();
        
         var total = mrp * quantity;

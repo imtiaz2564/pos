@@ -76,6 +76,8 @@
     <option value="Thela">Thela</option>
   </select>
   </div>
+
+  
     <? } ?>
     <!-- <div class="form-group" style='float: right;'>
         <label>Grand Total: </label>
@@ -95,6 +97,8 @@
 <script>
 $.ajaxSetup({ cache: false });
 $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
+var journalId = '<?=$this->uri->segment(4)?>';
+$('#result').load('<?=site_url('item/getStockData')?>'+'/'+journalId+'/')
 
 $('input[name=customer_id],input[name=phone],input[name=customer]').keypress(function(e) {
     if(e.which == 13) {
@@ -139,11 +143,21 @@ $('#formJournal').submit(function() {
     customer = $('input[name=customer]').val();
     description = $('input[name=description]').val();
     totalDiscount = $('input[name=totalDiscount]').val();
+    var journalId = '<?=$this->uri->segment(4)?>';
+    // $.ajax({
+    //    type: 'GET',
+    //    url: '<?//=site_url('item/getstockdata')?>'+'/'+journalId+'/',
+    //    success: function(data){
+    //        var win=window.open();
+    //        win.document.write(data)
+    //        win.print();
+    //        win.close();
+    //    }
+    //  });
     $.ajax({
        type: "POST",
        dataType: "json",
        url: $('#formJournal').attr('action'),
-       // data: $('#formJournal').serialize(),
         data:{ date: date, customer_id:customer_id, phone:phone, customer:customer, description:description, totalDiscount:totalDiscount},
        success: function(data){
            if( typeof data['error'] !== 'undefined' ){

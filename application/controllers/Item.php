@@ -132,7 +132,7 @@ class Item extends CI_Controller {
         
         if($this->uri->segment(3) == 'insert'){
             $id = $this->item_model->getUnsavedItem();
-            if($id->id){
+            if(isset($id->id)){
                 $this->session->set_userdata('journal_id',$id->id);
                 redirect('item/in/edit/'.$id->id);
             }
@@ -150,6 +150,7 @@ class Item extends CI_Controller {
         }elseif($this->uri->segment(3) == 'ajax'){ // when we fetch data
 
             $this->crud->ci->db->where('journals.type','0'); // Journal Type: IN
+            $this->crud->ci->db->where('journals.status','1');
             //$this->crud->ci->db->where('item_type','1'); // Item Type: Medicine
         }elseif($this->uri->segment(3) == 'update'){
             /*
@@ -195,7 +196,7 @@ class Item extends CI_Controller {
             // $this->session->set_userdata('journal_id',$id);
             // redirect('item/out/edit/'.$id);
             $id = $this->item_model->getUnsavedItem();
-            if($id->id){
+            if(isset($id->id)){
                 $this->session->set_userdata('journal_id',$id->id);
                 redirect('item/out/edit/'.$id->id);
             }
@@ -375,5 +376,33 @@ class Item extends CI_Controller {
         $this->load->model('item_model');
         $query = $this->item_model->getDiscount($id);
         return $query->discount;
+    } 
+    function getStockData($journalId) {
+        $this->load->model('item_model');
+        $query = $this->item_model->getStockData($journalId);
+        //$data = [];
+         foreach($query as $result) {
+
+         }
+            // $data['unitPrice'] = $result->unit_price;
+            // // print_r($data);
+            // //  echo $data->unitPrice;
+            $this->load->view('SalesInvoice',$result,true);
+      
+    
+
+
+      //die();
+        //  }
+        //  print_r($data);
+        //  die();
+        //  //{
+            // $data['item_name'] = $result->item_name;
+            // $data['journal_id'] = $result->journal_id;
+            // $data['quantity'] = $result->quantity;
+
+      
+
+      
     } 
 }
