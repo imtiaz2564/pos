@@ -170,7 +170,7 @@ $('#formJournal').submit(function() {
     phone = $('input[name=phone]').val();
     customer = $('input[name=customer]').val();
     description = $('input[name=description]').val();
-    //labourCost = $('input[name=labourCost]').val();; 
+    labourCost = $('input[name=labourCost]').val();; 
     totalDiscount = $('input[name=totalDiscount]').val();
 // console.log(labourCost);
     //var journalId = '<?//=$this->uri->segment(4)?>';
