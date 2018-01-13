@@ -74,12 +74,13 @@
         <label>Delivery Type: </label>
         <label><select></select></label>
     </div> -->
-    <div class="form-group" style='float: right;'>
+    <div  class="form-group" style='float: right;'>
     <label>Delivery Type: </label> 
-    <select>
-    <option value="Track">Track</option>
-    <option value="Thela">Thela</option>
-  </select>
+    <select name = "deliveryType" >
+        <option value="0">None</option>
+        <option value="truck">Truck</option>
+        <option value="thela">Thela</option>
+    </select>
   </div>
 
   
@@ -100,10 +101,32 @@
     </div>
 </div>
 <script>
+// $(function(){
+
+var journalId = '<?=$this->uri->segment(4)?>';
+$('select[name=deliveryType]').on('change', function(){
+delivery = $('select[name=deliveryType]').val();
+//console.log(delivery);
+$.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '<?=site_url('item/getdeliverytype')?>'+'/'+$(this).val()+'/'+journalId+'/', 
+            success: function (data) {
+                var deliveryCost = data['deliveryCost'];
+                //console.log(deliveryCost);
+                $('input[name=labourCost]').val(deliveryCost);
+            }
+        });
+
+});
+// });
 $.ajaxSetup({ cache: false });
 $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
 var journalId = '<?=$this->uri->segment(4)?>';
 $('#result').load('<?=site_url('item/getStockData')?>'+'/'+journalId+'/')
+
+
+
 
 $('input[name=customer_id],input[name=phone],input[name=customer]').keypress(function(e) {
     if(e.which == 13) {
@@ -147,8 +170,10 @@ $('#formJournal').submit(function() {
     phone = $('input[name=phone]').val();
     customer = $('input[name=customer]').val();
     description = $('input[name=description]').val();
+    //labourCost = $('input[name=labourCost]').val();; 
     totalDiscount = $('input[name=totalDiscount]').val();
-    var journalId = '<?=$this->uri->segment(4)?>';
+// console.log(labourCost);
+    //var journalId = '<?//=$this->uri->segment(4)?>';
     // $.ajax({
     //    type: 'GET',
     //    url: '<?//=site_url('item/getstockdata')?>'+'/'+journalId+'/',
@@ -163,7 +188,7 @@ $('#formJournal').submit(function() {
        type: "POST",
        dataType: "json",
        url: $('#formJournal').attr('action'),
-        data:{ date: date, customer_id:customer_id, phone:phone, customer:customer, description:description, totalDiscount:totalDiscount},
+        data:{ date: date, customer_id:customer_id, phone:phone, customer:customer, description:description, totalDiscount:totalDiscount, labourCost:labourCost},
        success: function(data){
            if( typeof data['error'] !== 'undefined' ){
                $('.error').html(data['error']).slideDown();

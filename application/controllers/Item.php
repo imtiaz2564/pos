@@ -36,6 +36,8 @@ class Item extends CI_Controller {
             //'labourCost' => 'Labour Cost',
             'mrp' => 'MRP',
             'discount' => 'Discount',
+            'truck' => 'Truck',
+            'thela' => 'Thela',
             //'purchase_price' => 'Purchase Price',
             //'mrp' => 'MRP',
             //'pack' => 'Pack',
@@ -178,7 +180,7 @@ class Item extends CI_Controller {
 
         $this->crud->set_hidden('type','0'); // Journal Type: IN
         //$this->crud->set_hidden('item_type','1'); // Item Type: Medicine
-        $this->crud->set_hidden('status',1);
+        $this->crud->set_hidden('status','1');
         $this->crud->join('supplier_id','people','id','name','people.type=1');
         $this->crud->change_type('description','textarea');
         $this->crud->change_type('date','date');
@@ -236,7 +238,7 @@ class Item extends CI_Controller {
         //$this->crud->extra_fields($this, ['getJournalOutTotal'=>'Total']);
         $this->crud->set_rule('date','required');
         $this->crud->set_hidden('type','1'); // Journal Type: OUT
-        $this->crud->set_hidden('status',1);
+        $this->crud->set_hidden('status','1');
         //$this->crud->set_hidden('item_type','1'); // Item Type: Medicine
 
         $this->crud->change_type('description','textarea');
@@ -245,7 +247,8 @@ class Item extends CI_Controller {
         $this->crud->form_extra('id="formJournal"');
         $data = [
             'title' => 'Sales Register',
-        ];    
+        ];
+        $data['deliveryType'] = $this->item_model->getDeliveryType();    
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }
@@ -406,5 +409,13 @@ class Item extends CI_Controller {
       
 
       
+    }
+    function getDeliveryType($deliveryType,$journalId){
+        $this->load->model('item_model');
+        $query = $this->item_model->getDeliveryCost($deliveryType,$journalId);
+        //foreach($query as $data)
+        //print_r($data);
+        $data['deliveryCost'] = $query->deliveryCost;
+        echo json_encode($data);
     } 
 }

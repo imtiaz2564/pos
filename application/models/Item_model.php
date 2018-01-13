@@ -190,5 +190,22 @@ function getCustomerBalance($id) {
     function getStockData($journalId) {
         $query =  $this->db->where('journal_id',$journalId)->get('stock');
         return $query->result();
+    }
+    function getDeliveryType(){
+        $query =  $this->db->get('uom');
+        return $query->result();
+    }
+    function getDeliveryCost($deliveryType,$journalId){
+        //$deliveryType = $deliveryType =='truck':'thela';
+    //    echo $deliveryType;
+    //    echo $journalId;
+        $query =  $this->db->select('sum((quantity*items.'.$deliveryType.')) as deliveryCost')
+        ->join('items','items.id=item_name','left')
+        ->where('journal_id',$journalId)->get('stock')->row();
+        return $query; 
+        // foreach($query as )
+        // $total = 
+        ///print_r($query);
+
     } 
 }
