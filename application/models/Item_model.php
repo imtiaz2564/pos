@@ -212,7 +212,7 @@ function getCustomerBalance($id) {
     function getRemainingBySupplier($id){
         //select customer , items.name , item_name,sum(quantity) as quantity from  stock left join items on stock.item_name = items.id left join journals ON stock.journal_id = journals.id where stock.type =0 group by stock.item_name
         $query =  $this->db->select('journals.customer as customerName, items.name ,sum(stock.quantity) as totalquantity')
-        ->join('items','items.id=stock.item_name','left')->join('journals','stock.journal_id = journals.id','left')
+        ->join('items','items.id=stock.item_name','left')->join('journals','journals.id = stock.journal_id','left')
         ->where('stock.type',0)->where('stock.item_name',$id)->where('journals.type',0)->group_by('stock.item_name')->get('stock');
         return $query->row();
     } 
