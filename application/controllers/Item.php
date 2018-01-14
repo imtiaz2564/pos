@@ -454,7 +454,8 @@ class Item extends CI_Controller {
         $this->load->model('item_model');
         $query = $this->item_model->getRemainingBySupplier($id);
         //foreach($query as $data){
-            return $query->totalquantity;
+            return 0;
+            //return $query->totalquantity;
         //} 
 
     }
