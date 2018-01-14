@@ -59,21 +59,56 @@
     <label style="color:#0000FF" id="currentBalance"></label>
     </div>
     <? } ?>
-    <div id="transactions"></div>
-    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
-    
-    <div class="form-group" style='float: right;'>
-        <label>Total Discount: </label>
-        <label><input type="text" name="totalDiscount" value="" class="form-control" placeholder="Total Discount"></label>
+    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
+    <div><h1>Supplier Info</h1></div>
+    <div>
+    <label>Supplier Name: </label>
+    <label style="color:#0000FF" id="supName"></label>
     </div>
+    <div>
+    <div>
+    <label>Business Name: </label>
+    <label style="color:#0000FF" id="supBusinessName"></label>
+    </div>
+    <label>Supplier Email: </label>
+    <label style="color:#0000FF" id="supEmail"></label>
+    </div>
+    <div>
+    <label>Address: </label>
+    <label style="color:#0000FF" id="supAddress"></label>
+    </div>
+    <div>
+    <label>Business Address: </label>
+    <label style="color:#0000FF" id="supBusinessAddress"></label>
+    </div>
+    <div>
+    <label>Area: </label>
+    <label style="color:#0000FF" id="supArea"></label>
+    </div>
+    <div>
+    <label>District: </label>
+    <label style="color:#0000FF" id="supDistrict"></label>
+    </div>
+    <div>
+    <label>Opening Balance: </label>
+    <label style="color:#0000FF" id="supOpeningBalance"></label>
+    <div>
+    <label>Current Balance: </label>
+    <label style="color:#0000FF" id="supCurrentBalance"></label>
+    </div>
+    <? } ?>
+    <div id="transactions"></div>
     <div class="form-group" style='float: right;'>
         <label>Labour Cost: </label>
         <label><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost"></label>
     </div>
-    <!-- <div class="form-group" style='float: right;'>
-        <label>Delivery Type: </label>
-        <label><select></select></label>
-    </div> -->
+    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
+        <div class="form-group" style='float: right;'>
+        <label>Transport Cost: </label>
+        <label><input type="text" name="transportCost" value="" class="form-control" placeholder="Transport Cost"></label>
+    </div>
+    <?}?>
+    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
     <div  class="form-group" style='float: right;'>
     <label>Delivery Type: </label> 
     <select name = "deliveryType" >
@@ -82,6 +117,15 @@
         <option value="thela">Thela</option>
     </select>
   </div>
+    <div class="form-group" style='float: right;'>
+        <label>Total Discount: </label>
+        <label><input type="text" name="totalDiscount" value="" class="form-control" placeholder="Total Discount"></label>
+    </div>
+    <!-- <div class="form-group" style='float: right;'>
+        <label>Delivery Type: </label>
+        <label><select></select></label>
+    </div> -->
+   
 
   
     <? } ?>
@@ -113,7 +157,6 @@ $.ajax({
             url: '<?=site_url('item/getdeliverytype')?>'+'/'+$(this).val()+'/'+journalId+'/', 
             success: function (data) {
                 var deliveryCost = data['deliveryCost'];
-                //console.log(deliveryCost);
                 $('input[name=labourCost]').val(deliveryCost);
             }
         });
@@ -125,8 +168,47 @@ $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
 var journalId = '<?=$this->uri->segment(4)?>';
 $('#result').load('<?=site_url('item/getStockData')?>'+'/'+journalId+'/')
 
+<? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
 
+$('input[name=supplier_id],input[name=phone],input[name=customer]').keypress(function(e) {
+    if(e.which == 13) {
+        $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '<?=site_url('item/getSupplierData/')?>'+'/'+$(this).val()+'/', 
+        success: function (data) {
+             phone = data["phone"];
+             name = data["name"];
+             customer_id = data["code"];
+             businessName = data["businessName"];
+             email = data["email"];
+             address = data["address"];
+             businessAddress = data["businessAddress"];
+             area = data["area"];
+             district = data["district"];
+             openingBalance = data["openingBalance"];
+             currentBalance = data["totalBalance"]; 
 
+             $('input[name=supplier_id]').val(customer_id);
+             $('input[name=phone]').val(phone);
+             $('input[name=customer]').val(name);
+
+             $('#supName').html(name);
+             $('#supBusinessName').html(businessName);
+             $('#supEmail').html(email);
+             $('#supAddress').html(address);
+             $('#supBusinessAddress').html(businessAddress);
+             $('#supArea').html(area);
+             $('#supDistrict').html(district);
+             $('#supOpeningBalance').html(openingBalance);
+             $('#supCurrentBalance').html(currentBalance);
+            }
+        });
+    }
+});
+<?}?>
+
+<? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
 
 $('input[name=customer_id],input[name=phone],input[name=customer]').keypress(function(e) {
     if(e.which == 13) {
@@ -164,13 +246,16 @@ $('input[name=customer_id],input[name=phone],input[name=customer]').keypress(fun
         });
     }
 });
+<?}?>
 $('#formJournal').submit(function() {
     date = $('input[name=date]').val();
     customer_id = $('input[name=customer_id]').val();
+    supplier_id = $('input[name=supplier_id]').val();
     phone = $('input[name=phone]').val();
     customer = $('input[name=customer]').val();
     description = $('input[name=description]').val();
-    labourCost = $('input[name=labourCost]').val();; 
+    labourCost = $('input[name=labourCost]').val();
+    transportCost = $('input[name=transportCost]').val(); 
     totalDiscount = $('input[name=totalDiscount]').val();
 // console.log(labourCost);
     //var journalId = '<?//=$this->uri->segment(4)?>';
@@ -188,7 +273,7 @@ $('#formJournal').submit(function() {
        type: "POST",
        dataType: "json",
        url: $('#formJournal').attr('action'),
-        data:{ date: date, customer_id:customer_id, phone:phone, customer:customer, description:description, totalDiscount:totalDiscount, labourCost:labourCost},
+        data:{ date: date, customer_id:customer_id, supplier_id:supplier_id, phone:phone, customer:customer, description:description, totalDiscount:totalDiscount, labourCost:labourCost, transportCost:transportCost},
        success: function(data){
            if( typeof data['error'] !== 'undefined' ){
                $('.error').html(data['error']).slideDown();
@@ -196,7 +281,7 @@ $('#formJournal').submit(function() {
             <? if( $this->uri->segment(2) == 'out' ) { ?>
                window.location = '<?=site_url('item/out/insert');?>';
             <? } else if($this->uri->segment(2) == 'in') {?>   
-            window.location = '<?=site_url('item/in/insert');?>';
+            window.location = '<?=site_url('item/in');?>';
             <? } ?>
            }
        }

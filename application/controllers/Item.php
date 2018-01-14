@@ -36,8 +36,8 @@ class Item extends CI_Controller {
             //'labourCost' => 'Labour Cost',
             'mrp' => 'MRP',
             'discount' => 'Discount',
-            'truck' => 'Truck',
-            'thela' => 'Thela',
+            'truck' => 'Delivery By Truck',
+            'thela' => 'Delivery By Thela',
             //'purchase_price' => 'Purchase Price',
             //'mrp' => 'MRP',
             //'pack' => 'Pack',
@@ -122,11 +122,42 @@ class Item extends CI_Controller {
         
         $this->crud->use_modal();
         
-        //$this->crud->hide_controls();
+        $this->crud->hide_controls();
         
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
-	}
+    }
+    public function stockbysupplier()
+    {
+        $data['title'] = 'Stock By Supplier';
+
+        $this->crud->init('items',[
+            'name' => 'Item Name',
+            //'code' => 'Item Code',
+            //'pack' => 'Pack',
+
+        ]);
+        //$this->crud->display_fields(['Item Code','Item Name','Stock Amount']);
+        $this->crud->set_hidden('type','0'); // 1 for Medicine
+        
+        $this->crud->ci->db->where('type','1'); // 1 for Medicine
+        //$this->crud->extra_buttons($this,['getRemaining'=>'Stock']);
+
+         $this->crud->extra_fields($this,['getRemainingBySupplier'=>'Stock Amount By Supplier','getSupplierName'=>'Supplier']);
+        // $this->crud->extra_buttons([
+        //     ['title'=>'Move Stock', 'href'=>'#','icon'=>''],
+        // ]);
+        $this->crud->set_rule('name','required');
+        //$this->crud->set_search('name');
+        
+        $this->crud->use_modal();
+        
+        $this->crud->hide_controls();
+        
+        $data['content']=$this->crud->run();
+        $this->load->view('template',$data);
+
+    }
     public function getRemaining($id){
         $this->load->model('item_model');
         return $this->item_model->getRemaining($id);
@@ -167,7 +198,9 @@ class Item extends CI_Controller {
         
         $this->crud->init('journals',[
             'date' => 'Posting Date',
-            'supplier_id' => 'Supplier',
+            'supplier_id' => 'Supplier ID',
+            'phone' => 'Phone',
+            'customer' => 'Supplier Name', 
             'description' => 'Description',
         ]);
         //if($this->uri->segment(3) == 'edit'){
@@ -181,7 +214,7 @@ class Item extends CI_Controller {
         $this->crud->set_hidden('type','0'); // Journal Type: IN
         //$this->crud->set_hidden('item_type','1'); // Item Type: Medicine
         $this->crud->set_hidden('status','1');
-        $this->crud->join('supplier_id','people','id','name','people.type=1');
+        //$this->crud->join('customer','people','id','name','people.type=1');
         $this->crud->change_type('description','textarea');
         $this->crud->change_type('date','date');
         $this->crud->form_extra('id="formJournal"');
@@ -276,7 +309,7 @@ class Item extends CI_Controller {
          $this->crud->display_fields(['Item Name','Unit Price','Quantity','Discount','Total']);
         }
         else{
-            $this->crud->display_fields(['Item Name','Unit Price','Quantity','Total','Labour Cost']);
+            $this->crud->display_fields(['Item Name','Unit Price','Quantity','Total']);
 
         }
          //$this->crud->join('item_id','items','id','code','type=0'); // Medicine only
@@ -413,9 +446,22 @@ class Item extends CI_Controller {
     function getDeliveryType($deliveryType,$journalId){
         $this->load->model('item_model');
         $query = $this->item_model->getDeliveryCost($deliveryType,$journalId);
-        //foreach($query as $data)
-        //print_r($data);
         $data['deliveryCost'] = $query->deliveryCost;
         echo json_encode($data);
+    }
+    function getRemainingBySupplier($id) {
+        //return $id;
+        $this->load->model('item_model');
+        $query = $this->item_model->getRemainingBySupplier($id);
+        //foreach($query as $data){
+            return $query->quantity;
+        //} 
+
+    }
+    function getSupplierName($id) {
+       $this->load->model('item_model');
+       $query = $this->item_model->getRemainingBySupplier($id);
+           return $query->customer;
+    
     } 
 }

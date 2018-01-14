@@ -14,7 +14,10 @@
         <td><input type="text" name="discount" value="" class="form-control" placeholder="Discount"></td>
         <? } ?>
         <td><input type="text" name="total" value="" class="form-control" placeholder="total"></td>
-        <!-- <td><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost"></td> -->
+        <?php  if( $this->session->userdata('type') == 0 ) { ?>
+        <!-- <td><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost"></td>
+        <td><input type="text" name="transportCost" value="" class="form-control" placeholder="Transport Cost"></td> -->
+        <? } ?>
         </tr>
         
     </table>

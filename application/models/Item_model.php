@@ -166,7 +166,8 @@ function getCustomerBalance($id) {
     foreach($data as $data) {
         $stock = $this->db->where('journal_id' , $data->id)->get('stock')->result();
         foreach($stock as $stock){
-            $subTotal += $stock->quantity*$stock->unit_price;}
+            $subTotal += $stock->quantity*$stock->unit_price;
+        }
           
     }
     return $total - $subTotal; 
@@ -207,5 +208,12 @@ function getCustomerBalance($id) {
         // $total = 
         ///print_r($query);
 
+    }
+    function getRemainingBySupplier($id){
+        //select customer , items.name , item_name,sum(quantity) as quantity from  stock left join items on stock.item_name = items.id left join journals ON stock.journal_id = journals.id where stock.type =0 group by stock.item_name
+        $query =  $this->db->select('customer , items.name , item_name,sum(quantity) as quantity')
+        ->join('items','items.id=item_name','left')->join('journals','stock.journal_id = journals.id','left')
+        ->where('stock.type',0)->where('stock.item_name',$id)->where('journals.type',0)->group_by('stock.item_name')->get('stock')->row();
+        return $query;
     } 
 }

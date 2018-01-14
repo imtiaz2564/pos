@@ -18,6 +18,7 @@
                     <li><a href="<?=site_url('item/in/')?>">Purchase Register</a></li>
                     <li><a href="<?=site_url('item/out/insert')?>">Sales Register</a></li>
                     <li><a href="<?=site_url('item/stock')?>">Item Stock</a></li>
+                    <li><a href="<?=site_url('item/stockbysupplier')?>">Stock By Supplier</a></li>
                 </ul>
             </li>
 <!--
