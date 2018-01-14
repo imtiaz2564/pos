@@ -461,7 +461,7 @@ class Item extends CI_Controller {
     function getSupplierName($id) {
        $this->load->model('item_model');
        $query = $this->item_model->getRemainingBySupplier($id);
-           return $query->customer;
+           return $query->customerName;
     
     } 
 }
