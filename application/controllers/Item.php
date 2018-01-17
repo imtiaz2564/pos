@@ -129,34 +129,13 @@ class Item extends CI_Controller {
     }
     public function stockbysupplier()
     {
-        $data['title'] = 'Stock By Supplier';
-
-        $this->crud->init('items',[
-            'name' => 'Item Name',
-            //'code' => 'Item Code',
-            //'pack' => 'Pack',
-
-        ]);
-        //$this->crud->display_fields(['Item Code','Item Name','Stock Amount']);
-        $this->crud->set_hidden('type','0'); // 1 for Medicine
-        
-        $this->crud->ci->db->where('type','1'); // 1 for Medicine
-        //$this->crud->extra_buttons($this,['getRemaining'=>'Stock']);
-
-         $this->crud->extra_fields($this,['getRemainingBySupplier'=>'Stock Amount By Supplier','getSupplierName'=>'Supplier']);
-        // $this->crud->extra_buttons([
-        //     ['title'=>'Move Stock', 'href'=>'#','icon'=>''],
-        // ]);
-        $this->crud->set_rule('name','required');
-        //$this->crud->set_search('name');
-        
-        $this->crud->use_modal();
-        
-        $this->crud->hide_controls();
-        
-        $data['content']=$this->crud->run();
+        $data['title'] = ' ';
+        $this->load->model('item_model');
+        $data['supplierInfo'] = $this->item_model->getRemainingBySupplier();
+        $data['content'] = $this->load->view('StockBySupplier.php',[],true);
         $this->load->view('template',$data);
-
+    }
+    function importregister(){
     }
     public function getRemaining($id){
         $this->load->model('item_model');
@@ -198,7 +177,7 @@ class Item extends CI_Controller {
         
         $this->crud->init('journals',[
             'date' => 'Posting Date',
-            'supplier_id' => 'Supplier ID',
+            //'supplier_id' => 'Supplier ID',
             'phone' => 'Phone',
             'customer' => 'Supplier Name', 
             'description' => 'Description',
@@ -256,7 +235,7 @@ class Item extends CI_Controller {
         
         $this->crud->init('journals',[
             'date' => 'Posting Date',
-            'customer_id' => 'Customer ID',
+            //'customer_id' => 'Customer ID',
             'phone' => 'Phone',
             'customer' => 'Customer Name',
             'description' => 'Description',
@@ -367,6 +346,7 @@ class Item extends CI_Controller {
         $result = $this->item_model->getCustomerData($cusid);
         $balance =  $this->item_model->getCustomerBalance($cusid);
      
+        $data['id'] = $result->id;
         $data['name'] = $result->name;
         $data['phone'] = $result->phone;
         $data['code'] = $result->code;
@@ -384,6 +364,7 @@ class Item extends CI_Controller {
         $this->load->model('item_model');
         $data = [];
         $result = $this->item_model->getSupplierData($cusid);
+        $data['id'] = $result->id;
         $data['name'] = $result->name;
         $data['phone'] = $result->phone;
         $data['code'] = $result->code;
@@ -418,29 +399,10 @@ class Item extends CI_Controller {
     function getStockData($journalId) {
         $this->load->model('item_model');
         $query = $this->item_model->getStockData($journalId);
-        //$data = [];
          foreach($query as $result) {
 
          }
-            // $data['unitPrice'] = $result->unit_price;
-            // // print_r($data);
-            // //  echo $data->unitPrice;
-            $this->load->view('SalesInvoice',$result,true);
-      
-    
-
-
-      //die();
-        //  }
-        //  print_r($data);
-        //  die();
-        //  //{
-            // $data['item_name'] = $result->item_name;
-            // $data['journal_id'] = $result->journal_id;
-            // $data['quantity'] = $result->quantity;
-
-      
-
+        $this->load->view('SalesInvoice',$result,true);
       
     }
     function getDeliveryType($deliveryType,$journalId){
@@ -450,21 +412,15 @@ class Item extends CI_Controller {
         echo json_encode($data);
     }
     function getRemainingBySupplier($id) {
-        //return $id;
         $this->load->model('item_model');
         $query = $this->item_model->getRemainingBySupplier($id);
+        return $query->quantity;
         
-        //return 0;
-           //
-     return $query->totalquantity;
-        //} 
-
     }
     function getSupplierName($id) {
        $this->load->model('item_model');
        $query = $this->item_model->getRemainingBySupplier($id);
-       //return 0;    
-       return $query->customerName;
+       return $query->customer;
     
     } 
 }

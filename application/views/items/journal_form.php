@@ -5,14 +5,30 @@
         <i class="fa fa-bar-chart-o"></i>
     </div>
     <div class="panel-body">
-        <?=$form_open?>
         <div class="row">
-                <?php foreach($inputs as $input){
-                    ?><div class="col-md-6"><?php
-                        if($input['label'] !=''){?>
-                        <div class="form-group">
-                            <label><?=$input['label']?> :</label>
-                            <?=$input['html']?>
+            <?$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>   
+            <div class="col-md-6">                        
+                <div class="form-group">
+                    <label>Customer ID :</label>
+                    <input type="text" name="idCustomer" value="" class="form-control" placeholder="Customer ID" />
+                </div>
+            </div>
+            <? } ?>
+            <?$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>   
+            <div class="col-md-6">                        
+                <div class="form-group">
+                    <label>Supplier ID :</label>
+                    <input type="text" name="idSupplier" value="" class="form-control" placeholder="Supplierr ID" />
+                </div>
+            </div>
+        <? } ?>   
+        <?=$form_open?>
+        <?php foreach($inputs as $input) { ?>
+            <div class="col-md-6"><?php
+                if($input['label'] !=''){?>
+                    <div class="form-group">
+                        <label><?=$input['label']?> :</label>
+                        <?=$input['html']?>
                         </div>
                     <?php }else{
                             echo $input['html'];
@@ -24,115 +40,117 @@
     <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
     <div><h1>Customer Info</h1></div>
     <div>
-    <label>Customer Name: </label>
-    <label style="color:#0000FF" id="cusName"></label>
+        <label>Customer Name: </label>
+        <label style="color:#0000FF" id="cusName"></label>
     </div>
     <div>
     <div>
-    <label>Business Name: </label>
-    <label style="color:#0000FF" id="businessName"></label>
+        <label>Business Name: </label>
+        <label style="color:#0000FF" id="businessName"></label>
     </div>
-    <label>Customer Email: </label>
-    <label style="color:#0000FF" id="email"></label>
-    </div>
-    <div>
-    <label>Address: </label>
-    <label style="color:#0000FF" id="address"></label>
+        <label>Customer Email: </label>
+        <label style="color:#0000FF" id="email"></label>
     </div>
     <div>
-    <label>Business Address: </label>
-    <label style="color:#0000FF" id="businessAddress"></label>
+        <label>Address: </label>
+        <label style="color:#0000FF" id="address"></label>
     </div>
     <div>
-    <label>Area: </label>
-    <label style="color:#0000FF" id="area"></label>
+        <label>Business Address: </label>
+        <label style="color:#0000FF" id="businessAddress"></label>
     </div>
     <div>
-    <label>District: </label>
-    <label style="color:#0000FF" id="district"></label>
+        <label>Area: </label>
+        <label style="color:#0000FF" id="area"></label>
     </div>
     <div>
-    <label>Opening Balance: </label>
-    <label style="color:#0000FF" id="openingBalance"></label>
-    <div>
-    <label>Current Balance: </label>
-    <label style="color:#0000FF" id="currentBalance"></label>
+        <label>District: </label>
+        <label style="color:#0000FF" id="district"></label>
     </div>
-    <? } ?>
-    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
+    <div>
+        <label>Opening Balance: </label>
+        <label style="color:#0000FF" id="openingBalance"></label>
+    <div>
+        <label>Current Balance: </label>
+        <label style="color:#0000FF" id="currentBalance"></label>
+    </div>
+<? } ?>
+<? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
     <div><h1>Supplier Info</h1></div>
     <div>
-    <label>Supplier Name: </label>
-    <label style="color:#0000FF" id="supName"></label>
+        <label>Supplier Name: </label>
+        <label style="color:#0000FF" id="supName"></label>
     </div>
     <div>
     <div>
-    <label>Business Name: </label>
-    <label style="color:#0000FF" id="supBusinessName"></label>
+        <label>Business Name: </label>
+        <label style="color:#0000FF" id="supBusinessName"></label>
     </div>
-    <label>Supplier Email: </label>
-    <label style="color:#0000FF" id="supEmail"></label>
-    </div>
-    <div>
-    <label>Address: </label>
-    <label style="color:#0000FF" id="supAddress"></label>
+        <label>Supplier Email: </label>
+        <label style="color:#0000FF" id="supEmail"></label>
     </div>
     <div>
-    <label>Business Address: </label>
-    <label style="color:#0000FF" id="supBusinessAddress"></label>
+        <label>Address: </label>
+        <label style="color:#0000FF" id="supAddress"></label>
     </div>
     <div>
-    <label>Area: </label>
-    <label style="color:#0000FF" id="supArea"></label>
+        <label>Business Address: </label>
+        <label style="color:#0000FF" id="supBusinessAddress"></label>
     </div>
     <div>
-    <label>District: </label>
-    <label style="color:#0000FF" id="supDistrict"></label>
+        <label>Area: </label>
+        <label style="color:#0000FF" id="supArea"></label>
     </div>
     <div>
-    <label>Opening Balance: </label>
-    <label style="color:#0000FF" id="supOpeningBalance"></label>
-    <div>
-    <label>Current Balance: </label>
-    <label style="color:#0000FF" id="supCurrentBalance"></label>
+        <label>District: </label>
+        <label style="color:#0000FF" id="supDistrict"></label>
     </div>
-    <? } ?>
+    <div>
+        <label>Opening Balance: </label>
+        <label style="color:#0000FF" id="supOpeningBalance"></label>
+    <div>
+        <label>Current Balance: </label>
+        <label style="color:#0000FF" id="supCurrentBalance"></label>
+    </div>
+<? } ?>
     <div id="transactions"></div>
+    <div class= "row">
     <div class="form-group" style='float: right;'>
-        <label>Labour Cost: </label>
-        <label><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost"></label>
+        <label>Grand Total: </label>
+        <label>     </label>
     </div>
+    </div>
+        <div class="form-group" style='float: right;'>
+            <label>Labour Cost: </label>
+            <label><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost"></label>
+        </div>
     <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
         <div class="form-group" style='float: right;'>
-        <label>Transport Cost: </label>
-        <label><input type="text" name="transportCost" value="" class="form-control" placeholder="Transport Cost"></label>
-    </div>
+            <label>Transport Cost: </label>
+            <label><input type="text" name="transportCost" value="" class="form-control" placeholder="Transport Cost"></label>
+        </div>
     <?}?>
     <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
     <div  class="form-group" style='float: right;'>
-    <label>Delivery Type: </label> 
-    <select name = "deliveryType" >
-        <option value="0">None</option>
-        <option value="truck">Truck</option>
-        <option value="thela">Thela</option>
-    </select>
-  </div>
+        <label>Delivery Type: </label> 
+        <select name = "deliveryType" >
+            <option value="0">None</option>
+            <option value="truck">Truck</option>
+            <option value="thela">Thela</option>
+        </select>
+    </div>
     <div class="form-group" style='float: right;'>
         <label>Total Discount: </label>
         <label><input type="text" name="totalDiscount" value="" class="form-control" placeholder="Total Discount"></label>
     </div>
-    <!-- <div class="form-group" style='float: right;'>
-        <label>Delivery Type: </label>
-        <label><select></select></label>
-    </div> -->
-   
-
-  
     <? } ?>
-    <!-- <div class="form-group" style='float: right;'>
-        <label>Grand Total: </label>
-        <label></label>
-    </div> -->
+    <div>
+        <input id="cusId" name="cus" type="hidden" value="">
+    </div>
+    <div>
+        <input id="supId" name="sup" type="hidden" value="">
+    </div>
+   
     </div>
     </div>
     <div class="panel-footer">
@@ -145,12 +163,9 @@
     </div>
 </div>
 <script>
-// $(function(){
-
 var journalId = '<?=$this->uri->segment(4)?>';
 $('select[name=deliveryType]').on('change', function(){
 delivery = $('select[name=deliveryType]').val();
-//console.log(delivery);
 $.ajax({
             type: 'GET',
             dataType: 'json',
@@ -162,21 +177,20 @@ $.ajax({
         });
 
 });
-// });
 $.ajaxSetup({ cache: false });
 $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
 var journalId = '<?=$this->uri->segment(4)?>';
 $('#result').load('<?=site_url('item/getStockData')?>'+'/'+journalId+'/')
 
 <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
-
-$('input[name=supplier_id],input[name=phone],input[name=customer]').keypress(function(e) {
+$('input[name=idSupplier],input[name=phone],input[name=customer]').keypress(function(e) {
     if(e.which == 13) {
         $.ajax({
         type: 'POST',
         dataType: 'json',
         url: '<?=site_url('item/getSupplierData/')?>'+'/'+$(this).val()+'/', 
         success: function (data) {
+            supplierID = data["id"];
              phone = data["phone"];
              name = data["name"];
              customer_id = data["code"];
@@ -189,10 +203,11 @@ $('input[name=supplier_id],input[name=phone],input[name=customer]').keypress(fun
              openingBalance = data["openingBalance"];
              currentBalance = data["totalBalance"]; 
 
-             $('input[name=supplier_id]').val(customer_id);
+             $('input[name=idSupplier]').val(customer_id);
              $('input[name=phone]').val(phone);
              $('input[name=customer]').val(name);
 
+             $('#supId').val(supplierID);
              $('#supName').html(name);
              $('#supBusinessName').html(businessName);
              $('#supEmail').html(email);
@@ -209,17 +224,18 @@ $('input[name=supplier_id],input[name=phone],input[name=customer]').keypress(fun
 <?}?>
 
 <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
-
-$('input[name=customer_id],input[name=phone],input[name=customer]').keypress(function(e) {
+$('input[name=idCustomer],input[name=phone],input[name=customer]').keypress(function(e) {
+   
     if(e.which == 13) {
         $.ajax({
         type: 'POST',
         dataType: 'json',
         url: '<?=site_url('item/getCustomerData/')?>'+'/'+$(this).val()+'/', 
         success: function (data) {
+            customerID = data["id"]; 
              phone = data["phone"];
              name = data["name"];
-             customer_id = data["code"];
+             customer_code = data["code"];
              businessName = data["businessName"];
              email = data["email"];
              address = data["address"];
@@ -228,11 +244,11 @@ $('input[name=customer_id],input[name=phone],input[name=customer]').keypress(fun
              district = data["district"];
              openingBalance = data["openingBalance"];
              currentBalance = data["totalBalance"]; 
-
-             $('input[name=customer_id]').val(customer_id);
+             $('input[name=idCustomer]').val(customer_code);
              $('input[name=phone]').val(phone);
              $('input[name=customer]').val(name);
-
+             
+             $('#cusId').val(customerID);
              $('#cusName').html(name);
              $('#businessName').html(businessName);
              $('#email').html(email);
@@ -248,9 +264,32 @@ $('input[name=customer_id],input[name=phone],input[name=customer]').keypress(fun
 });
 <?}?>
 $('#formJournal').submit(function() {
+    <? //$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
+        // alert($('input[name=idCustomer]').val());
+        // if(isEmpty($('input[name=idCustomer]').val())){
+        //     alert('Enter customer ID');
+        //     return false;
+        // }       
+    <? //} ?>
+    <? //$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
+        
+        // if($('input[name=supplier_id]').val() == null ){
+        //     alert('Enter Supplier ID');
+        //     return false;
+        // }
+            
+        
+    <? //} ?>
+    cus_ID = parseInt($('#cusId').val());
+    sup_ID = parseInt($('#supId').val());
+    if(isNaN(sup_ID)){
+        sup_ID = 0;
+    }
+    if(isNaN(cus_ID)){
+        cus_ID  = 0;
+    }
     date = $('input[name=date]').val();
-    customer_id = $('input[name=customer_id]').val();
-    supplier_id = $('input[name=supplier_id]').val();
+    //supplier_id = $('input[name=supplier_id]').val();
     phone = $('input[name=phone]').val();
     customer = $('input[name=customer]').val();
     description = $('input[name=description]').val();
@@ -269,11 +308,13 @@ $('#formJournal').submit(function() {
     //        win.close();
     //    }
     //  });
+    // $.ajaxSetup({ cache: false });
+
     $.ajax({
        type: "POST",
        dataType: "json",
        url: $('#formJournal').attr('action'),
-        data:{ date: date, customer_id:customer_id, supplier_id:supplier_id, phone:phone, customer:customer, description:description, totalDiscount:totalDiscount, labourCost:labourCost, transportCost:transportCost},
+        data:{ date: date, customer_id:cus_ID, supplier_id:sup_ID, phone:phone, customer:customer, description:description, totalDiscount:totalDiscount, labourCost:labourCost, transportCost:transportCost},
        success: function(data){
            if( typeof data['error'] !== 'undefined' ){
                $('.error').html(data['error']).slideDown();
@@ -281,7 +322,7 @@ $('#formJournal').submit(function() {
             <? if( $this->uri->segment(2) == 'out' ) { ?>
                window.location = '<?=site_url('item/out/insert');?>';
             <? } else if($this->uri->segment(2) == 'in') {?>   
-            window.location = '<?=site_url('item/in');?>';
+            window.location = '<?=site_url('item/in/insert');?>';
             <? } ?>
            }
        }

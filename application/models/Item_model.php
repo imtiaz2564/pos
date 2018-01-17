@@ -209,11 +209,26 @@ function getCustomerBalance($id) {
         ///print_r($query);
 
     }
-    function getRemainingBySupplier($id){
+    function getRemainingBySupplier(){
         //select customer , items.name , item_name,sum(quantity) as quantity from  stock left join items on stock.item_name = items.id left join journals ON stock.journal_id = journals.id where stock.type =0 group by stock.item_name
-        $query =  $this->db->select('journals.customer as customerName, items.name ,sum(stock.quantity) as totalquantity')
-        ->join('items','items.id=stock.item_name','left')->join('journals','journals.id = stock.journal_id','left')
-        ->where('stock.type',0)->where('stock.item_name',$id)->where('journals.type',0)->group_by('stock.item_name')->get('stock');
-        return $query->row();
+//         select customer, name ,sum(stock.quantity) as quantity from journals  
+// left join stock on journals.id = stock.journal_id 
+// left join items on stock.item_name = items.id
+// group by customer, name
+        // $query =  $this->db->select('journals.customer as customerName, items.name ,sum(stock.quantity) as totalquantity')
+        // ->join('items','items.id=stock.item_name','left')->join('journals','journals.id = stock.journal_id','left')
+        // ->where('stock.type',0)->where('stock.item_name',$id)->where('journals.type',0)->group_by('stock.item_name')->get('stock');
+        
+//         select customer, name ,sum(stock.quantity) as quantity from journals  
+// left join stock on journals.id = stock.journal_id 
+// left join items on stock.item_name = items.id
+// where stock.item_name = 3 and journals.type = 0 and stock.type = 0
+// group by customer
+        $query =  $this->db->select('journals.customer, items.name ,sum(stock.quantity) as quantity')
+        ->join('stock','journals.id = stock.journal_id','left')->join('items','stock.item_name = items.id','left')
+        ->where('stock.type',0)->where('journals.type',0)->group_by('journals.customer')->group_by('items.name')->get('journals');
+        
+        
+        return $query->result_array();
     } 
 }
