@@ -23,7 +23,10 @@
     </table>
     
 <?=$form_close?>
-
+<!-- <div class="form-group" style='float: right;'>
+        <label>Grand Total: </label>
+        <label>     </label>
+    </div> -->
 <script>
 
 $(function(){

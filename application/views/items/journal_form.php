@@ -12,16 +12,30 @@
                     <label>Customer ID :</label>
                     <input type="text" name="idCustomer" value="" class="form-control" placeholder="Customer ID" />
                 </div>
+                <div class="form-group">
+                    <label>Customer Name :</label>
+                        <input type="text" name="customer" value="" class="form-control" placeholder="Customer Name">
+                </div>
             </div>
             <? } ?>
             <?$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>   
             <div class="col-md-6">                        
                 <div class="form-group">
                     <label>Supplier ID :</label>
-                    <input type="text" name="idSupplier" value="" class="form-control" placeholder="Supplierr ID" />
+                    <input type="text" name="idSupplier" value="" class="form-control" placeholder="Supplier ID" />
+                </div>
+                <div class="form-group">
+                    <label>Supplier Name :</label>
+                        <input type="text" name="customer" value="" class="form-control" placeholder="Supplier Name">
                 </div>
             </div>
-        <? } ?>   
+        <? } ?>
+        <div class="col-md-6">
+        <div class="form-group">
+            <label>Phone :</label>
+            <input type="text" name="phone" value="" class="form-control" placeholder="Phone">
+        </div>
+        </div>
         <?=$form_open?>
         <?php foreach($inputs as $input) { ?>
             <div class="col-md-6"><?php
@@ -115,10 +129,10 @@
 <? } ?>
     <div id="transactions"></div>
     <div class= "row">
-    <div class="form-group" style='float: right;'>
+    <!-- <div class="form-group" style='float: right;'>
         <label>Grand Total: </label>
         <label>     </label>
-    </div>
+    </div> -->
     </div>
         <div class="form-group" style='float: right;'>
             <label>Labour Cost: </label>
@@ -179,8 +193,8 @@ $.ajax({
 });
 $.ajaxSetup({ cache: false });
 $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
-var journalId = '<?=$this->uri->segment(4)?>';
-$('#result').load('<?=site_url('item/getStockData')?>'+'/'+journalId+'/')
+//var journalId = '<?//=$this->uri->segment(4)?>';
+//$('#result').load('<?//=site_url('item/getStockData')?>'+'/'+journalId+'/')
 
 <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
 $('input[name=idSupplier],input[name=phone],input[name=customer]').keypress(function(e) {
@@ -289,39 +303,40 @@ $('#formJournal').submit(function() {
         cus_ID  = 0;
     }
     date = $('input[name=date]').val();
-    //supplier_id = $('input[name=supplier_id]').val();
     phone = $('input[name=phone]').val();
     customer = $('input[name=customer]').val();
     description = $('input[name=description]').val();
     labourCost = $('input[name=labourCost]').val();
     transportCost = $('input[name=transportCost]').val(); 
     totalDiscount = $('input[name=totalDiscount]').val();
-// console.log(labourCost);
-    //var journalId = '<?//=$this->uri->segment(4)?>';
-    // $.ajax({
-    //    type: 'GET',
-    //    url: '<?//=site_url('item/getstockdata')?>'+'/'+journalId+'/',
-    //    success: function(data){
-    //        var win=window.open();
-    //        win.document.write(data)
-    //        win.print();
-    //        win.close();
-    //    }
-    //  });
-    // $.ajaxSetup({ cache: false });
 
+<? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
+    var journalId = '<?=$this->uri->segment(4)?>';
     $.ajax({
-       type: "POST",
-       dataType: "json",
-       url: $('#formJournal').attr('action'),
-        data:{ date: date, customer_id:cus_ID, supplier_id:sup_ID, phone:phone, customer:customer, description:description, totalDiscount:totalDiscount, labourCost:labourCost, transportCost:transportCost},
-       success: function(data){
-           if( typeof data['error'] !== 'undefined' ){
+       type: 'POST',
+       url: '<?=site_url('item/getstockdata')?>'+'/'+journalId+'/'+labourCost+'/'+totalDiscount+'/',
+       success: function(data) {
+           var win=window.open();
+           win.document.write(data)
+           win.print();
+           win.close();
+       }
+     });
+    <? } ?>  
+    
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: $('#formJournal').attr('action'),
+         data:{ date: date, customer_id:cus_ID, supplier_id:sup_ID, phone:phone, customer:customer, description:description, totalDiscount:totalDiscount, labourCost:labourCost, transportCost:transportCost},
+        success: function(data){
+            if( typeof data['error'] !== 'undefined' ){
                $('.error').html(data['error']).slideDown();
-           }else{
+            }else{
             <? if( $this->uri->segment(2) == 'out' ) { ?>
-               window.location = '<?=site_url('item/out/insert');?>';
+             window.location = '<?=site_url('item/out/insert');?>';
             <? } else if($this->uri->segment(2) == 'in') {?>   
+            
             window.location = '<?=site_url('item/in/insert');?>';
             <? } ?>
            }

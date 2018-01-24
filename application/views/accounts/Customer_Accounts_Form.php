@@ -7,6 +7,14 @@
     <div class="panel-body">
         <?=$form_open?>
         <div class="row">
+        <? if( $this->uri->segment(2) == 'receives' ) { ?>   
+            <div class="col-md-6">                        
+                <div class="form-group">
+                    <label>Customer ID :</label>
+                    <input type="text" name="peopleID" value="" class="form-control" placeholder="Customer ID" />
+                </div>
+            </div>
+            <? } ?>
                 <?php foreach($inputs as $input){
                     ?><div class="col-md-6"><?php
                         if($input['label'] !=''){?>
@@ -59,6 +67,9 @@
     <label>Current Balance: </label>
     <label style="color:#0000FF" id="totalBalance"></label>
     </div>
+    <div>
+        <input id="pplID" name="pplID" type="hidden" value="">
+    </div>
     <div class="panel-footer">
         <div class="btn-group pull-right">
             <?//=anchor($this->uri->segment(1).'/'.$this->uri->segment(2),'Cancel','class="btn btn-default"');?>
@@ -75,6 +86,7 @@
         dataType: 'json',
         url: '<?=site_url('item/getCustomerData/')?>'+'/'+$(this).val()+'/', 
         success: function (data) {
+             id = data["id"];
              phone = data["phone"];
              name = data["name"];
              customer_id = data["code"];
@@ -90,7 +102,8 @@
              $('input[name=peopleID]').val(customer_id);
              $('input[name=phone]').val(phone);
              $('input[name=name]').val(name);
-
+             
+             $('#pplID').val(id);
              $('#cusName').html(name);
              $('#businessName').html(businessName);
              $('#email').html(email);
@@ -105,19 +118,26 @@
     }
 });
 $('#customerAccounts').submit(function() {
-    
+    name = $('input[name=name]').val();
+    phone = $('input[name=phone]').val();
+    date = $('input[name=date]').val();
+    amount = $('input[name=amount]').val();
+    paymentType = $('input[name=paymentType]').val();
+    description = $('input[name=description]').val(); 
+    ppl_ID = parseInt($('#pplID').val());
     $.ajax({
        type: "POST",
        dataType: "json",
        url: $('#customerAccounts').attr('action'),
-       data: $('#customerAccounts').serialize(),
+       //data: $('#customerAccounts').serialize(),
+       data: {  date:date , amount:amount , paymentType:paymentType , description:description , peopleID:ppl_ID },
        success: function(data){
-           if( typeof data['error'] !== 'undefined' ){
-               $('.error').html(data['error']).slideDown();
-           }else{
-               window.location = '<?=site_url('finance/receives/insert');?>';
-           }
-       }
+        if( typeof data['error'] !== 'undefined' ){
+            $('.error').html(data['error']).slideDown();
+        }else{
+            window.location = '<?=site_url('finance/receives/insert');?>';
+        }
+    }
      });
     return false;
 });

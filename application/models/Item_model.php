@@ -131,7 +131,7 @@ class Item_Model extends CI_Model{
         return $query->row();
     }
     function getSupplierData($id){
-        $query = $this->db->where('type',1)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people');
+         $query = $this->db->where('type',1)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people');
         return $query->row();
     }
     function getUnitPrice($item){
@@ -142,8 +142,9 @@ class Item_Model extends CI_Model{
         $salesData = $this->db->where('customer_id', $customerID)->get('journals')->result();
          $total = [];
         foreach( $salesData as $salesData ) {
-           $data = $this->db->where('journal_id', $salesData->id)->get('stock')->result();
-           array_push($total , $data);  
+           $data = $this->db->where('journal_id', $salesData->id)->get('stock')->result_array();
+           $total[] = $data;
+           //array_push($total , $data);  
         }
         return $total;
     }
@@ -152,26 +153,49 @@ class Item_Model extends CI_Model{
         return $query->row();
     
     }
-    // function getCustomerBalance($id) {
-    //     $query = $this->db->select('sum(amount) as total')->where('type',0)->where('peopleID',$id)->or_where('name',$id)->or_where('phone',$id)->get('finance');
-    //     return $query->row();
-    //  }   
-function getCustomerBalance($id) {
-    $subTotal = 0;
-    $total = 0;
-    $query = $this->db->select('sum(amount) as total')->where('type',0)->where('peopleID',$id)->or_where('name',$id)->or_where('phone',$id)->get('finance')->row();
-    $openingBalance = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row();
-    $data = $this->db->where('customer_id', $id)->or_where('customer',$id)->or_where('phone',$id)->get('journals')->result();
-    $total = $openingBalance->openingBalance+$query->total;
-    foreach($data as $data) {
-        $stock = $this->db->where('journal_id' , $data->id)->get('stock')->result();
-        foreach($stock as $stock){
-            $subTotal += $stock->quantity*$stock->unit_price;
+    function getCustomerBalance($id) {
+        $subTotal = 0;
+        $total = 0;
+        $peopleID = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row(); 
+        //$query = $this->db->select('sum(amount) as total')->where('type',0)->where('peopleID',$id)->or_where('name',$id)->or_where('phone',$id)->get('finance')->row();
+        $query = $this->db->select('sum(amount) as total')->where('peopleID',$peopleID->id)->get('finance')->row();
+        $openingBalance = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row();
+        //$data = $this->db->where('customer_id', $id)->or_where('customer',$id)->or_where('phone',$id)->get('journals')->result();
+            
+        $data = $this->db->where('customer_id', $peopleID->id)->get('journals')->result();
+        
+        $total = $openingBalance->openingBalance+$query->total;
+        foreach($data as $data) {
+            $stock = $this->db->where('journal_id' , $data->id)->get('stock')->result();
+            foreach($stock as $stock){
+                $subTotal += $stock->quantity*$stock->unit_price;
+            }
+            
         }
-          
+        return $total - $subTotal; 
     }
-    return $total - $subTotal; 
-} 
+    function getSupplierBalance($id) {
+        $subTotal = 0;
+        $total = 0;
+        $peopleID = $this->db->where('type',1)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row(); 
+       
+        $query = $this->db->select('sum(amount) as total')->where('peopleID',$peopleID->id)->get('finance')->row();
+       
+        $openingBalance = $this->db->where('type',1)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row();
+       
+        $data = $this->db->where('supplier_id', $peopleID->id)->get('journals')->result();
+       
+        $total = $openingBalance->openingBalance+$query->total;
+       
+        foreach($data as $data) {
+            $stock = $this->db->where('journal_id' , $data->id)->get('stock')->result();
+            foreach($stock as $stock){
+                $subTotal += $stock->quantity*$stock->unit_price;
+            }
+            
+        }
+        return $total - $subTotal; 
+    } 
     function checkBusinessName($businessName) {
         $query = $this->db->where('businessName', $businessName)->get('people');
         return $query->row();
@@ -189,8 +213,8 @@ function getCustomerBalance($id) {
         return $query->row();
     }
     function getStockData($journalId) {
-        $query =  $this->db->where('journal_id',$journalId)->get('stock');
-        return $query->result();
+        $query =  $this->db->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('journal_id',$journalId)->get('stock');
+        return $query->result_array();
     }
     function getDeliveryType(){
         $query =  $this->db->get('uom');

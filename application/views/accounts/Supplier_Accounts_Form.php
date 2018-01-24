@@ -7,6 +7,22 @@
     <div class="panel-body">
         <?=$form_open?>
         <div class="row">
+            <? if( $this->uri->segment(2) == 'payments' ) { ?>   
+                    <div class="col-md-6">                        
+                        <div class="form-group">
+                            <label>Supplier ID :</label>
+                            <input type="text" name="peopleID" value="" class="form-control" placeholder="Supplier ID" />
+                        </div>
+                        <div class="form-group">
+                            <label>Supplier Name :</label>
+                            <input type="text" name="name" value="" class="form-control" placeholder="Supplier Name" />
+                        </div>
+                        <div class="form-group">
+                            <label>Phone :</label>
+                            <input type="text" name="phone" value="" class="form-control" placeholder="Phone" />
+                        </div>
+                    </div>
+            <? } ?>
                 <?php foreach($inputs as $input){
                     ?><div class="col-md-6"><?php
                         if($input['label'] !=''){?>
@@ -55,9 +71,16 @@
     <label>Opening Balance: </label>
     <label style="color:#0000FF" id="openingBalance"></label>
     </div>
+    <div>
+    <label>Current Balance: </label>
+    <label style="color:#0000FF" id="currentBalance"></label>
+    </div>
+    <div>
+        <input id="pplID" name="pplID" type="hidden" value="">
+    </div>
     <div class="panel-footer">
         <div class="btn-group pull-right">
-            <?=anchor($this->uri->segment(1).'/'.$this->uri->segment(2),'Cancel','class="btn btn-default"');?>
+            <?//=anchor($this->uri->segment(1).'/'.$this->uri->segment(2),'Cancel','class="btn btn-default"');?>
             <a href="#" onclick="$('#supplierAccounts').submit();" class="btn btn-primary">Save</a>
         </div>
         <div class="clearfix"></div>
@@ -73,6 +96,7 @@ $.ajaxSetup({ cache: false });
         dataType: 'json',
         url: '<?=site_url('item/getSupplierData/')?>'+'/'+$(this).val()+'/', 
         success: function (data) {
+             id = data["id"];
              phone = data["phone"];
              name = data["name"];
              customer_id = data["code"];
@@ -83,11 +107,14 @@ $.ajaxSetup({ cache: false });
              area = data["area"];
              district = data["district"];
              openingBalance = data["openingBalance"];
-
+             totalBalance = data["totalBalance"];
+             
+             
              $('input[name=peopleID]').val(customer_id);
              $('input[name=phone]').val(phone);
              $('input[name=name]').val(name);
 
+             $('#pplID').val(id);
              $('#cusName').html(name);
              $('#businessName').html(businessName);
              $('#email').html(email);
@@ -96,22 +123,32 @@ $.ajaxSetup({ cache: false });
              $('#area').html(area);
              $('#district').html(district);
              $('#openingBalance').html(openingBalance);
+             $('#currentBalance').html(totalBalance);
             }
         });
     }
 });
 $('#supplierAccounts').submit(function() {
-    
+    // name = $('input[name=name]').val();
+    // phone = $('input[name=phone]').val();
+    date = $('input[name=date]').val();
+    amount = $('input[name=amount]').val();
+    paymentType = $('select[name=paymentType]').val();
+    description = $('input[name=description]').val(); 
+    ppl_ID = parseInt($('#pplID').val());
+    type =  1;
+
     $.ajax({
        type: "POST",
        dataType: "json",
        url: $('#supplierAccounts').attr('action'),
-       data: $('#supplierAccounts').serialize(),
+       //data: $('#supplierAccounts').serialize(),
+       data: { date:date , amount:amount , paymentType:paymentType , description:description , peopleID:ppl_ID , type:type },
        success: function(data){
            if( typeof data['error'] !== 'undefined' ){
                $('.error').html(data['error']).slideDown();
            }else{
-               window.location = '<?=site_url($this->uri->segment(1).'/'.$this->uri->segment(2));?>';
+                window.location = '<?=site_url('finance/payments/insert');?>';
            }
        }
      });

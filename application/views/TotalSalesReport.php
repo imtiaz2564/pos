@@ -12,16 +12,22 @@
         <td><b>Unit Of Price</b></td>
         <td><b>Total</b></td>
     </tr>
-    </thead>     
+    </thead>
+    <? foreach( $salesData as $sales) 
+    foreach( $sales as $sales)
+    { 
+        //print_r($sales);
+        ?>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><?=$sales["id"]?></td>
+        <td><?=$sales["item_id"]?></td>
+        <td><?=$sales["item_name"]?></td>
+        <td><?=$sales["journal_id"]?></td>
+        <td><?=$sales["date"]?></td>
+        <td><?=$sales["type"]?></td>
+        <td><?=$sales["labourCost"]?></td>
+        <td><?=$sales["transportCost"]?></td>
     </tr>
+    <? } ?>
     </table>    
 </div>

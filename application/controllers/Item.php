@@ -132,7 +132,9 @@ class Item extends CI_Controller {
         $data['title'] = ' ';
         $this->load->model('item_model');
         $data['supplierInfo'] = $this->item_model->getRemainingBySupplier();
-        $data['content'] = $this->load->view('StockBySupplier.php',[],true);
+     //   print_r($data['supplierInfo']);
+     //   die();
+        $data['content'] = $this->load->view('StockBySupplier.php',$data,true);
         $this->load->view('template',$data);
     }
     function importregister(){
@@ -236,8 +238,8 @@ class Item extends CI_Controller {
         $this->crud->init('journals',[
             'date' => 'Posting Date',
             //'customer_id' => 'Customer ID',
-            'phone' => 'Phone',
-            'customer' => 'Customer Name',
+            // 'phone' => 'Phone',
+            // 'customer' => 'Customer Name',
             'description' => 'Description',
             //'price_type' => 'Price Type',
         ]);
@@ -329,14 +331,14 @@ class Item extends CI_Controller {
         return $this->item_model->getTotal($id);
     
     }
-    public function getLabourCost($id){
-        $this->load->model('item_model');
-        $data = [];
-        $result  = $this->item_model->getLabourCost($id);
-        $data['labourCost'] = $result->labourCost;
-        echo json_encode($data); 
+    // public function getLabourCost($id){
+    //     $this->load->model('item_model');
+    //     $data = [];
+    //     $result  = $this->item_model->getLabourCost($id);
+    //     $data['labourCost'] = $result->labourCost;
+    //     echo json_encode($data); 
     
-    }
+    // }
     public function beforeSave($post){
         unset($post['total']); return $post;
     }
@@ -364,6 +366,9 @@ class Item extends CI_Controller {
         $this->load->model('item_model');
         $data = [];
         $result = $this->item_model->getSupplierData($cusid);
+        
+        $balance =  $this->item_model->getSupplierBalance($cusid);
+       
         $data['id'] = $result->id;
         $data['name'] = $result->name;
         $data['phone'] = $result->phone;
@@ -375,6 +380,7 @@ class Item extends CI_Controller {
         $data['area'] = $result->area;
         $data['district'] = $result->district;
         $data['openingBalance'] = $result->openingBalance;
+        $data['totalBalance'] = $balance;
         echo json_encode($data);
     }
     function getUnitPrice($item) {
@@ -386,23 +392,22 @@ class Item extends CI_Controller {
         $data['labourCost'] = $result->labourCost;
         echo json_encode($data);
     }
-    function getTotalLabourCost($id) {
-        $this->load->model('item_model');
-        $query = $this->item_model->getTotalLabourCost($id);
-        return $query->labourCost; 
-    }
+    // function getTotalLabourCost($id) {
+    //     $this->load->model('item_model');
+    //     $query = $this->item_model->getTotalLabourCost($id);
+    //     return $query->labourCost; 
+    // }
     function getDiscount($id) {
         $this->load->model('item_model');
         $query = $this->item_model->getDiscount($id);
         return $query->discount;
     } 
-    function getStockData($journalId) {
+    function getStockData($journalId,$labourCost = 0,$totalDiscount = 0) {
         $this->load->model('item_model');
-        $query = $this->item_model->getStockData($journalId);
-         foreach($query as $result) {
-
-         }
-        $this->load->view('SalesInvoice',$result,true);
+        $data['salesData'] = $this->item_model->getStockData($journalId);
+        $data['labourCost'] = $labourCost;
+        $data['totalDiscount'] = $totalDiscount;
+        $this->load->view('SalesInvoice',$data);
       
     }
     function getDeliveryType($deliveryType,$journalId){

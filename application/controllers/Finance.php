@@ -21,9 +21,9 @@ class Finance extends CI_Controller {
         $data['title'] = 'Suplier Payments';
         
         $this->crud->init('finance',[
-            'peopleID' => 'Suplier ID',
-            'name' => 'Suplier Name',
-            'phone' => 'Phone',
+            //'peopleID' => 'Suplier ID',
+            //  'name' => 'Suplier Name',
+            //  'phone' => 'Phone',
             'date' => 'Date',
             'amount' => 'Amount',
             'paymentType' => 'Payment Type',
@@ -33,16 +33,16 @@ class Finance extends CI_Controller {
         
         //$this->crud->join('peopleID','people','id','name','type=1'); // Supplier
 
-        $this->crud->set_hidden('type','1'); // Payment
+        $this->crud->set_hidden('finance.type','1'); // Payment
         
         if($this->uri->segment(3) == 'ajax')
             $this->crud->ci->db->where('finance.type','1'); // Payment. Apply where clause only when fetch data.
         
-        $this->crud->set_rule('peopleID','required');
+        //$this->crud->set_rule('peopleID','required');
         $this->crud->set_rule('amount','required');
         $this->crud->change_type('date','date');
         $this->crud->change_type('description','textarea');
-        $this->crud->order([0,1,3,4,2,5,6,7]);
+        //$this->crud->order([0,1,3,4,2,5,6]);
         
         //$this->crud->use_modal();
         $this->crud->custom_form('accounts/Supplier_Accounts_Form');
@@ -54,7 +54,7 @@ class Finance extends CI_Controller {
         $data['title'] = 'Customer Receives';
         
         $this->crud->init('finance',[
-            'peopleID' => 'Customer ID',
+            //'peopleID' => 'Customer ID',
             'name' => 'Customer Name',
             'phone' => 'Phone',
             'date' => 'Date',
@@ -71,12 +71,11 @@ class Finance extends CI_Controller {
         if($this->uri->segment(3) == 'ajax')
             $this->crud->ci->db->where('finance.type','0'); // Receive. Apply where clause only when fetch data.
         
-        $this->crud->set_rule('peopleID','required');
+        //$this->crud->set_rule('peopleID','required');
         $this->crud->set_rule('amount','required');
         $this->crud->change_type('date','date');
         $this->crud->change_type('description','textarea');
-        $this->crud->order([0,1,3,4
-        ,2,5,6,7]);
+       // $this->crud->order([0,1,3,4,2,5,6]);
         
         //$this->crud->use_modal();
         $this->crud->custom_form('accounts/Customer_Accounts_Form');
@@ -91,7 +90,8 @@ class Finance extends CI_Controller {
     }
     function getSalesReport( $customerID ) {
         $this->load->model('item_model');
-        $data = $this->item_model->getSalesData( $customerID  );
+        $data['salesData'] = $this->item_model->getSalesData( $customerID  );
+      
         $this->load->view('TotalSalesReport.php',$data);
     }
     

@@ -3,14 +3,14 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h4 class="modal-title">
-            <i class="fa fa-file-o">Customer Sales Report</i>
+            <i class="fa fa-file-o">Statement</i>
         </h4>
     </div>
    <div class="modal-body">
        <div class="row">
            <fieldset>
-           <div class="col-md-3 form-group">
-                <label>Customer ID :</label>
+           <div class="col-md-4 form-group">
+                <label>Customer ID / Supplier ID :</label>
                 <td><input type="text" name="customerId" value="" class="form-control" placeholder="customer ID"></td>
             </div>
            <div class="col-md-3 form-group">

@@ -1,13 +1,4 @@
-<?
-foreach($result as $results)
-{
-    //echo $results->unit_price;
- print_r($results);
-}
-
-die();
-?>
-
+<? foreach($salesData as $data) ?>
 <div class="modal-body" style="max-height:400px; overflow-y:scroll;">
 <h1>Sales Invoices</h1>        
 <table class="table table-report">
@@ -18,28 +9,7 @@ die();
                             <td class="title">
                             </td>
                             <td>
-                                Invoice #: 123<br>
-                                Created: January 1, 2015<br>
-                                Due: February 1, 2015
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr class="information">
-                <td colspan="2">
-                    <table>
-                        <tr>
-                            <td>
-                                Sparksuite, Inc.<br>
-                                12345 Sunny Road<br>
-                                Sunnyville, CA 12345
-                            </td>
-                            
-                            <td>
-                                Acme Corp.<br>
-                                John Doe<br>
-                                john@example.com
+                                Invoice #: <?=$data['journal_id']?><br>
                             </td>
                         </tr>
                     </table>
@@ -47,51 +17,49 @@ die();
             </tr>
             
             <tr class="heading">
-                <td>
-                    Item
-                </td>
-                
-                <td>
-                    Price
-                </td>
+                <td>Item Name</td>
+                <td>Unit Price</td>
+                <td>Quantity</td>
+                <td>Discount</td>
+                <td>Total</td>
+
             </tr>
-            
-            <tr class="item">
-                <td>
-                    Website design
-                </td>
-                
-                <td>
-                    $300.00
-                </td>
-            </tr>
-            
-            <tr class="item">
-                <td>
-                    Hosting (3 months)
-                </td>
-                
-                <td>
-                    $75.00
-                </td>
-            </tr>
-            
-            <tr class="item last">
-                <td>
-                    Domain name (1 year)
-                </td>
-                
-                <td>
-                    $10.00
-                </td>
-            </tr>
-            
-            <tr class="total">
-                <td></td>
-                
-                <td>
-                   Total: $385.00
-                </td>
-            </tr>
+            <? $total = 0; foreach($salesData as $salesData) { ?>
+                <tr>
+                    <td><?=$salesData['name']?></td>
+                    <td><?=$salesData['unit_price']?></td>
+                    <td><?=$salesData['quantity']?></td>
+                    <td><?=$salesData['discount']?></td>
+                    <td><?=($salesData['unit_price']*$salesData['quantity'])-($salesData['quantity']*$salesData['discount'])?></td>
+                </tr>
+                <? $total += ($salesData['unit_price']*$salesData['quantity'])-($salesData['quantity']*$salesData['discount']); }?>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Grand Total</td>
+                    <td><?=$total?></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Labour Cost</td>
+                    <td><?=$labourCost?></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Final Discount</td>
+                    <td><?=$totalDiscount?></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Total Payable</td>
+                    <td><?=($total+$salesData['labourCost'])-$salesData['totalDiscount']?></td>
+                </tr>
         </table>    
 </div>
