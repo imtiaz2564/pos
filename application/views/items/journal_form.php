@@ -315,6 +315,7 @@ $('#formJournal').submit(function() {
     $.ajax({
        type: 'POST',
        url: '<?=site_url('item/getstockdata')?>'+'/'+journalId+'/'+labourCost+'/'+totalDiscount+'/',
+       async: false,
        success: function(data) {
            var win=window.open();
            win.document.write(data)
