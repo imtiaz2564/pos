@@ -215,7 +215,7 @@ class Item extends CI_Controller {
             'date' => 'Posting Date',
             //'supplier_id' => 'Supplier ID',
             //'phone' => 'Phone',
-            'customer' => 'Supplier Name', 
+            //'customer' => 'Supplier Name', 
             'description' => 'Description',
         ]);
         //if($this->uri->segment(3) == 'edit'){

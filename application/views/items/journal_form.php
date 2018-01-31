@@ -324,8 +324,7 @@ $('#formJournal').submit(function() {
     transportCost = $('input[name=transportCost]').val(); 
     totalDiscount = $('input[name=totalDiscount]').val();
     var journalId = '<?=$this->uri->segment(4)?>';
-   alert(sup_ID);
-    $.ajax({
+   $.ajax({
        type: 'POST',
        url: '<?=site_url('item/insertsupplierid')?>'+'/'+sup_ID+'/'+journalId+'/',
        //async: false,
