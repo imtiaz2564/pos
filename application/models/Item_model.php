@@ -4,8 +4,17 @@ class Item_Model extends CI_Model{
         parent::__construct();
     }
     function getRemaining($id){
-        //return $id;
-        $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type','0')->get('stock');
+        
+        // $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type','0')->get('stock');
+        // $in = $query->row()->total;
+
+        // $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type','1')->get('stock');
+        // $out = $query->row()->total;
+        
+        // return $in-$out;
+
+        
+        $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type','3')->where('warehouse','3')->get('stock');
         $in = $query->row()->total;
 
         $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type','1')->get('stock');
@@ -256,7 +265,7 @@ class Item_Model extends CI_Model{
     function insertStock( $warehouse , $quantity, $item_name ){
         // $query = $this->db->select('sum(quantity) as totalquantity')->where('warehouse',$warehouse)->where('item_name',$item_name)->get('stock')->row();
         // $rest = $query->totalquantity-$quantity;
-        return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'warehouse'=>3,'type'=>1]);
+        return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'warehouse'=>3,'type'=>3]);
     }
     function checkStock( $warehouse ,  $item_name ) {
         $query = $this->db->select('sum(quantity) as totalquantity,')->join('items','items.id=item_name','left')->where('warehouse',$warehouse)->where('item_name',$item_name)->where('stock.type',0)->get('stock')->row();
