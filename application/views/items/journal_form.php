@@ -1,3 +1,4 @@
+
 <?=$error;?>
 <?=$this->session->flashdata('');?>
 <div class="panel panel-white">
@@ -22,7 +23,7 @@
             <div class="col-md-6">                        
                 <div class="form-group">
                     <label>Supplier ID :</label>
-                    <input type="text" name="idSupplier" value="" class="form-control" placeholder="Supplier ID" />
+                    <input type="text" name="idSupplier" id="idSupplier" value="" class="form-control" placeholder="Supplier ID" />
                 </div>
                 <div class="form-group">
                     <label>Supplier Name :</label>
@@ -192,12 +193,23 @@ $.ajax({
 
 });
 $.ajaxSetup({ cache: false });
-$('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
+
+   // var idSupplier = 2 ;
+    // idSupplier =  $('input[name=idSupplier]').val();
+    // //alert(idSupplier);
+    // if(idSupplier == undefined){
+    //     //alert('Insert ID');
+    //     idSupplier = 0;
+    // }
+   /// $('#transactions').load('<?//=site_url('item/ajax_itemlist')?>'+'/'+idSupplier+'/');
+    
+   $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
 //var journalId = '<?//=$this->uri->segment(4)?>';
 //$('#result').load('<?//=site_url('item/getStockData')?>'+'/'+journalId+'/')
 
 <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
 $('input[name=idSupplier],input[name=phone],input[name=customer]').keypress(function(e) {
+   
     if(e.which == 13) {
         $.ajax({
         type: 'POST',
@@ -231,8 +243,10 @@ $('input[name=idSupplier],input[name=phone],input[name=customer]').keypress(func
              $('#supDistrict').html(district);
              $('#supOpeningBalance').html(openingBalance);
              $('#supCurrentBalance').html(currentBalance);
+            
             }
         });
+       
     }
 });
 <?}?>
@@ -309,9 +323,24 @@ $('#formJournal').submit(function() {
     labourCost = $('input[name=labourCost]').val();
     transportCost = $('input[name=transportCost]').val(); 
     totalDiscount = $('input[name=totalDiscount]').val();
-
-<? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
     var journalId = '<?=$this->uri->segment(4)?>';
+   alert(sup_ID);
+    $.ajax({
+       type: 'POST',
+       url: '<?=site_url('item/insertsupplierid')?>'+'/'+sup_ID+'/'+journalId+'/',
+       //async: false,
+       success: function(data) {
+        if( typeof data['error'] !== 'undefined' ){
+                   $('.error').html(data['error']).slideDown();
+               }else{
+                   reloadData();
+               }
+       }
+     });
+    
+<? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
+   // var journalId = '<?//=$this->uri->segment(4)?>';
+    
     $.ajax({
        type: 'POST',
        url: '<?=site_url('item/getstockdata')?>'+'/'+journalId+'/'+labourCost+'/'+totalDiscount+'/',

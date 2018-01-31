@@ -18,7 +18,6 @@ class Item extends CI_Controller {
 	public function index(){
         if($this->uri->segment(2)=='') redirect('item/index'); // datatable ajax list issue.
         
-        //$data['title'] = 'Medicines List';
         $data['title'] = 'Items List';
 
         $this->crud->init('items',[
@@ -132,12 +131,44 @@ class Item extends CI_Controller {
         $data['title'] = ' ';
         $this->load->model('item_model');
         $data['supplierInfo'] = $this->item_model->getRemainingBySupplier();
-     //   print_r($data['supplierInfo']);
-     //   die();
         $data['content'] = $this->load->view('StockBySupplier.php',$data,true);
         $this->load->view('template',$data);
+       
+        // $data['title'] = 'Stock By  Supplier';
+
+        // $this->crud->init('item',[
+        //     'name' => 'Item Name',
+
+        // ]);
+        // $this->crud->extra_fields($this,['getSupplierStock'=>'Stock']);
+        // // $this->crud->use_modal();
+        // $this->crud->ci->db->where('type','1');
+        // $data['content']=$this->crud->run();
+        // $this->load->view('template',$data);
     }
     function importregister(){
+        $data['title'] = 'Import Register';
+
+        $this->crud->init('stock',[
+            'item_name' => 'Item Name',
+            'warehouse' => 'Supplier',
+            'quantity' => 'Quantity',
+            'transport' => 'Transport',
+            'receiver' => 'Receiver',
+            'driverName' => 'Driver Name',
+
+        ]);
+         $this->crud->join('item_name','items','id','name','type=1');
+         $this->crud->join('warehouse','people','id','name','type=1');
+         $this->crud->before_save($this, 'checkStock');
+         $this->crud->after_save($this, 'stockUpdate');
+        // $this->crud->use_modal();
+         $this->crud->set_rule('item_name','required');
+         $this->crud->set_hidden('type','2'); // 2 for transfer
+        $this->crud->order(['4','5','0','2','1','3','6']);
+       $this->crud->custom_form('items/import_form');
+        $data['content']=$this->crud->run();
+        $this->load->view('template',$data);
     }
     public function getRemaining($id){
         $this->load->model('item_model');
@@ -159,7 +190,10 @@ class Item extends CI_Controller {
             }
             
         }elseif($this->uri->segment(3) == 'edit'){
-            $this->session->set_userdata('journal_id',$this->uri->segment(4));        
+            $this->session->set_userdata('journal_id',$this->uri->segment(4)); 
+            //$sup = $this->input->post('idSupplier');
+            //echo $sup;    
+           
             $this->session->set_userdata('type','0'); // Stock Type: IN
             
         
@@ -176,11 +210,11 @@ class Item extends CI_Controller {
             */
         
         }
-        
+//
         $this->crud->init('journals',[
             'date' => 'Posting Date',
             //'supplier_id' => 'Supplier ID',
-            'phone' => 'Phone',
+            //'phone' => 'Phone',
             'customer' => 'Supplier Name', 
             'description' => 'Description',
         ]);
@@ -304,8 +338,10 @@ class Item extends CI_Controller {
         // $this->crud->order(['4','0','5','1','2','3','6','7']);
         $this->crud->order(['2','4','0','1','3','5']);
         $this->crud->set_hidden('journal_id',$id);
-        
+        //$this->crud->set_hidden('warehouse',$supplier);
+
         $this->crud->set_hidden('type',$this->session->userdata('type')); // Stock type. 0: in, 1: out
+       // $this->crud->set_hidden('supplier_id',$suplr);
         $this->crud->set_hidden('date',date('Y-m-d'));
         // $this->crud->display_fields(['Item Name','Item Code','Unit']);
         $this->crud->before_save($this, 'beforeSave');
@@ -427,5 +463,26 @@ class Item extends CI_Controller {
        $query = $this->item_model->getRemainingBySupplier($id);
        return $query->customer;
     
-    } 
+    }
+    function insertSupplierId($sup_id , $journalid){
+        $this->load->model('item_model');
+     
+        $this->item_model->insertSupplier($sup_id , $journalid);
+
+    }
+    public function stockUpdate($post){
+        $this->load->model('item_model');
+        $this->item_model->insertStock($post['warehouse'] , $post['quantity'],$post['item_name']);
+        die( json_encode(['error'=>'Updated Stock']));
+  
+    }
+    public function checkStock($post){
+        $this->load->model('item_model');
+        $stock = $this->item_model->checkStock($post['warehouse'] , $post['item_name']);
+        if($stock < $post['quantity'] ){
+            die( json_encode(['error'=>'Number of items are not available']));
+        }
+        return $post;
+    }
+
 }

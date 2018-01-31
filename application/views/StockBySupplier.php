@@ -17,9 +17,9 @@
     <?php foreach($supplierInfo as $info) { ?>
  
     <tr>
-        <td><?=$info['customer']?></td>
+        <td><?=$info['customerName']?></td>
         <td><?=$info['name']?></td>
-        <td><?=$info['quantity']?></td>
+        <td><?=$info['avail']?></td>
      </tr>
     <? } ?>
     

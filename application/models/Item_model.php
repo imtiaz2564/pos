@@ -234,25 +234,35 @@ class Item_Model extends CI_Model{
 
     }
     function getRemainingBySupplier(){
-        //select customer , items.name , item_name,sum(quantity) as quantity from  stock left join items on stock.item_name = items.id left join journals ON stock.journal_id = journals.id where stock.type =0 group by stock.item_name
-//         select customer, name ,sum(stock.quantity) as quantity from journals  
-// left join stock on journals.id = stock.journal_id 
-// left join items on stock.item_name = items.id
-// group by customer, name
-        // $query =  $this->db->select('journals.customer as customerName, items.name ,sum(stock.quantity) as totalquantity')
-        // ->join('items','items.id=stock.item_name','left')->join('journals','journals.id = stock.journal_id','left')
-        // ->where('stock.type',0)->where('stock.item_name',$id)->where('journals.type',0)->group_by('stock.item_name')->get('stock');
+        $total = []; 
+        $query = $this->db->select('people.id as supplierid,stock.item_name as itemid, people.name as customerName,items.name,sum(stock.quantity) as quantity,')->join('items','items.id=item_name','left')->join('people','stock.warehouse = people.id','left')->where('stock.type',0)->group_by('people.name')->group_by('items.name')->get('stock')->result_array();
+        foreach( $query as $data){
+            $res = $this->db->select('sum(stock.quantity) as quantity')->where('stock.warehouse',$data['supplierid'])->where('stock.item_name',$data['itemid'])->where('stock.type',2)->get('stock')->row();
         
-//         select customer, name ,sum(stock.quantity) as quantity from journals  
-// left join stock on journals.id = stock.journal_id 
-// left join items on stock.item_name = items.id
-// where stock.item_name = 3 and journals.type = 0 and stock.type = 0
-// group by customer
-        $query =  $this->db->select('journals.customer, items.name ,sum(stock.quantity) as quantity')
-        ->join('stock','journals.id = stock.journal_id','left')->join('items','stock.item_name = items.id','left')
-        ->where('stock.type',0)->where('journals.type',0)->group_by('journals.customer')->group_by('items.name')->get('journals');
-        
-        
-        return $query->result_array();
+            $avail = $data['quantity'] - $res->quantity;
+            $data['avail'] = $avail;
+         
+         
+            $total[]  = $data;  
+       
+        }
+        return $total;
+    }
+    function insertSupplier($sup_id , $journalid){
+        $this->db->set('warehouse', $sup_id); //value that used to update column  
+        $this->db->where('journal_id', $journalid); //which row want to upgrade  
+        $this->db->update('stock');
     } 
+    function insertStock( $warehouse , $quantity, $item_name ){
+        // $query = $this->db->select('sum(quantity) as totalquantity')->where('warehouse',$warehouse)->where('item_name',$item_name)->get('stock')->row();
+        // $rest = $query->totalquantity-$quantity;
+        return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'warehouse'=>3,'type'=>1]);
+    }
+    function checkStock( $warehouse ,  $item_name ) {
+        $query = $this->db->select('sum(quantity) as totalquantity,')->join('items','items.id=item_name','left')->where('warehouse',$warehouse)->where('item_name',$item_name)->where('stock.type',0)->get('stock')->row();
+        $data = $this->db->select('sum(quantity) as transfer')->where('warehouse',$warehouse)->where('item_name',$item_name)->where('type',2)->get('stock')->row();
+        $reminder =  $query->totalquantity - $data->transfer;
+        return $reminder;
+    }
+  
 }
