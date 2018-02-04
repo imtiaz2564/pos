@@ -216,7 +216,7 @@ $('input[name=idSupplier],input[name=phone],input[name=customer]').keypress(func
         dataType: 'json',
         url: '<?=site_url('item/getSupplierData/')?>'+'/'+$(this).val()+'/', 
         success: function (data) {
-            supplierID = data["id"];
+             supplierID = data["id"];
              phone = data["phone"];
              name = data["name"];
              customer_id = data["code"];
@@ -248,6 +248,9 @@ $('input[name=idSupplier],input[name=phone],input[name=customer]').keypress(func
         });
        
     }
+    // if( supplierID == " "){
+    //     console.log(supplierID);
+           // }
 });
 <?}?>
 
@@ -292,24 +295,29 @@ $('input[name=idCustomer],input[name=phone],input[name=customer]').keypress(func
 });
 <?}?>
 $('#formJournal').submit(function() {
-    <? //$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
-        // alert($('input[name=idCustomer]').val());
-        // if(isEmpty($('input[name=idCustomer]').val())){
-        //     alert('Enter customer ID');
-        //     return false;
-        // }       
-    <? //} ?>
-    <? //$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
-        
-        // if($('input[name=supplier_id]').val() == null ){
-        //     alert('Enter Supplier ID');
-        //     return false;
-        // }
-            
-        
-    <? //} ?>
+
     cus_ID = parseInt($('#cusId').val());
     sup_ID = parseInt($('#supId').val());
+    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
+        
+         if(isNaN(sup_ID)){
+            alert("Insert Supplier ID");
+
+            return false;
+         }
+            
+        
+    <? } ?>
+    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
+        
+        if(isNaN(cus_ID)){
+           alert("Insert Customer ID");
+
+           return false;
+        }
+           
+       
+   <? } ?>
     if(isNaN(sup_ID)){
         sup_ID = 0;
     }
@@ -324,18 +332,17 @@ $('#formJournal').submit(function() {
     transportCost = $('input[name=transportCost]').val(); 
     totalDiscount = $('input[name=totalDiscount]').val();
     var journalId = '<?=$this->uri->segment(4)?>';
-   $.ajax({
-       type: 'POST',
-       url: '<?=site_url('item/insertsupplierid')?>'+'/'+sup_ID+'/'+journalId+'/',
-       //async: false,
-       success: function(data) {
-        if( typeof data['error'] !== 'undefined' ){
-                   $('.error').html(data['error']).slideDown();
-               }else{
-                   reloadData();
-               }
-       }
-     });
+//    $.ajax({
+//        type: 'POST',
+//        url: '<?//=site_url('item/insertsupplierid')?>'+'/'+sup_ID+'/'+journalId+'/',
+//        success: function(data) {
+//         if( typeof data['error'] !== 'undefined' ){
+//                    $('.error').html(data['error']).slideDown();
+//                }else{
+//                    reloadData();
+//                }
+//        }
+//      });
     
 <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
    // var journalId = '<?//=$this->uri->segment(4)?>';

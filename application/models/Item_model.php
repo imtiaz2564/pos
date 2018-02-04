@@ -257,11 +257,11 @@ class Item_Model extends CI_Model{
         }
         return $total;
     }
-    function insertSupplier($sup_id , $journalid){
-        $this->db->set('warehouse', $sup_id); //value that used to update column  
-        $this->db->where('journal_id', $journalid); //which row want to upgrade  
-        $this->db->update('stock');
-    } 
+    // function insertSupplier($sup_id , $journalid){
+    //     $this->db->set('warehouse', $sup_id); //value that used to update column  
+    //     $this->db->where('journal_id', $journalid); //which row want to upgrade  
+    //     $this->db->update('stock');
+    // } 
     function insertStock( $warehouse , $quantity, $item_name ){
         // $query = $this->db->select('sum(quantity) as totalquantity')->where('warehouse',$warehouse)->where('item_name',$item_name)->get('stock')->row();
         // $rest = $query->totalquantity-$quantity;

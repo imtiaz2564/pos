@@ -309,34 +309,44 @@ class Item extends CI_Controller {
         // $this->session->userdata('out',$this->uri->segment(2));
         // $this->session->set_userdata('seg',$ur);
      $this->crud->init('stock', [
-            //'item_id' => 'Item Code',
+           // 'warehouse' => 'Supplier',
             'item_name' => 'Item Name',
-            // 'date' => 'Date',
-            //'uom' => 'UoM',
             'unit_price' => 'Unit Price',
             'quantity' => 'Quantity',
-           // 'offer' => 'Offer',
-            
-            
         ]);
         // $this->crud->change_type('date','date');
         if( $this->session->userdata('type') == 1 ) {
+            $this->crud->init('stock', [
+                // 'warehouse' => 'Supplier',
+                 'item_name' => 'Item Name',
+                 'unit_price' => 'Unit Price',
+                 'quantity' => 'Quantity',
+             ]);
          $this->crud->display_fields(['Item Name','Unit Price','Quantity','Discount','Total']);
         }
         else{
-            $this->crud->display_fields(['Item Name','Unit Price','Quantity','Total']);
+            $this->crud->init('stock', [
+                 'warehouse' => 'Supplier',
+                 'item_name' => 'Item Name',
+                 'unit_price' => 'Unit Price',
+                 'quantity' => 'Quantity',
+             ]);
+            $this->crud->display_fields(['Supplier','Item Name','Unit Price','Quantity','Total']);
+            $this->crud->join('warehouse','people','id','name','type=1'); // Medicine only
+        
 
         }
          //$this->crud->join('item_id','items','id','code','type=0'); // Medicine only
         
-        $this->crud->join('item_name','items','id','name','type=1'); // Medicine only
+
+         $this->crud->join('item_name','items','id','name','type=1');
         //$this->crud->join('uom','uom','id','uom');
         //!important    
         $this->crud->where(['journal_id='.$id]);
         $this->crud->extra_fields($this,['getDiscount'=>'Discount','getTotal'=>'Total' , 'getTotalLabourCost'=>'Labour Cost']);
         //$this->crud->order(['2','0','1','3','4']); // don't forget, we have a hidden field
         // $this->crud->order(['4','0','5','1','2','3','6','7']);
-        $this->crud->order(['2','4','0','1','3','5']);
+        $this->crud->order(['2','3','4','0','1','5']);
         $this->crud->set_hidden('journal_id',$id);
         //$this->crud->set_hidden('warehouse',$supplier);
 
