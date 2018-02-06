@@ -154,8 +154,8 @@ class Item extends CI_Controller {
             'warehouse' => 'Supplier',
             'quantity' => 'Quantity',
             'transport' => 'Transport',
-            'receiver' => 'Receiver',
-            'driverName' => 'Driver Name',
+            'receiver' => 'Receiver Info',
+            'driverName' => 'Driver Info',
 
         ]);
          $this->crud->join('item_name','items','id','name','type=1');

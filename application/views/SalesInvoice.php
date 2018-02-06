@@ -24,7 +24,7 @@
                 <td>Total</td>
 
             </tr>
-            <? $total = 0; foreach($salesData as $salesData) { ?>
+            <? $total = 0; $payable = 0;  foreach($salesData as $salesData) { ?>
                 <tr>
                     <td><?=$salesData['name']?></td>
                     <td><?=$salesData['unit_price']?></td>
@@ -32,7 +32,7 @@
                     <td><?=$salesData['discount']?></td>
                     <td><?=($salesData['unit_price']*$salesData['quantity'])-($salesData['quantity']*$salesData['discount'])?></td>
                 </tr>
-                <? $total += ($salesData['unit_price']*$salesData['quantity'])-($salesData['quantity']*$salesData['discount']); }?>
+                <? $total += ($salesData['unit_price']*$salesData['quantity'])-($salesData['quantity']*$salesData['discount']);}?>
                 <tr>
                     <td></td>
                     <td></td>
@@ -59,7 +59,8 @@
                     <td></td>
                     <td></td>
                     <td>Total Payable</td>
-                    <td><?=($total+$salesData['labourCost'])-$salesData['totalDiscount']?></td>
+                    <!-- <td><?//=($total+$salesData['labourCost'])-$salesData['totalDiscount']?></td> -->
+                    <td><?=($total+$labourCost+$totalDiscount)?></td>
                 </tr>
         </table>    
 </div>

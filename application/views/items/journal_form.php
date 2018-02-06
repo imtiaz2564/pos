@@ -1,4 +1,3 @@
-
 <?=$error;?>
 <?=$this->session->flashdata('');?>
 <div class="panel panel-white">
@@ -17,10 +16,14 @@
                     <label>Customer Name :</label>
                         <input type="text" name="customer" value="" class="form-control" placeholder="Customer Name">
                 </div>
+                <div class="form-group">
+            <label>Phone :</label>
+            <input type="text" name="phone" value="" class="form-control" placeholder="Phone">
+        </div>
             </div>
             <? } ?>
-            <?$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>   
-            <div class="col-md-6">                        
+            <?//$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>   
+            <!-- <div class="col-md-6">                        
                 <div class="form-group">
                     <label>Supplier ID :</label>
                     <input type="text" name="idSupplier" id="idSupplier" value="" class="form-control" placeholder="Supplier ID" />
@@ -29,14 +32,14 @@
                     <label>Supplier Name :</label>
                         <input type="text" name="customer" value="" class="form-control" placeholder="Supplier Name">
                 </div>
-            </div>
-        <? } ?>
-        <div class="col-md-6">
+            </div> -->
+        <? //} ?>
+        <!-- <div class="col-md-6">
         <div class="form-group">
             <label>Phone :</label>
             <input type="text" name="phone" value="" class="form-control" placeholder="Phone">
         </div>
-        </div>
+        </div> -->
         <?=$form_open?>
         <?php foreach($inputs as $input) { ?>
             <div class="col-md-6"><?php
@@ -52,46 +55,50 @@
                 }?>
         </div>
     <?=$form_close?>
-    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
-    <div><h1>Customer Info</h1></div>
-    <div>
+    <? //$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
+    <div class="row">
+    <div  class= "input-group customerInfo" id = "cusinfo" style="">
+    <div class= "input-group customerInfo"><h1>Customer Info</h1></div>
+    <div class= "input-group customerInfo">
         <label>Customer Name: </label>
         <label style="color:#0000FF" id="cusName"></label>
     </div>
-    <div>
-    <div>
+    <div class= "input-group customerInfo">
         <label>Business Name: </label>
         <label style="color:#0000FF" id="businessName"></label>
     </div>
+    <div class= "input-group customerInfo">
         <label>Customer Email: </label>
         <label style="color:#0000FF" id="email"></label>
     </div>
-    <div>
+    <div class= "input-group customerInfo">
         <label>Address: </label>
         <label style="color:#0000FF" id="address"></label>
     </div>
-    <div>
+    <div class= "input-group customerInfo">
         <label>Business Address: </label>
         <label style="color:#0000FF" id="businessAddress"></label>
     </div>
-    <div>
+    <div class= "input-group customerInfo">
         <label>Area: </label>
         <label style="color:#0000FF" id="area"></label>
     </div>
-    <div>
+    <div class= "input-group customerInfo">
         <label>District: </label>
         <label style="color:#0000FF" id="district"></label>
     </div>
-    <div>
+    <div class= "input-group customerInfo">
         <label>Opening Balance: </label>
         <label style="color:#0000FF" id="openingBalance"></label>
-    <div>
+    <div class= "input-group customerInfo">
         <label>Current Balance: </label>
         <label style="color:#0000FF" id="currentBalance"></label>
     </div>
-<? } ?>
-<? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
-    <div><h1>Supplier Info</h1></div>
+</div>
+</div>
+<? //} ?>
+<?// $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
+    <!-- <div><h1>Supplier Info</h1></div>
     <div>
         <label>Supplier Name: </label>
         <label style="color:#0000FF" id="supName"></label>
@@ -126,8 +133,8 @@
     <div>
         <label>Current Balance: </label>
         <label style="color:#0000FF" id="supCurrentBalance"></label>
-    </div>
-<? } ?>
+    </div> -->
+<? //} ?>
     <div id="transactions"></div>
     <div class= "row">
     <!-- <div class="form-group" style='float: right;'>
@@ -135,30 +142,33 @@
         <label>     </label>
     </div> -->
     </div>
-        <div class="form-group" style='float: right;'>
+        <!-- <div class="form-group" style='float: right;'>
             <label>Labour Cost: </label>
             <label><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost"></label>
-        </div>
+        </div> -->
     <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
         <div class="form-group" style='float: right;'>
             <label>Transport Cost: </label>
             <label><input type="text" name="transportCost" value="" class="form-control" placeholder="Transport Cost"></label>
         </div>
     <?}?>
-    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
-    <div  class="form-group" style='float: right;'>
-        <label>Delivery Type: </label> 
-        <select name = "deliveryType" >
-            <option value="0">None</option>
-            <option value="truck">Truck</option>
-            <option value="thela">Thela</option>
+    <? //$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
+    <div  class="form-group delivery" id = "deliveryType" style='float: right;'>
+        <label class="form-group delivery">Delivery Type: </label> 
+        <select class="form-group delivery"  name = "deliveryType" >
+            <option class="form-group delivery" value="0">None</option>
+            <option class="form-group delivery" value="truck">Truck</option>
+            <option class="form-group delivery" value="thela">Thela</option>
         </select>
+        <label class="form-group delivery">Labour Cost: </label>
+        <label class="form-group delivery"><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost"></label>
+
+    <!-- </div>
+    <div class="form-group" style='float: right;'> -->
+        <label class="form-group delivery">Final Discount: </label>
+        <label class="form-group delivery"><input type="text" name="totalDiscount" value="" class="form-control" placeholder="Total Discount"></label>
     </div>
-    <div class="form-group" style='float: right;'>
-        <label>Total Discount: </label>
-        <label><input type="text" name="totalDiscount" value="" class="form-control" placeholder="Total Discount"></label>
-    </div>
-    <? } ?>
+    <? //} ?>
     <div>
         <input id="cusId" name="cus" type="hidden" value="">
     </div>
@@ -170,7 +180,6 @@
     </div>
     <div class="panel-footer">
         <div class="btn-group pull-right">
-            <?//=anchor($this->uri->segment(1).'/'.$this->uri->segment(2),'Cancel','class="btn btn-default"');?>
             <a href="<?=site_url()?>" class="btn btn-default">Close</a>
             <a href="#" onclick="$('#formJournal').submit();" class="btn btn-primary">Save</a>
         </div>
@@ -178,10 +187,14 @@
     </div>
 </div>
 <script>
+    $(function(){
+        $('#cusinfo').hide();
+        $('#deliveryType').hide();
+    });
 var journalId = '<?=$this->uri->segment(4)?>';
 $('select[name=deliveryType]').on('change', function(){
-delivery = $('select[name=deliveryType]').val();
-$.ajax({
+  delivery = $('select[name=deliveryType]').val();
+    $.ajax({
             type: 'GET',
             dataType: 'json',
             url: '<?=site_url('item/getdeliverytype')?>'+'/'+$(this).val()+'/'+journalId+'/', 
@@ -203,61 +216,62 @@ $.ajaxSetup({ cache: false });
     // }
    /// $('#transactions').load('<?//=site_url('item/ajax_itemlist')?>'+'/'+idSupplier+'/');
     
-   $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
+//    $('#transactions').load('<?//=site_url('item/ajax_itemlist/')?>');
 //var journalId = '<?//=$this->uri->segment(4)?>';
 //$('#result').load('<?//=site_url('item/getStockData')?>'+'/'+journalId+'/')
 
 <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
-$('input[name=idSupplier],input[name=phone],input[name=customer]').keypress(function(e) {
+    $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
+// $('input[name=idSupplier],input[name=phone],input[name=customer]').keypress(function(e) {
    
-    if(e.which == 13) {
-        $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: '<?=site_url('item/getSupplierData/')?>'+'/'+$(this).val()+'/', 
-        success: function (data) {
-             supplierID = data["id"];
-             phone = data["phone"];
-             name = data["name"];
-             customer_id = data["code"];
-             businessName = data["businessName"];
-             email = data["email"];
-             address = data["address"];
-             businessAddress = data["businessAddress"];
-             area = data["area"];
-             district = data["district"];
-             openingBalance = data["openingBalance"];
-             currentBalance = data["totalBalance"]; 
+//     if(e.which == 13) {
+  
+//         $.ajax({
+//         type: 'POST',
+//         dataType: 'json',
+//         url: '<?//=site_url('item/getSupplierData/')?>'+'/'+$(this).val()+'/', 
+//         success: function (data) {
+//              supplierID = data["id"];
+//              phone = data["phone"];
+//              name = data["name"];
+//              customer_id = data["code"];
+//              businessName = data["businessName"];
+//              email = data["email"];
+//              address = data["address"];
+//              businessAddress = data["businessAddress"];
+//              area = data["area"];
+//              district = data["district"];
+//              openingBalance = data["openingBalance"];
+//              currentBalance = data["totalBalance"]; 
 
-             $('input[name=idSupplier]').val(customer_id);
-             $('input[name=phone]').val(phone);
-             $('input[name=customer]').val(name);
+//              $('input[name=idSupplier]').val(customer_id);
+//              $('input[name=phone]').val(phone);
+//              $('input[name=customer]').val(name);
 
-             $('#supId').val(supplierID);
-             $('#supName').html(name);
-             $('#supBusinessName').html(businessName);
-             $('#supEmail').html(email);
-             $('#supAddress').html(address);
-             $('#supBusinessAddress').html(businessAddress);
-             $('#supArea').html(area);
-             $('#supDistrict').html(district);
-             $('#supOpeningBalance').html(openingBalance);
-             $('#supCurrentBalance').html(currentBalance);
+//              $('#supId').val(supplierID);
+//              $('#supName').html(name);
+//              $('#supBusinessName').html(businessName);
+//              $('#supEmail').html(email);
+//              $('#supAddress').html(address);
+//              $('#supBusinessAddress').html(businessAddress);
+//              $('#supArea').html(area);
+//              $('#supDistrict').html(district);
+//              $('#supOpeningBalance').html(openingBalance);
+//              $('#supCurrentBalance').html(currentBalance);
             
-            }
-        });
+//             }
+//         });
        
-    }
-    // if( supplierID == " "){
-    //     console.log(supplierID);
-           // }
-});
+//     }
+// });
 <?}?>
 
 <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
-$('input[name=idCustomer],input[name=phone],input[name=customer]').keypress(function(e) {
    
+$('input[name=idCustomer],input[name=phone],input[name=customer]').keypress(function(e) {
+            
     if(e.which == 13) {
+        
         $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -278,7 +292,7 @@ $('input[name=idCustomer],input[name=phone],input[name=customer]').keypress(func
              $('input[name=idCustomer]').val(customer_code);
              $('input[name=phone]').val(phone);
              $('input[name=customer]').val(name);
-             
+        
              $('#cusId').val(customerID);
              $('#cusName').html(name);
              $('#businessName').html(businessName);
@@ -291,6 +305,14 @@ $('input[name=idCustomer],input[name=phone],input[name=customer]').keypress(func
              $('#currentBalance').html(currentBalance);
             }
         });
+        
+        
+    }
+    text =$('input[name=idCustomer]').val();
+    if( text.length > 0 ) {
+        $('#cusinfo').show();    
+        $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
+        $('#deliveryType').show();
     }
 });
 <?}?>
@@ -298,26 +320,7 @@ $('#formJournal').submit(function() {
 
     cus_ID = parseInt($('#cusId').val());
     sup_ID = parseInt($('#supId').val());
-    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
-        
-         if(isNaN(sup_ID)){
-            alert("Insert Supplier ID");
-
-            return false;
-         }
-            
-        
-    <? } ?>
-    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
-        
-        if(isNaN(cus_ID)){
-           alert("Insert Customer ID");
-
-           return false;
-        }
-           
-       
-   <? } ?>
+   
     if(isNaN(sup_ID)){
         sup_ID = 0;
     }
