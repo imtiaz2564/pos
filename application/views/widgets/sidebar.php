@@ -15,8 +15,8 @@
 <!--                <a href="#"><i class="fa fa-bar-chart-o fa-flask"></i> Medicine <span class="fa arrow"></span></a>-->
                 <a href="#"><i class="fa fa-bar-chart-o fa-flask"></i> Items <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li><a href="<?=site_url('item/in/insert')?>">Purchase Register</a></li>
-                    <li><a href="<?=site_url('item/out/insert')?>">Sales Register</a></li>
+                    <li><a href="<?=site_url('item/purchase')?>">Purchase</a></li>
+                    <li><a href="<?=site_url('item/sale')?>">Sales</a></li>
                     <li><a href="<?=site_url('item/stock')?>">Item Stock</a></li>
                     <li><a href="<?=site_url('item/importregister/insert')?>">Import Register</a></li>
                     <li><a href="<?=site_url('item/stockbysupplier')?>">Stock By Supplier</a></li>

@@ -156,6 +156,7 @@ class Item_Model extends CI_Model{
            //array_push($total , $data);  
         }
         return $total;
+
     }
     function checkPhoneNumber($phone) {
         $query = $this->db->where('phone', $phone)->get('people');
@@ -272,6 +273,10 @@ class Item_Model extends CI_Model{
         $data = $this->db->select('sum(quantity) as transfer')->where('warehouse',$warehouse)->where('item_name',$item_name)->where('type',2)->get('stock')->row();
         $reminder =  $query->totalquantity - $data->transfer;
         return $reminder;
+    }
+    function getCustomers(){
+        $query =  $this->db->where('type','0')->get('people')->result_array();
+        return $query;
     }
   
 }

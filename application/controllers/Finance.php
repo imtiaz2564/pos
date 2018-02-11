@@ -84,8 +84,10 @@ class Finance extends CI_Controller {
         $this->load->view('template',$data);
     }
     public function statement() {
+        $this->load->model('item_model');
         $data['title'] = '';
-        $data['content'] = $this->load->view('Statement.php',[],true);
+        $data['customers'] = $this->item_model->getCustomers();
+        $data['content'] = $this->load->view('Statement.php',$data,true);
         $this->load->view('template',$data);
     }
     function getSalesReport( $customerID ) {

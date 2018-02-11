@@ -174,6 +174,16 @@ class Item extends CI_Controller {
         $this->load->model('item_model');
         return $this->item_model->getRemaining($id);
     }
+    public function purchase(){
+        $data['title'] = '';
+        $data['content'] = $this->load->view('purchaseView.php',[],true);
+        $this->load->view('template',$data);
+    }
+    public function sale(){
+        $data['title'] = '';
+        $data['content'] = $this->load->view('salesView.php',[],true);
+        $this->load->view('template',$data);
+    }
     public function in(){
         $this->load->model('item_model');
         
