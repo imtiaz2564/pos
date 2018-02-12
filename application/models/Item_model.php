@@ -147,14 +147,15 @@ class Item_Model extends CI_Model{
         $query = $this->db->where('id',$item)->get('items');
         return $query->row();
     }
-    function getSalesData( $customerID  ){
-        $salesData = $this->db->where('customer_id', $customerID)->get('journals')->result();
-         $total = [];
+    function getSalesData( $customerID , $datfrom , $datto){
+        $salesData = $this->db->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('journals')->result_array();
+        $total = [];
         foreach( $salesData as $salesData ) {
-           $data = $this->db->where('journal_id', $salesData->id)->get('stock')->result_array();
-           $total[] = $data;
-           //array_push($total , $data);  
+            $data = $this->db->where('journal_id', $salesData['id'])->get('stock')->result_array();
+            $total[] = $data;
+            
         }
+        
         return $total;
 
     }
@@ -278,5 +279,30 @@ class Item_Model extends CI_Model{
         $query =  $this->db->where('type','0')->get('people')->result_array();
         return $query;
     }
-  
+    function getSuppliers(){
+        $query =  $this->db->where('type','1')->get('people')->result_array();
+        return $query;
+    }
+    // function getCustomerStatement( $customerID , $datfrom , $datto ) {
+    //     $salesData = $this->db->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('journals')->result();
+    //     $data2 = $this->db->where('peopleID', $customerID)->get('finance')->result_array();
+           
+    //     $total = [];
+    //     foreach( $salesData as $salesData ) {
+       
+    //         $data = $this->db->where('journal_id', $salesData->id)->get('stock')->result_array();
+    //         $total['details'] = $data;
+            
+    //     }
+    //     $total['statement'] = $data2;
+    //     // print_r($total);
+    //     // die();
+    //     return $total;
+
+
+    // }
+    function getCustomerStatement( $customerID , $datfrom , $datto ){
+        $statement = $this->db->where('peopleID', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('finance')->result_array();
+        return $statement;
+    }
 }

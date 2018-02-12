@@ -83,18 +83,33 @@ class Finance extends CI_Controller {
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }
-    public function statement() {
+    public function customer($id) {
         $this->load->model('item_model');
         $data['title'] = '';
         $data['customers'] = $this->item_model->getCustomers();
         $data['content'] = $this->load->view('Statement.php',$data,true);
         $this->load->view('template',$data);
     }
-    function getSalesReport( $customerID ) {
+    function getSalesReport( $customerID , $datfrom , $datto) {
         $this->load->model('item_model');
-        $data['salesData'] = $this->item_model->getSalesData( $customerID  );
-      
+        $data['salesData'] = $this->item_model->getSalesData( $customerID , $datfrom , $datto );
         $this->load->view('TotalSalesReport.php',$data);
+       
+    }
+    public function supplier($id) {
+        $this->load->model('item_model');
+        $data['title'] = '';
+        $data['suppliers'] = $this->item_model->getSuppliers();
+        $data['content'] = $this->load->view('Statement.php',$data,true);
+        //$data['content'] = $this->load->view('SupplierReport\SupplierHistoryView.php',$data,true);
+        $this->load->view('template',$data);
+    }
+    function getcustomerstatement( $customerID , $datfrom , $datto ) {
+        $this->load->model('item_model');
+        $data['title'] = '';
+        $data['salesData'] = $this->item_model->getSalesData( $customerID , $datfrom , $datto );
+        $data['statement'] = $this->item_model->getCustomerStatement( $customerID , $datfrom , $datto );
+        $this->load->view('CustomerStatement.php',$data);
     }
     
 }
