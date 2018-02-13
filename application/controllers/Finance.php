@@ -114,13 +114,13 @@ class Finance extends CI_Controller {
     public function getSupplierHistory($supplierID , $datfrom , $datto) {
         $this->load->model('item_model');
         $data['history'] = $this->item_model->getSupplierHistory( $supplierID , $datfrom , $datto );
-        $this->load->view('SupplierReport\SupplierHistoryView.php',$data);
+        $this->load->view('SupplierReport/SupplierHistoryView.php',$data);
     }
     function getSupplierStatement( $supplierID , $datfrom , $datto ){
         $this->load->model('item_model');
         $data['history'] = $this->item_model->getSupplierHistory( $supplierID , $datfrom , $datto );
        $data['statement'] = $this->item_model->getCustomerStatement( $supplierID , $datfrom , $datto );
-        $this->load->view('SupplierReport\SupplierStatement.php',$data);
+        $this->load->view('SupplierReport/SupplierStatement.php',$data);
     }
     
 }
