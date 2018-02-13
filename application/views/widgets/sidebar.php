@@ -37,7 +37,6 @@
                 <ul class="nav nav-second-level">
                     <li><a href="<?=site_url('finance/receives/insert')?>">Customer</a></li>
                     <li><a href="<?=site_url('finance/payments/insert')?>">Supplier</a></li>
-                    <li><a href="<?=site_url('finance/statement')?>">Statement</a></li>
                 </ul>
             </li>
             <li>

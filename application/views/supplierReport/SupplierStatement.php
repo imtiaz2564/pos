@@ -11,13 +11,12 @@
 
     </tr>
     </thead>
-    <? $paid = 0; foreach( $salesData as $sales) 
-    foreach( $sales as $sales)
-    { $payable  = $sales["quantity"]*$sales["unit_price"];
+    <? $paid = 0; foreach( $history as $history) {
+          $payable  = $history["quantity"]*$history["unit_price"];
         $paid = $paid - $payable;
         ?>
         <tr>
-        <td><?=$sales["date"]?></td>
+        <td><?=$history["date"]?></td>
         <td><?=$payable?></td>
         <td></td>
         <td></td>

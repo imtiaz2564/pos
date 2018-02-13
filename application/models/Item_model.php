@@ -305,4 +305,16 @@ class Item_Model extends CI_Model{
         $statement = $this->db->where('peopleID', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('finance')->result_array();
         return $statement;
     }
+    function getSupplierHistory( $supplierID , $datfrom , $datto){
+      
+        $salesData = $this->db->select('items.name as itemName,stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity')->join('items','items.id=item_name','left')->where('warehouse', $supplierID)->where('date >=',$datfrom)->where('date <=',$datto)->get('stock')->result_array();
+        return $salesData;
+
+    }
+    // function getSupplierHistory( $supplierID , $datfrom , $datto){
+      
+    //     $salesData = $this->db->select('items.name as itemName,stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity')->join('items','items.id=item_name','left')->where('warehouse', $supplierID)->where('date >=',$datfrom)->where('date <=',$datto)->get('stock')->result_array();
+    //     return $salesData;
+
+    // }
 }

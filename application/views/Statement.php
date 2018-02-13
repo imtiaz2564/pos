@@ -44,6 +44,12 @@
         <div id = "reportdetails" ></div>
     <div class="panel-footer submit">
         <div class="btn-group submit">
+        <? if( $this->uri->segment(3) == 'supplierhistory' || $this->uri->segment(3) == 'supplierstatement') { ?>
+            <a href="<?=site_url('item/purchase')?>" class = "btn btn-primary pull-right">Close</a>
+        <? } ?>
+        <? if( $this->uri->segment(3) == 'history' || $this->uri->segment(3) == 'statement') { ?>
+            <a href="<?=site_url('item/sale')?>" class = "btn btn-primary pull-right">Close</a>
+        <? } ?>   
             <a href="#" class = "btn btn-primary pull-right" onclick="return submitCustomerData()">Submit</a>
             <div class="clearfix"></div>            
         </div>
@@ -56,25 +62,41 @@
         var customerID = $('select[name=customerId]').val();
         var salesFrom = $('input[name=salesFrom]').val();
         var salesTo = $('input[name=salesTo]').val();
+        if(salesFrom.length  ==  ' ' || salesTo.length  ==  ' ' ){
+            alert('Insert Date');
+            return false;
+        }
         $('#reportdetails').load('<?=site_url('finance/getSalesReport')?>/'+customerID+'/'+salesFrom+'/'+salesTo+'/');
         <? } ?>
         <? $uri = $this->uri->segment(3); if( $this->uri->segment(3) == 'statement' ) { ?>
         var customerID = $('select[name=customerId]').val();
         var salesFrom = $('input[name=salesFrom]').val();
         var salesTo = $('input[name=salesTo]').val();
+        if(salesFrom.length  ==  ' ' || salesTo.length  ==  ' ' ){
+            alert('Insert Date');
+            return false;
+        }
         $('#reportdetails').load('<?=site_url('finance/getcustomerstatement')?>/'+customerID+'/'+salesFrom+'/'+salesTo+'/');
         <? } ?>
         <? $uri = $this->uri->segment(3); if( $this->uri->segment(3) == 'supplierhistory' ) { ?>
         var supplierId = $('select[name=supplierId]').val();
         var salesFrom = $('input[name=salesFrom]').val();
         var salesTo = $('input[name=salesTo]').val();
-        $('#reportdetails').load('<?=site_url('finance/getSalesReport')?>/'+supplierId+'/'+salesFrom+'/'+salesTo+'/');
+        if(salesFrom.length  ==  ' ' || salesTo.length  ==  ' ' ){
+            alert('Insert Date');
+            return false;
+        }
+        $('#reportdetails').load('<?=site_url('finance/getSupplierHistory')?>/'+supplierId+'/'+salesFrom+'/'+salesTo+'/');
         <? } ?>
         <? $uri = $this->uri->segment(3); if( $this->uri->segment(3) == 'supplierstatement' ) { ?>
         var supplierId = $('select[name=supplierId]').val();
         var salesFrom = $('input[name=salesFrom]').val();
         var salesTo = $('input[name=salesTo]').val();
-        $('#reportdetails').load('<?=site_url('finance/getcustomerstatement')?>/'+supplierId+'/'+salesFrom+'/'+salesTo+'/');
+        if(salesFrom.length  ==  ' ' || salesTo.length  ==  ' ' ){
+            alert('Insert Date');
+            return false;
+        }
+        $('#reportdetails').load('<?=site_url('finance/getSupplierStatement')?>/'+supplierId+'/'+salesFrom+'/'+salesTo+'/');
         <? } ?>
     }
 </script>
