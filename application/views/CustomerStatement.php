@@ -4,6 +4,8 @@
     <thead>
     <tr>
         <td><b>Date</b></td>
+        <td><b>Customer Name</b></td>
+        <td><b>Customer ID</b></td>
         <td><b>Payable Amount</b></td>
         <td><b>Paid Amount</b></td>
         <td><b>Details</b></td>
@@ -13,11 +15,14 @@
     </thead>
     <? $paid = 0; foreach( $salesData as $sales) 
     foreach( $sales as $sales)
-    { $payable  = $sales["quantity"]*$sales["unit_price"];
+    { //$payable  = $sales["quantity"]*$sales["unit_price"];
+        $payable  = $sales["total"];
         $paid = $paid - $payable;
         ?>
         <tr>
         <td><?=$sales["date"]?></td>
+        <td><?=$sales["name"]?></td>
+        <td><?=$sales["code"]?></td>
         <td><?=$payable?></td>
         <td></td>
         <td></td>
@@ -30,9 +35,11 @@
     <tr>
         <td><?=$state["date"]?></td>
         <td></td>
+        <td></td>
+        <td></td>
         <td><?=$state["amount"]?></td>
         <? $paid = $paid+$state["amount"] ?>
-        <td></td>
+        <td><?=$state["description"]?></td>
         <td><?=$paid?></td>
     </tr>
     <? } ?>

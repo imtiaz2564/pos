@@ -60,7 +60,7 @@
                     <td></td>
                     <td>Total Payable</td>
                     <!-- <td><?//=($total+$salesData['labourCost'])-$salesData['totalDiscount']?></td> -->
-                    <td><?=($total+$labourCost+$totalDiscount)?></td>
+                    <td><?=($total+$labourCost)-$totalDiscount?></td>
                 </tr>
         </table>    
 </div>

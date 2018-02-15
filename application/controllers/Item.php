@@ -153,7 +153,9 @@ class Item extends CI_Controller {
             'item_name' => 'Item Name',
             'warehouse' => 'Supplier',
             'quantity' => 'Quantity',
-            'transport' => 'Transport',
+            'transportCost' => 'Transport Cost',
+            'labourCost' => 'Labour Cost',
+            'transport' => 'Transport Info',
             'receiver' => 'Receiver Info',
             'driverName' => 'Driver Info',
 
@@ -162,11 +164,10 @@ class Item extends CI_Controller {
          $this->crud->join('warehouse','people','id','name','type=1');
          $this->crud->before_save($this, 'checkStock');
          $this->crud->after_save($this, 'stockUpdate');
-        // $this->crud->use_modal();
          $this->crud->set_rule('item_name','required');
          $this->crud->set_hidden('type','2'); // 2 for transfer
-        $this->crud->order(['4','5','0','2','1','3','6']);
-       $this->crud->custom_form('items/import_form');
+        $this->crud->order(['6','7','4','5','0','2','1','3','8']);
+        $this->crud->custom_form('items/import_form');
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }

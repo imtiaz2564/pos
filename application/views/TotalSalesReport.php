@@ -4,16 +4,23 @@
     <thead>
     <tr>
         <td><b>Date</b></td>
+        <td><b>Customer Name</b></td>
+        <td><b>Customer ID</b></td>
         <td><b>Invoice No</b></td>
         <td><b>Amonuts</b></td>
     </tr>
     </thead>
     <? foreach( $salesData as $sales) 
+    // print_r($sales);
+    // die();
     foreach( $sales as $sales) { ?>
+    
     <tr>
         <td><?=$sales["date"]?></td>
+        <td><?=$sales["name"]?></td>
+        <td><?=$sales["code"]?></td>
         <td><?=$sales["journal_id"]?></td>
-        <td><?=$sales["quantity"]*$sales["unit_price"]?></td>
+        <td><?=$sales["total"]?></td>
     </tr>
     <? } ?>
     </table>    

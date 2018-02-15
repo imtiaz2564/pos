@@ -10,22 +10,41 @@
         <div class="row">
             <fieldset>
                 <div class="col-md-4 form-group">
-                <? $uri = $this->uri->segment(3); if( $this->uri->segment(3) == 'history' || $this->uri->segment(3) == 'statement' ) { ?>
+                <? $uri = $this->uri->segment(3); if( $this->uri->segment(3) == 'history'  ) { ?>
                     
-                        <label>Customer ID  :</label>
+                        <label>Business Name ( Customer ) :</label>
                         <select name = "customerId" class="form-control autocomplete">
+                        <option  value = "0" >ALL</option>
                         <? foreach($customers as $customer) {?>
-                        <option  value = <?=$customer['id']?>><?=$customer['name']?></option>
+                        <option  value = <?=$customer['id']?>><?=$customer['businessName']?></option>
                         <? } ?>
                         </select>
      
-                <? } ?>
-                <? $uri = $this->uri->segment(3); if( $this->uri->segment(3) == 'supplierhistory' || $this->uri->segment(3) == 'supplierstatement') { ?>
+                <? }  if(  $this->uri->segment(3) == 'statement' ) { ?>
                     
-                    <label>Supplier ID  :</label>
+                    <label>Business Name ( Customer ) :</label>
+                    <select name = "customerId" class="form-control autocomplete">
+                    <? foreach($customers as $customer) {?>
+                    <option  value = <?=$customer['id']?>><?=$customer['businessName']?></option>
+                    <? } ?>
+                    </select>
+ 
+            <? }  if( $this->uri->segment(3) == 'supplierhistory') { ?>
+                    
+                    <label>Compnay Name ( Supplier ):</label>
+                    <select name = "supplierId" class="form-control autocomplete">
+                    <option  value = "0" >ALL</option>
+                    <? foreach($suppliers as $supplier) {?>
+                    <option  value = <?=$supplier['id']?>><?=$supplier['businessName']?></option>
+                    <? } ?>
+                    </select>
+ 
+                <? } if(  $this->uri->segment(3) == 'supplierstatement') { ?>
+                    
+                    <label>Compnay Name ( Supplier ):</label>
                     <select name = "supplierId" class="form-control autocomplete">
                     <? foreach($suppliers as $supplier) {?>
-                    <option  value = <?=$supplier['id']?>><?=$supplier['name']?></option>
+                    <option  value = <?=$supplier['id']?>><?=$supplier['businessName']?></option>
                     <? } ?>
                     </select>
  
@@ -42,14 +61,14 @@
            </fieldset>   
         </div>
         <div id = "reportdetails" ></div>
-    <div class="panel-footer submit">
-        <div class="btn-group submit">
-        <? if( $this->uri->segment(3) == 'supplierhistory' || $this->uri->segment(3) == 'supplierstatement') { ?>
-            <a href="<?=site_url('item/purchase')?>" class = "btn btn-primary pull-right">Close</a>
-        <? } ?>
-        <? if( $this->uri->segment(3) == 'history' || $this->uri->segment(3) == 'statement') { ?>
-            <a href="<?=site_url('item/sale')?>" class = "btn btn-primary pull-right">Close</a>
-        <? } ?>   
+        <div class="panel-footer submit">
+            <div class="btn-group submit">
+            <? if( $this->uri->segment(3) == 'supplierhistory' || $this->uri->segment(3) == 'supplierstatement') { ?>
+                <a href="<?=site_url('item/purchase')?>" class = "btn btn-primary pull-right">Close</a>
+            <? } ?>
+            <? if( $this->uri->segment(3) == 'history' || $this->uri->segment(3) == 'statement') { ?>
+                <a href="<?=site_url('item/sale')?>" class = "btn btn-primary pull-right">Close</a>
+            <? } ?>   
             <a href="#" class = "btn btn-primary pull-right" onclick="return submitCustomerData()">Submit</a>
             <div class="clearfix"></div>            
         </div>
