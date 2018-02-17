@@ -11,7 +11,14 @@
 
     </tr>
     </thead>
-    <? $paid = 0; foreach( $history as $history) {
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>        
+        <td>Opening Balance</td>
+        <td><?=$openingBalance?></td>
+    </tr>
+    <? $paid = $openingBalance; foreach( $history as $history) {
           $payable  = $history["quantity"]*$history["unit_price"];
         $paid = $paid - $payable;
         ?>

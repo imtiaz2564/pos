@@ -29,68 +29,45 @@ class Item extends CI_Controller {
 //            'pack' => 'Pack',
 //             'code' => 'Item Code',
             'name' => 'Item Name',
- //           'uom'=>'UoM',
-//            'type' => 'Type',
             'parent' => 'Parent',
-            //'labourCost' => 'Labour Cost',
             'mrp' => 'MRP',
             'discount' => 'Discount',
             'truck' => 'Delivery By Truck',
             'thela' => 'Delivery By Thela',
-            //'purchase_price' => 'Purchase Price',
-            //'mrp' => 'MRP',
-            //'pack' => 'Pack',
         ]);
-        //$this->crud->display_fields(['Medicine Name','Medicine Code','Pack']);
-         $this->crud->set_hidden('type','1'); // 1 for Medicine
+        $this->crud->set_hidden('type','1'); // 1 for Medicine
         if($this->uri->segment(3) == 'ajax') {   
-       $this->crud->ci->db->where('items.type','1'); // 1 for Medicine
+            $this->crud->ci->db->where('items.type','1'); // 1 for Medicine
         }
-  //  $this->crud->join('uom','uom','id','uom');
-       
-  $this->crud->join('parent','items','id','name','items.type=0');
+        $this->crud->join('parent','items','id','name','items.type=0');
   
-  //$this->crud->join('supplier','people','id','name','people.type=1');
+        //$this->crud->join('supplier','people','id','name','people.type=1');
         $this->crud->set_rule('name','required');
-    //    $this->crud->set_rule('code','required');
-     //   $this->crud->set_option('type',['1'=>'Item','0'=>'Category']);
+        //$this->crud->set_rule('code','required');
+        //$this->crud->set_option('type',['1'=>'Item','0'=>'Category']);
         $this->crud->set_search('name');
-     //   $this->crud->custom_form('items/item_create_form');
+        //$this->crud->custom_form('items/item_create_form');
         $this->crud->use_modal();
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }
     public function category(){
         //if($this->uri->segment(2)=='') redirect('item/index'); // datatable ajax list issue.
-        
         //$data['title'] = 'Medicines List';
         $data['title'] = 'Category List';
 
         $this->crud->init('items',[
-//            'name' => 'Medicine Name',
-//            'code' => 'Medicine Code',
-//            'cp' => 'CP Price',
-//            'tp' => 'TP Price',
-//            'mrp' => 'MRP',
-//            'pack' => 'Pack',
-//             'code' => 'Item Code',
             'name' => 'Category Name',
- //           'uom'=>'UoM',
-  //          'type' => 'Type',
-     //       'parent' => 'Parent',
-            //'purchase_price' => 'Purchase Price',
-            //'mrp' => 'MRP',
-            //'pack' => 'Pack',
         ]);
         //$this->crud->display_fields(['Medicine Name','Medicine Code','Pack']);
-         $this->crud->set_hidden('type','0'); // 1 for Medicine
-            $this->crud->ci->db->where('type','0'); // 1 for Medicine
+        $this->crud->set_hidden('type','0'); // 1 for Medicine
+        $this->crud->ci->db->where('type','0'); // 1 for Medicine
         //$this->crud->join('uom','uom','id','uom');
-       // $this->crud->join('parent','items','id','name','items.type=0');
+        //$this->crud->join('parent','items','id','name','items.type=0');
         //$this->crud->join('supplier','people','id','name','people.type=1');
         $this->crud->set_rule('name','required');
-    //    $this->crud->set_rule('code','required');
-     //   $this->crud->set_option('type',['1'=>'Item','0'=>'Category']);
+        //$this->crud->set_rule('code','required');
+        //$this->crud->set_option('type',['1'=>'Item','0'=>'Category']);
         $this->crud->set_search('name');
         //$this->crud->custom_form('items/item_create_form');
         $this->crud->use_modal();
@@ -102,9 +79,6 @@ class Item extends CI_Controller {
 
         $this->crud->init('items',[
             'name' => 'Item Name',
-            //'code' => 'Item Code',
-            //'pack' => 'Pack',
-
         ]);
         //$this->crud->display_fields(['Item Code','Item Name','Stock Amount']);
         $this->crud->set_hidden('type','0'); // 1 for Medicine
@@ -126,8 +100,7 @@ class Item extends CI_Controller {
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }
-    public function stockbysupplier()
-    {
+    public function stockbysupplier() {
         $data['title'] = ' ';
         $this->load->model('item_model');
         $data['supplierInfo'] = $this->item_model->getRemainingBySupplier();
@@ -155,18 +128,22 @@ class Item extends CI_Controller {
             'quantity' => 'Quantity',
             'transportCost' => 'Transport Cost',
             'labourCost' => 'Labour Cost',
+            'date' => 'Import Date',
+            'unloadDate' => 'Unload Date',
             'transport' => 'Transport Info',
             'receiver' => 'Receiver Info',
             'driverName' => 'Driver Info',
 
         ]);
-         $this->crud->join('item_name','items','id','name','type=1');
-         $this->crud->join('warehouse','people','id','name','type=1');
-         $this->crud->before_save($this, 'checkStock');
-         $this->crud->after_save($this, 'stockUpdate');
-         $this->crud->set_rule('item_name','required');
-         $this->crud->set_hidden('type','2'); // 2 for transfer
-        $this->crud->order(['6','7','4','5','0','2','1','3','8']);
+        $this->crud->join('item_name','items','id','name','type=1');
+        $this->crud->join('warehouse','people','id','name','type=1');
+        $this->crud->before_save($this, 'checkStock');
+        $this->crud->after_save($this, 'stockUpdate');
+        $this->crud->change_type('date','date');
+        $this->crud->change_type('unloadDate','date');
+        $this->crud->set_rule('item_name','required');
+        $this->crud->set_hidden('type','2'); // 2 for transfer
+        $this->crud->order(['10','9','8','7','6','4','5','0','2','1','3']);
         $this->crud->custom_form('items/import_form');
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
@@ -203,8 +180,6 @@ class Item extends CI_Controller {
         }elseif($this->uri->segment(3) == 'edit'){
             $this->session->set_userdata('journal_id',$this->uri->segment(4)); 
             //$sup = $this->input->post('idSupplier');
-            //echo $sup;    
-           
             $this->session->set_userdata('type','0'); // Stock Type: IN
             
         

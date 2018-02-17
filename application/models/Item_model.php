@@ -323,8 +323,8 @@ class Item_Model extends CI_Model{
         return $salesData;
 
     }
-    // function getSupplierHistory( $supplierID , $datfrom , $datto){
-    //     $salesData = $this->db->select('items.name as itemName,stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity')->join('items','items.id=item_name','left')->where('warehouse', $supplierID)->where('date >=',$datfrom)->where('date <=',$datto)->get('stock')->result_array();
-    //     return $salesData;
-    // }
+    function getOpeningBalance($customerID){
+        $data = $this->db->where('id',$customerID)->get('people')->row();
+        return $data->openingBalance; 
+    }
 }

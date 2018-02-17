@@ -108,7 +108,8 @@ class Finance extends CI_Controller {
         $this->load->model('item_model');
         $data['title'] = '';
         $data['salesData'] = $this->item_model->getSalesData( $customerID , $datfrom , $datto );
-        $data['statement'] = $this->item_model->getCustomerStatement( $customerID , $datfrom , $datto );
+        $data['statement'] = $this->item_model->getCustomerStatement($customerID , $datfrom , $datto);
+        $data['openingBalance'] = $this->item_model->getOpeningBalance($customerID);
         $this->load->view('CustomerStatement.php',$data);
     }
     public function getSupplierHistory($supplierID , $datfrom , $datto) {
@@ -119,7 +120,8 @@ class Finance extends CI_Controller {
     function getSupplierStatement( $supplierID , $datfrom , $datto ){
         $this->load->model('item_model');
         $data['history'] = $this->item_model->getSupplierHistory( $supplierID , $datfrom , $datto );
-       $data['statement'] = $this->item_model->getCustomerStatement( $supplierID , $datfrom , $datto );
+        $data['openingBalance'] = $this->item_model->getOpeningBalance($supplierID);
+        $data['statement'] = $this->item_model->getCustomerStatement( $supplierID , $datfrom , $datto );
         $this->load->view('supplierReport/SupplierStatement.php',$data);
     }
     

@@ -271,40 +271,39 @@ $.ajaxSetup({ cache: false });
 $('input[name=idCustomer],input[name=phone],input[name=customer]').keypress(function(e) {
             
     if(e.which == 13) {
-        
         $.ajax({
         type: 'POST',
         dataType: 'json',
         url: '<?=site_url('item/getCustomerData/')?>'+'/'+$(this).val()+'/', 
         success: function (data) {
             customerID = data["id"]; 
-             phone = data["phone"];
-             name = data["name"];
-             customer_code = data["code"];
-             businessName = data["businessName"];
-             email = data["email"];
-             address = data["address"];
-             businessAddress = data["businessAddress"];
-             area = data["area"];
-             district = data["district"];
-             openingBalance = data["openingBalance"];
-             currentBalance = data["totalBalance"]; 
-             $('input[name=idCustomer]').val(customer_code);
-             $('input[name=phone]').val(phone);
-             $('input[name=customer]').val(name);
+            phone = data["phone"];
+            name = data["name"];
+            customer_code = data["code"];
+            businessName = data["businessName"];
+            email = data["email"];
+            address = data["address"];
+            businessAddress = data["businessAddress"];
+            area = data["area"];
+            district = data["district"];
+            openingBalance = data["openingBalance"];
+            currentBalance = data["totalBalance"]; 
+            $('input[name=idCustomer]').val(customer_code);
+            $('input[name=phone]').val(phone);
+            $('input[name=customer]').val(name);
         
-             $('#cusId').val(customerID);
-             $('#cusName').html(name);
-             $('#businessName').html(businessName);
-             $('#email').html(email);
-             $('#address').html(address);
-             $('#businessAddress').html(businessAddress);
-             $('#area').html(area);
-             $('#district').html(district);
-             $('#openingBalance').html(openingBalance);
-             $('#currentBalance').html(currentBalance);
-            }
-        });
+            $('#cusId').val(customerID);
+            $('#cusName').html(name);
+            $('#businessName').html(businessName);
+            $('#email').html(email);
+            $('#address').html(address);
+            $('#businessAddress').html(businessAddress);
+            $('#area').html(area);
+            $('#district').html(district);
+            $('#openingBalance').html(openingBalance);
+            $('#currentBalance').html(currentBalance);
+        }
+    });
         
         
     }
@@ -314,6 +313,14 @@ $('input[name=idCustomer],input[name=phone],input[name=customer]').keypress(func
         $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
         $('#deliveryType').show();
     }
+    // $.ajax({
+    //    type: 'POST',
+    //    url: '<?//=site_url('item/getstockdata')?>'+'/'+journalId+'/'+labourCost+'/'+totalDiscount+'/',
+    //    async: false,
+    //    success: function(data) {
+    //     $('.grandTotal').val(data['quantity']);
+    //    }
+    //  });
 });
 <?}?>
 $('#formJournal').submit(function() {
@@ -349,7 +356,8 @@ $('#formJournal').submit(function() {
     
 <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
    // var journalId = '<?//=$this->uri->segment(4)?>';
-    
+ 
+
     $.ajax({
        type: 'POST',
        url: '<?=site_url('item/getstockdata')?>'+'/'+journalId+'/'+labourCost+'/'+totalDiscount+'/',

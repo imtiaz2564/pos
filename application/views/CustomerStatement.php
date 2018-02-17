@@ -13,7 +13,16 @@
 
     </tr>
     </thead>
-    <? $paid = 0; foreach( $salesData as $sales) 
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>        
+        <td></td>
+        <td></td>
+        <td>Opening Balance</td>
+        <td><?=$openingBalance?></td>
+    </tr>
+    <? $paid = $openingBalance; foreach( $salesData as $sales) 
     foreach( $sales as $sales)
     { //$payable  = $sales["quantity"]*$sales["unit_price"];
         $payable  = $sales["total"];

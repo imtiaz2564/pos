@@ -19,14 +19,14 @@
         <td><input type="text" name="transportCost" value="" class="form-control" placeholder="Transport Cost"></td> -->
         <? } ?>
         </tr>
-        
-    </table>
+        </table>
     
 <?=$form_close?>
-<!-- <div class="form-group" style='float: right;'>
+<div class="form-group" style='float: right;'>
         <label>Grand Total: </label>
-        <label>     </label>
-    </div> -->
+        <label class="form-group delivery"><input type="text" style="color:#0000FF" name="grandTotal" value="" class="form-control" placeholder="Grand Total" readonly></label>
+   
+    </div>
 <script>
 
 $(function(){
@@ -58,6 +58,7 @@ initialize();
     //     }
     //     });
     //     });
+    var grandtotal = 0;
        $('input[name=unit_price],input[name=quantity]').on('keyup',function(){
         var quantity = $('input[name=quantity]').val();
        
@@ -66,18 +67,23 @@ initialize();
         var dis = discount * quantity;
         
         $('input[name=total]').val(total);
+        grandtotal += total;
+        $('input[name=grandTotal]').val(grandtotal);
+       
        // $('input[name=labourCost]').val(cost);
         $('input[name=discount]').val(dis);
     });
 
 <?  } else { ?>
+var purchasetotal = 0;
     $('input[name=unit_price],input[name=quantity]').on('keyup',function(){
         //var unit_price = $('input[name=unit_price]').val(mrp);
         var quantity = $('input[name=quantity]').val();
         var unit_price = $('input[name=unit_price]').val();
         var total = unit_price * quantity;
-
         $('input[name=total]').val(total);
+        purchasetotal += total;
+        $('input[name=grandTotal]').val(purchasetotal);
     });
 <? } ?>
 $('form').submit(function() {
