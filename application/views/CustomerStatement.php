@@ -7,8 +7,9 @@
         <td><b>Customer Name</b></td>
         <td><b>Customer ID</b></td>
         <td><b>Payable Amount</b></td>
+        <td><b>Sales Detail</b></td>
         <td><b>Paid Amount</b></td>
-        <td><b>Details</b></td>
+        <td><b>Account Detail</b></td>
         <td><b>Balance</b></td>
 
     </tr>
@@ -17,6 +18,7 @@
         <td></td>
         <td></td>
         <td></td>        
+        <td></td>
         <td></td>
         <td></td>
         <td>Opening Balance</td>
@@ -33,6 +35,7 @@
         <td><?=$sales["name"]?></td>
         <td><?=$sales["code"]?></td>
         <td><?=$payable?></td>
+        <td><?=$sales["salesDescription"]?></td>
         <td></td>
         <td></td>
         <td><?=$paid?></td>
@@ -43,6 +46,7 @@
  
     <tr>
         <td><?=$state["date"]?></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>

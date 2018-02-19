@@ -147,10 +147,10 @@ class Item_Model extends CI_Model{
     }
     function getSalesData( $customerID , $datfrom , $datto){
         if($customerID == 0 ){
-            $salesData = $this->db->select('people.name as cusName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount')->join('people','people.id=customer_id','left')->where('journals.type', 1)->where('date >=',$datfrom)->where('date <=',$datto)->get('journals')->result_array();
+            $salesData = $this->db->select('people.name as cusName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('journals.type', 1)->where('date >=',$datfrom)->where('date <=',$datto)->get('journals')->result_array();
         }
         else{
-            $salesData = $this->db->select('people.name as cusName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount')->join('people','people.id=customer_id','left')->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('journals')->result_array();
+            $salesData = $this->db->select('people.name as cusName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('journals')->result_array();
         }
         $total = [];
         foreach( $salesData as $salesData ) {
@@ -158,7 +158,8 @@ class Item_Model extends CI_Model{
            
             $data[0]['name'] = $salesData['cusName'];
             $data[0]['code'] = $salesData['cusID'];
-            
+            $data[0]['salesDescription'] = $salesData['salesDescription'];
+
             $total[] = $data;
             
         }
@@ -316,10 +317,10 @@ class Item_Model extends CI_Model{
     }
     function getSupplierHistory( $supplierID , $datfrom , $datto){
         if($supplierID == 0){
-            $salesData = $this->db->select('people.name as supplier,people.code as supplierID,items.name as itemName,stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->where('stock.type', 0)->where('date >=',$datfrom)->where('date <=',$datto)->get('stock')->result_array();
+            $salesData = $this->db->select('people.name as supplier,people.code as supplierID,items.name as itemName,stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,journals.description as purchaseDescription')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('stock.type', 0)->where('stock.date >=',$datfrom)->where('stock.date <=',$datto)->get('stock')->result_array();
             return $salesData;
         }    
-        $salesData = $this->db->select('people.name as supplier,people.code as supplierID,items.name as itemName,stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->where('warehouse', $supplierID)->where('date >=',$datfrom)->where('date <=',$datto)->get('stock')->result_array();
+        $salesData = $this->db->select('people.name as supplier,people.code as supplierID,items.name as itemName,stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,journals.description as purchaseDescription')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('warehouse', $supplierID)->where('stock.date >=',$datfrom)->where('stock.date <=',$datto)->get('stock')->result_array();
         return $salesData;
 
     }

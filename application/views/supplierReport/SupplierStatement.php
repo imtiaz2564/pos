@@ -5,8 +5,9 @@
     <tr>
         <td><b>Date</b></td>
         <td><b>Payable Amount</b></td>
+        <td><b>Purchase Detail</b></td>
         <td><b>Paid Amount</b></td>
-        <td><b>Details</b></td>
+        <td><b>Account Detail</b></td>
         <td><b>Balance</b></td>
 
     </tr>
@@ -14,6 +15,7 @@
     <tr>
         <td></td>
         <td></td>
+        <td></td> 
         <td></td>        
         <td>Opening Balance</td>
         <td><?=$openingBalance?></td>
@@ -25,6 +27,7 @@
         <tr>
         <td><?=$history["date"]?></td>
         <td><?=$payable?></td>
+        <td><?=$history["purchaseDescription"]?></td>
         <td></td>
         <td></td>
         <td><?=$paid?></td>
@@ -36,9 +39,10 @@
     <tr>
         <td><?=$state["date"]?></td>
         <td></td>
+        <td></td>
         <td><?=$state["amount"]?></td>
         <? $paid = $paid+$state["amount"] ?>
-        <td></td>
+        <td><?=$state["description"]?></td>
         <td><?=$paid?></td>
     </tr>
     <? } ?>
