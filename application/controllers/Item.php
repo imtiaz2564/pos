@@ -431,5 +431,33 @@ class Item extends CI_Controller {
         }
         return $post;
     }
+    public function refund(){
+        $data['title'] = 'Item Refund';
+
+        $this->crud->init('stock',[
+            'customer_id' => 'Customer ID',
+            'item_name' => 'Item Name',
+            'quantity' => 'Quantity',
+            'date' => 'Refund Date',
+            'reason' => 'Reason',    
+        ]);
+        $this->crud->join('item_name','items','id','name','type=1');
+        $this->crud->change_type('date','date');
+        $this->crud->join('customer_id','people','id','businessAddress','type=0');
+        $this->crud->set_rule('item_name','required');
+        $this->crud->change_type('reason','textarea');
+        $this->crud->set_hidden('type','3'); // 3 for refund
+        $this->crud->after_save($this, 'refundStockUpdate');
+        
+        $this->crud->order(['4','3','0','1','2','5']);
+        $this->crud->custom_form('items/refund_form');
+        $data['content']=$this->crud->run();
+        $this->load->view('template',$data);
+    }
+    function refundStockUpdate($post){
+        $this->load->model('item_model');
+        $this->item_model->updateStock($post['item_name'] , $post['quantity']);
+        die( json_encode(['error'=>'Updated Stock']));
+    }
 
 }

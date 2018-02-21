@@ -19,6 +19,7 @@
                     <li><a href="<?=site_url('item/sale')?>">Sales</a></li>
                     <li><a href="<?=site_url('item/stock')?>">Item Stock</a></li>
                     <li><a href="<?=site_url('item/importregister/insert')?>">Import Register</a></li>
+                    <li><a href="<?=site_url('item/refund/insert')?>">Item Refund</a></li>
                     <li><a href="<?=site_url('item/stockbysupplier')?>">Stock By Supplier</a></li>
                 </ul>
             </li>
