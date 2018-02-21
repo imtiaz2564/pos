@@ -443,7 +443,7 @@ class Item extends CI_Controller {
         ]);
         $this->crud->join('item_name','items','id','name','type=1');
         $this->crud->change_type('date','date');
-        $this->crud->join('customer_id','people','id','businessAddress','type=0');
+        $this->crud->join('customer_id','people','id','businessName','type=0');
         $this->crud->set_rule('item_name','required');
         $this->crud->change_type('reason','textarea');
         $this->crud->set_hidden('type','3'); // 3 for refund
