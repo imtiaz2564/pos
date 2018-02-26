@@ -325,8 +325,11 @@ class Item_Model extends CI_Model{
 
     }
     function getOpeningBalance($customerID){
-        $data = $this->db->where('id',$customerID)->get('people')->row();
-        return $data->openingBalance; 
+        $data = $this->db->where('id',$customerID)->get('people')->result_array();
+        // foreach($data as $data)
+        // print_r($data);
+        // die();
+        return $data;//->openingBalance; 
     }
     function updateStock($item_name,$quantity){
         return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'warehouse'=>3,'type'=>3]);

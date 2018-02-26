@@ -109,7 +109,7 @@ class Finance extends CI_Controller {
         $data['title'] = '';
         $data['salesData'] = $this->item_model->getSalesData( $customerID , $datfrom , $datto );
         $data['statement'] = $this->item_model->getCustomerStatement($customerID , $datfrom , $datto);
-        $data['openingBalance'] = $this->item_model->getOpeningBalance($customerID);
+        $data['info'] = $this->item_model->getOpeningBalance($customerID);
         $this->load->view('CustomerStatement.php',$data);
     }
     public function getSupplierHistory($supplierID , $datfrom , $datto) {
