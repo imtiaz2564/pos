@@ -134,7 +134,7 @@ $('#supplierAccounts').submit(function() {
     date = $('input[name=date]').val();
     amount = $('input[name=amount]').val();
     paymentType = $('select[name=paymentType]').val();
-    description = $('input[name=description]').val(); 
+    detail = $('input[name=description]').val();
     ppl_ID = parseInt($('#pplID').val());
     type =  1;
 
@@ -143,7 +143,7 @@ $('#supplierAccounts').submit(function() {
        dataType: "json",
        url: $('#supplierAccounts').attr('action'),
        //data: $('#supplierAccounts').serialize(),
-       data: { date:date , amount:amount , paymentType:paymentType , description:description , peopleID:ppl_ID , type:type },
+       data: { date:date , amount:amount , paymentType:paymentType , description:detail , peopleID:ppl_ID , type:type },
        success: function(data){
            if( typeof data['error'] !== 'undefined' ){
                $('.error').html(data['error']).slideDown();

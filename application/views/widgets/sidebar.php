@@ -16,6 +16,7 @@
                 <a href="#"><i class="fa fa-bar-chart-o fa-flask"></i> Items <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li><a href="<?=site_url('item/purchase')?>">Purchase</a></li>
+                    <li><a href="<?=site_url('item/localpurchase/insert')?>">Local Purchase</a></li>
                     <li><a href="<?=site_url('item/sale')?>">Sales</a></li>
                     <li><a href="<?=site_url('item/stock')?>">Item Stock</a></li>
                     <li><a href="<?=site_url('item/importregister/insert')?>">Import Register</a></li>

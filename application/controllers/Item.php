@@ -438,6 +438,7 @@ class Item extends CI_Controller {
             'customer_id' => 'Customer ID',
             'item_name' => 'Item Name',
             'quantity' => 'Quantity',
+            'unit_price' => 'Unit Price',
             'date' => 'Refund Date',
             'reason' => 'Reason',    
         ]);
@@ -449,7 +450,7 @@ class Item extends CI_Controller {
         $this->crud->set_hidden('type','3'); // 3 for refund
         $this->crud->after_save($this, 'refundStockUpdate');
         
-        $this->crud->order(['4','3','0','1','2','5']);
+        $this->crud->order(['4','5','0','1','2','3','6']);
         $this->crud->custom_form('items/refund_form');
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
@@ -458,6 +459,31 @@ class Item extends CI_Controller {
         $this->load->model('item_model');
         $this->item_model->updateStock($post['item_name'] , $post['quantity']);
         die( json_encode(['error'=>'Updated Stock']));
+    }
+    public function localpurchase(){
+        die();
+        $data['title'] = 'Local Purchase';
+
+        $this->crud->init('stock',[
+            'warehouse' => 'Customer / Supplier',
+            'item_name' => 'Item Name',
+            'quantity' => 'Quantity',
+            'unit_price' => 'Unit Price',
+            'date' => 'Refund Date',
+            'reason' => 'Reason',    
+        ]);
+        $this->crud->join('item_name','items','id','name','type=1');
+        $this->crud->change_type('date','date');
+        $this->crud->join('warehouse','people','id','businessName');
+        $this->crud->set_rule('item_name','required');
+        $this->crud->change_type('reason','textarea');
+        $this->crud->set_hidden('type','3'); // 3 for refund
+        $this->crud->after_save($this, 'refundStockUpdate');
+        
+        $this->crud->order(['4','3','0','1','2','5']);
+        $this->crud->custom_form('items/refund_form');
+        $data['content']=$this->crud->run();
+        $this->load->view('template',$data);
     }
 
 }

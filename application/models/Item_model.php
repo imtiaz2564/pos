@@ -145,8 +145,8 @@ class Item_Model extends CI_Model{
         $query = $this->db->where('id',$item)->get('items');
         return $query->row();
     }
-    function getSalesData( $customerID , $datfrom , $datto){
-        if($customerID == 0 ){
+    function getSalesData( $customerID , $datfrom , $datto) {
+        if($customerID == 0 ){ // 0 for all customer 
             $salesData = $this->db->select('people.name as cusName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('journals.type', 1)->where('date >=',$datfrom)->where('date <=',$datto)->get('journals')->result_array();
         }
         else{
@@ -154,8 +154,7 @@ class Item_Model extends CI_Model{
         }
         $total = [];
         foreach( $salesData as $salesData ) {
-            $data = $this->db->select('date,journal_id,sum(quantity * unit_price) - sum(discount) - '.$salesData['totalDiscount'].' as total ')->where('journal_id', $salesData['journalId'])->get('stock')->result_array();
-           
+            $data = $this->db->select('date,journal_id,sum(quantity * unit_price) + labourCost - sum(discount) - '.$salesData['totalDiscount'].' as total ')->where('journal_id', $salesData['journalId'])->get('stock')->result_array();
             $data[0]['name'] = $salesData['cusName'];
             $data[0]['code'] = $salesData['cusID'];
             $data[0]['salesDescription'] = $salesData['salesDescription'];
@@ -163,8 +162,6 @@ class Item_Model extends CI_Model{
             $total[] = $data;
             
         }
-        // print_r($total);
-        // die();
         return $total;
 
     }
@@ -335,4 +332,9 @@ class Item_Model extends CI_Model{
         return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'warehouse'=>3,'type'=>3]);
 
     }
+    function getRefund($customerID , $datfrom , $datto){
+        $refund = $this->db->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('stock')->result_array();
+        return $refund;
+
+       }
 }

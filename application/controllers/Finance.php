@@ -21,9 +21,6 @@ class Finance extends CI_Controller {
         $data['title'] = 'Suplier Payments';
         
         $this->crud->init('finance',[
-            //'peopleID' => 'Suplier ID',
-            //  'name' => 'Suplier Name',
-            //  'phone' => 'Phone',
             'date' => 'Date',
             'amount' => 'Amount',
             'paymentType' => 'Payment Type',
@@ -31,17 +28,15 @@ class Finance extends CI_Controller {
         ]);
         $this->crud->set_option('paymentType',['0'=>'Cash','1'=>'TT','2'=>'Online','3'=>'bKash']);
         
-        //$this->crud->join('peopleID','people','id','name','type=1'); // Supplier
-
+        
         $this->crud->set_hidden('finance.type','1'); // Payment
         
         if($this->uri->segment(3) == 'ajax')
             $this->crud->ci->db->where('finance.type','1'); // Payment. Apply where clause only when fetch data.
         
-        //$this->crud->set_rule('peopleID','required');
         $this->crud->set_rule('amount','required');
         $this->crud->change_type('date','date');
-        $this->crud->change_type('description','textarea');
+        //$this->crud->change_type('description','textarea');
         //$this->crud->order([0,1,3,4,2,5,6]);
         
         //$this->crud->use_modal();
@@ -74,12 +69,12 @@ class Finance extends CI_Controller {
         //$this->crud->set_rule('peopleID','required');
         $this->crud->set_rule('amount','required');
         $this->crud->change_type('date','date');
-        $this->crud->change_type('description','textarea');
+        //$this->crud->change_type('description','textarea');
        // $this->crud->order([0,1,3,4,2,5,6]);
         
         //$this->crud->use_modal();
         $this->crud->custom_form('accounts/Customer_Accounts_Form');
-        $this->crud->form_extra('id="customerAccounts"');
+         $this->crud->form_extra('id="customerAccounts"');
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }
@@ -110,6 +105,7 @@ class Finance extends CI_Controller {
         $data['salesData'] = $this->item_model->getSalesData( $customerID , $datfrom , $datto );
         $data['statement'] = $this->item_model->getCustomerStatement($customerID , $datfrom , $datto);
         $data['info'] = $this->item_model->getOpeningBalance($customerID);
+        $data['refund'] = $this->item_model->getRefund($customerID , $datfrom , $datto);
         $this->load->view('CustomerStatement.php',$data);
     }
     public function getSupplierHistory($supplierID , $datfrom , $datto) {
@@ -120,7 +116,8 @@ class Finance extends CI_Controller {
     function getSupplierStatement( $supplierID , $datfrom , $datto ){
         $this->load->model('item_model');
         $data['history'] = $this->item_model->getSupplierHistory( $supplierID , $datfrom , $datto );
-        $data['openingBalance'] = $this->item_model->getOpeningBalance($supplierID);
+        //$data['openingBalance'] = $this->item_model->getOpeningBalance($supplierID);
+        $data['info'] = $this->item_model->getOpeningBalance($supplierID);
         $data['statement'] = $this->item_model->getCustomerStatement( $supplierID , $datfrom , $datto );
         $this->load->view('supplierReport/SupplierStatement.php',$data);
     }

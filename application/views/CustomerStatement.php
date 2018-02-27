@@ -62,19 +62,15 @@ foreach($info as $info)
     <thead>
         <tr>
             <td><b>Date</b></td>
-            <td><b>Customer Name</b></td>
-            <td><b>Customer ID</b></td>
-            <td><b>Payable Amount</b></td>
-            <td><b>Sales Detail</b></td>
-            <td><b>Paid Amount</b></td>
-            <td><b>Account Detail</b></td>
+            <td><b>Sales Description</b></td>
+            <td><b>Payable Amounts</b></td>
+            <td><b>Paid Amounts</b></td>
+            <td><b>Account Description</b></td>
             <td><b>Balance</b></td>
         </tr>
     </thead>
     <tr>
         <td></td>
-        <td></td>
-        <td></td>        
         <td></td>
         <td></td>
         <td></td>
@@ -89,12 +85,8 @@ foreach($info as $info)
         ?>
         <tr>
         <td><?=$sales["date"]?></td>
-        <!-- <td><?//=$sales["name"]?></td>
-        <td><?//=$sales["code"]?></td> -->
-        <td></td>
-        <td></td>
-        <td><?=$payable?></td>
         <td><?=$sales["salesDescription"]?></td>
+        <td><?=$payable?></td>
         <td></td>
         <td></td>
         <td><?=$paid?></td>
@@ -105,11 +97,22 @@ foreach($info as $info)
         <td><?=$state["date"]?></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
         <td><?=$state["amount"]?></td>
         <? $paid = $paid+$state["amount"] ?>
         <td><?=$state["description"]?></td>
+        <td><?=$paid?></td>
+    </tr>
+    <? } ?>
+    <?  foreach($refund as $refund) {   
+        $totalRefund = $refund["quantity"]*$refund["unit_price"];
+        ?>
+    <tr>
+        <td><?=$refund["date"]?></td>
+        <td><?=$refund["reason"]?></td>
+        <td></td>
+        <td><?=(-$totalRefund)?></td>
+        <? $paid = $paid-$totalRefund ?>
+        <td></td>
         <td><?=$paid?></td>
     </tr>
     <? } ?>
