@@ -12,7 +12,8 @@ class Item_Model extends CI_Model{
         // $out = $query->row()->total;
         
         // return $in-$out;
-        $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type','3')->where('warehouse','3')->get('stock');
+        $type = ['3','5','7'];
+        $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where_in('type',$type)->where('warehouse','3')->get('stock');
         $in = $query->row()->total;
 
         $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type','1')->get('stock');
@@ -272,10 +273,10 @@ class Item_Model extends CI_Model{
     //     $this->db->where('journal_id', $journalid); //which row want to upgrade  
     //     $this->db->update('stock');
     // } 
-    function insertStock( $warehouse , $quantity, $item_name ){
+    function updateStock( $item_name , $quantity,  $warehouse , $type ){
         // $query = $this->db->select('sum(quantity) as totalquantity')->where('warehouse',$warehouse)->where('item_name',$item_name)->get('stock')->row();
         // $rest = $query->totalquantity-$quantity;
-        return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'warehouse'=>3,'type'=>3]);
+        return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'warehouse'=>$warehouse ,'type'=>$type]);
     }
     function checkStock( $warehouse ,  $item_name ) {
         $query = $this->db->select('sum(quantity) as totalquantity,')->join('items','items.id=item_name','left')->where('warehouse',$warehouse)->where('item_name',$item_name)->where('stock.type',0)->get('stock')->row();
@@ -313,7 +314,7 @@ class Item_Model extends CI_Model{
         return $statement;
     }
     function getSupplierHistory( $supplierID , $datfrom , $datto){
-        if($supplierID == 0){
+        if($supplierID == 0) {
             $salesData = $this->db->select('people.name as supplier,people.code as supplierID,items.name as itemName,stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,journals.description as purchaseDescription')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('stock.type', 0)->where('stock.date >=',$datfrom)->where('stock.date <=',$datto)->get('stock')->result_array();
             return $salesData;
         }    
@@ -323,18 +324,21 @@ class Item_Model extends CI_Model{
     }
     function getOpeningBalance($customerID){
         $data = $this->db->where('id',$customerID)->get('people')->result_array();
-        // foreach($data as $data)
-        // print_r($data);
-        // die();
         return $data;//->openingBalance; 
     }
-    function updateStock($item_name,$quantity){
-        return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'warehouse'=>3,'type'=>3]);
+    // function updateStock($item_name, $quantity){
+    //     return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'warehouse'=>3,'type'=>5]);
 
-    }
+    // }
     function getRefund($customerID , $datfrom , $datto){
         $refund = $this->db->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('stock')->result_array();
         return $refund;
-
-       }
+    }
+    // function localStockUpdate($item_name, $quantity) {
+    //     return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'warehouse'=>3,'type'=>3]);
+    // }
+    function getStockType($id) {
+        $stock = $this->db->where('id',$id)->get('stock')->row();
+        return $stock->type; 
+    }
 }

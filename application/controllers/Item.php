@@ -267,8 +267,8 @@ class Item extends CI_Controller {
                  'unit_price' => 'Unit Price',
                  'quantity' => 'Quantity',
              ]);
-            $this->crud->display_fields(['Supplier','Item Name','Unit Price','Quantity','Total']);
-            $this->crud->join('warehouse','people','id','name','type=1'); // Medicine only
+            $this->crud->display_fields(['Supplier','Item Name','Unit Price','Quantity','Stock Type','Total']);
+            $this->crud->join('warehouse','people','id','name'); // Medicine only
             $this->crud->set_hidden('date',date('Y-m-d'));
         
 
@@ -280,7 +280,7 @@ class Item extends CI_Controller {
         //$this->crud->join('uom','uom','id','uom');
         //!important    
         $this->crud->where(['journal_id='.$id]);
-        $this->crud->extra_fields($this,['getDiscount'=>'Discount','getTotal'=>'Total' , 'getTotalLabourCost'=>'Labour Cost']);
+        $this->crud->extra_fields($this,['getDiscount'=>'Discount','getStockType'=>'Stock Type','getTotal'=>'Total' , 'getTotalLabourCost'=>'Labour Cost']);
         //$this->crud->order(['2','0','1','3','4']); // don't forget, we have a hidden field
         // $this->crud->order(['4','0','5','1','2','3','6','7']);
         $this->crud->order(['2','3','4','0','1','5']);
@@ -323,7 +323,8 @@ class Item extends CI_Controller {
     
     // }
     public function beforeSave($post){
-        unset($post['total']); return $post;
+        unset($post['total']); //return $post;
+        unset($post['stockType']); return $post;
     }
     function getCustomerData($cusid){
         $this->load->model('item_model');
@@ -393,7 +394,7 @@ class Item extends CI_Controller {
         $this->load->view('SalesInvoice',$data);
       
     }
-    function getDeliveryType($deliveryType,$journalId){
+    function getDeliveryType($deliveryType,$journalId) {
         $this->load->model('item_model');
         $query = $this->item_model->getDeliveryCost($deliveryType,$journalId);
         $data['deliveryCost'] = $query->deliveryCost;
@@ -411,19 +412,18 @@ class Item extends CI_Controller {
        return $query->customer;
     
     }
-    function insertSupplierId($sup_id , $journalid){
+    function insertSupplierId($sup_id , $journalid) {
         $this->load->model('item_model');
-     
         $this->item_model->insertSupplier($sup_id , $journalid);
 
     }
-    public function stockUpdate($post){
+    public function stockUpdate($post) {
         $this->load->model('item_model');
-        $this->item_model->insertStock($post['warehouse'] , $post['quantity'],$post['item_name']);
+        $this->item_model->updateStock($post['item_name'] , $post['quantity'],  '3' , '3');
         die( json_encode(['error'=>'Updated Stock']));
   
     }
-    public function checkStock($post){
+    public function checkStock($post) {
         $this->load->model('item_model');
         $stock = $this->item_model->checkStock($post['warehouse'] , $post['item_name']);
         if($stock < $post['quantity'] ){
@@ -431,7 +431,7 @@ class Item extends CI_Controller {
         }
         return $post;
     }
-    public function refund(){
+    public function refund() {
         $data['title'] = 'Item Refund';
 
         $this->crud->init('stock',[
@@ -447,7 +447,7 @@ class Item extends CI_Controller {
         $this->crud->join('customer_id','people','id','businessName','type=0');
         $this->crud->set_rule('item_name','required');
         $this->crud->change_type('reason','textarea');
-        $this->crud->set_hidden('type','3'); // 3 for refund
+        $this->crud->set_hidden('type','4'); // 4 for refund
         $this->crud->after_save($this, 'refundStockUpdate');
         
         $this->crud->order(['4','5','0','1','2','3','6']);
@@ -455,35 +455,47 @@ class Item extends CI_Controller {
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }
-    function refundStockUpdate($post){
+    function refundStockUpdate($post) {
         $this->load->model('item_model');
-        $this->item_model->updateStock($post['item_name'] , $post['quantity']);
+        $this->item_model->updateStock($post['item_name'] , $post['quantity'] , '3' , '5');
         die( json_encode(['error'=>'Updated Stock']));
     }
-    public function localpurchase(){
-        die();
-        $data['title'] = 'Local Purchase';
+    // public function localpurchase() {
+    //     $data['title'] = 'Local Purchase';
+    //     $this->crud->init('stock',[
+    //         'warehouse' => 'Customer / Supplier',
+    //         'item_name' => 'Item Name',
+    //         'quantity' => 'Quantity',
+    //         'unit_price' => 'Unit Price',
+    //         'date' => 'Date',
+    //     ]);
+    //     $this->crud->join('item_name','items','id','name','type=1');
+    //     $this->crud->change_type('date','date');
+    //     $this->crud->join('warehouse','people','id','businessName');
+    //     $this->crud->set_rule('item_name','required');
+    //     $this->crud->set_hidden('type','6'); // 6 for local purchase
+    //     $this->crud->after_save($this, 'localStockUpdate');
+    //     $this->crud->order(['4','3','0','1','2','5']);
+    //     $this->crud->custom_form('items/localpurchase_form');
+    //     $data['content']=$this->crud->run();
+    //     $this->load->view('template',$data);
+    // }
+    function localStockUpdate($item_name , $quantity ) {
+        $this->load->model('item_model');
+        $this->item_model->updateStock($item_name , $quantity ,'3' , '7');
+        die( json_encode(['error'=>'Updated Sylhet  Stock']));
+    }
+    function getStockType($id){
+        $this->load->model('item_model');
+        $query = $this->item_model->getStockType($id);
+        if( $query == "7" ) {
+            return "Sylhet Stock";
 
-        $this->crud->init('stock',[
-            'warehouse' => 'Customer / Supplier',
-            'item_name' => 'Item Name',
-            'quantity' => 'Quantity',
-            'unit_price' => 'Unit Price',
-            'date' => 'Refund Date',
-            'reason' => 'Reason',    
-        ]);
-        $this->crud->join('item_name','items','id','name','type=1');
-        $this->crud->change_type('date','date');
-        $this->crud->join('warehouse','people','id','businessName');
-        $this->crud->set_rule('item_name','required');
-        $this->crud->change_type('reason','textarea');
-        $this->crud->set_hidden('type','3'); // 3 for refund
-        $this->crud->after_save($this, 'refundStockUpdate');
-        
-        $this->crud->order(['4','3','0','1','2','5']);
-        $this->crud->custom_form('items/refund_form');
-        $data['content']=$this->crud->run();
-        $this->load->view('template',$data);
+        }
+        if( $query == "0" ) {
+            return "Supplier Stock";
+
+        }
     }
 
 }

@@ -13,6 +13,12 @@
             <?php  if( $this->session->userdata('type') == 1 ) { ?>
                 <td><input type="text" name="discount" value="" class="form-control" placeholder="Discount"></td>
             <? } ?>
+            <td> 
+                <select name = "stockType" >
+                    <option value="supplier">Supplier Stock</option>
+                    <option value="sylhet">Sylhet Stock</option>
+                </select>
+            </td>   
             <td><input type="text" name="total" value="" class="form-control" placeholder="total"></td>
         </tr>
     </table>
@@ -22,7 +28,7 @@
         <label>Grand Total: </label>
         <label class="form-group delivery"><input type="text" style="color:#0000FF" name="grandTotal" value="" class="form-control" placeholder="Grand Total" readonly></label>
    
-    </div>
+</div>
 <script>
 
 $(function(){
@@ -77,6 +83,8 @@ initialize();
     
 <? } ?>
 $('form').submit(function() {
+    var stock = $('select[name=stockType]').val();
+    
     $.ajax({
            type: "POST",
            dataType: "json",
@@ -87,15 +95,33 @@ $('form').submit(function() {
                    $('.error').html(data['error']).slideDown();
                }else{
                    reloadData();
-                   clearFields();
                }
            }
          });
+         if( stock == "sylhet") {
+        item = $('select[name=item_name]').val();
+        //alert(item);
+        quantity = $('input[name=quantity]').val();
+        $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '<?=site_url('item/localStockUpdate')?>'+'/'+item+'/'+quantity+'/', 
+                success: function (data) {
+                    if( typeof data['error'] !== 'undefined' ){
+                    $('.error').html(data['error']).slideDown();
+                    }else{
+                        reloadData();
+                        clearFields();
+            
+                    }
+                }
+            });        
+    }
     return false;
 });
 });
 function clearFields(){
-   // $('input[name=grandTotal]').val(' ');
+    //$('input[name=grandTotal]').val(' ');
     $('input[name=quantity]').val(' ');
     $('input[name=unit_price]').val(' ');
     $('input[name=total]').val(' ');
