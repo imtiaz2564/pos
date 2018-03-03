@@ -86,6 +86,9 @@ initialize();
     
 <? } ?>
 $('form').submit(function() {
+    <? if( $this->session->userdata('type') == 1 ) { ?>
+        alert("Do you want to purchase?")
+    <? }?>
     var stock = $('select[name=stockType]').val();
     
     $.ajax({
@@ -98,6 +101,7 @@ $('form').submit(function() {
                    $('.error').html(data['error']).slideDown();
                }else{
                    reloadData();
+                   clearFields();
                }
            }
          });
@@ -125,6 +129,8 @@ $('form').submit(function() {
 });
 function clearFields(){
     //$('input[name=grandTotal]').val(' ');
+    $('select[name=warehouse]').val(' ');
+    $('select[name=item_name]').val(' ');
     $('input[name=quantity]').val(' ');
     $('input[name=unit_price]').val(' ');
     $('input[name=total]').val(' ');

@@ -11,7 +11,7 @@
                     <a href="<?=site_url('item/in/insert')?>" class="btn btn-info" role="button">Purchase Register</a>
                     <!-- <a href="<?//=site_url('finance/supplier/supplierhistory')?>" class="btn btn-info" role="button">Purchase History</a> -->
                     <a href="<?=site_url('finance/customer/supplierhistory')?>" class="btn btn-info" role="button">Purchase History</a>
-                    <a href="<?=site_url('finance/supplier/supplierstatement')?>" class="btn btn-info" role="button">Supplier Statement</a>
+                    <a href="<?=site_url('finance/customer/supplierstatement')?>" class="btn btn-info" role="button">Supplier Statement</a>
                 </div>
             </div>
         </div>
