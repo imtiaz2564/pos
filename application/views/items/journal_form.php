@@ -6,8 +6,7 @@
     </div>
     <div class="panel-body">
         <div class="row">
-            <?$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>   
-                <?=$form_open?>
+        <?=$form_open?>
                     <?php foreach($inputs as $input) { ?>
                     <div class="col-md-3"><?php
                         if($input['label'] !=''){?>
@@ -23,6 +22,8 @@
                     </div>
                 <?=$form_close?>
     
+            <?$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>   
+               
                 <!-- <div class="form-group">
                     <label>Customer ID :</label>
                     <input type="text" name="idCustomer" value="" class="form-control" placeholder="Customer ID" />

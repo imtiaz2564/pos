@@ -39,6 +39,8 @@
                 <ul class="nav nav-second-level">
                     <li><a href="<?=site_url('finance/receives/insert')?>">Customer Payments</a></li>
                     <li><a href="<?=site_url('finance/payments/insert')?>">Supplier Payments</a></li>
+                    <li><a href="<?=site_url('finance/customer/statement')?>">Statement</a></li>
+                    <!-- <a href="<?//=site_url('finance/customer/statement')?>" class="btn btn-info" role="button">Customer Statement</a> -->
                 </ul>
             </li>
             <li>

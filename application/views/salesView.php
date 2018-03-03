@@ -10,7 +10,7 @@
                 <div class="col-md-6">                        
                     <a href="<?=site_url('item/out/insert')?>" class="btn btn-info" role="button">Sales Register</a>
                     <a href="<?=site_url('finance/customer/history')?>" class="btn btn-info" role="button">Sales History</a>
-                    <a href="<?=site_url('finance/customer/statement')?>" class="btn btn-info" role="button">Customer Statement</a>
+                    <!-- <a href="<?//=site_url('finance/customer/statement')?>" class="btn btn-info" role="button">Customer Statement</a> -->
                 </div>
             </div>
         </div>

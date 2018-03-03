@@ -92,6 +92,20 @@ foreach($info as $info)
         <td><?=$paid?></td>
     </tr>
     <? } ?>
+    <? foreach( $history as $history) { //new added 
+            $supplierpayable  = $history["quantity"]*$history["unit_price"];
+            $paid = $paid + $supplierpayable;
+            ?>
+        <tr>
+            <td><?=$history["date"]?></td>
+            <td><?=$history["purchaseDescription"]?></td>
+            <td></td>
+            <td><?=$supplierpayable?></td>
+            <td></td>
+            <td><?=$paid?></td>
+        </tr>
+
+        <? } ?>
     <?  foreach($statement as $state) {   ?>
     <tr>
         <td><?=$state["date"]?></td>
