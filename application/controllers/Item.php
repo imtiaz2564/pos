@@ -326,8 +326,8 @@ class Item extends CI_Controller {
     
     // }
     public function beforeSave($post){
-        unset($post['total']); //return $post;
-        unset($post['stockType']); return $post;
+        unset($post['total']); return $post;
+        //unset($post['stockType']); return $post;
     }
     function getCustomerData($cusid){
         $this->load->model('item_model');
@@ -491,7 +491,7 @@ class Item extends CI_Controller {
     function getStockType($id){
         $this->load->model('item_model');
         $query = $this->item_model->getStockType($id);
-        if( $query == "7" ) {
+        if( $query == "2" ) {
             return "Sylhet Stock";
 
         }

@@ -16,8 +16,8 @@
             <?php  if( $this->session->userdata('type') == 0 ) { ?>
             <td> 
                 <select name = "stockType" >
-                    <option value="supplier">Supplier Stock</option>
-                    <option value="sylhet">Sylhet Stock</option>
+                    <option value="0">Supplier Stock</option>
+                    <option value="2">Sylhet Stock</option>
                 </select>
             </td> 
             <? } ?> 
@@ -89,7 +89,7 @@ $('form').submit(function() {
     
   
     var stock = $('select[name=stockType]').val();
-    
+   
     $.ajax({
            type: "POST",
            dataType: "json",
@@ -104,26 +104,25 @@ $('form').submit(function() {
                }
            }
          });
-         if( stock == "sylhet") {
-        item = $('select[name=item_name]').val();
-        //alert(item);
-        quantity = $('input[name=quantity]').val();
-        $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '<?=site_url('item/localStockUpdate')?>'+'/'+item+'/'+quantity+'/', 
-                success: function (data) {
-                    if( typeof data['error'] !== 'undefined' ){
-                    $('.error').html(data['error']).slideDown();
-                    }else{
-                        reloadData();
-                        clearFields();
-            
+         if( stock == "2") {
+            item = $('select[name=item_name]').val();
+            quantity = $('input[name=quantity]').val();
+            $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '<?=site_url('item/localStockUpdate')?>'+'/'+item+'/'+quantity+'/', 
+                    success: function (data) {
+                        if( typeof data['error'] !== 'undefined' ){
+                        $('.error').html(data['error']).slideDown();
+                        }else{
+                            reloadData();
+                            //clearFields();
+                
+                        }
                     }
-                }
-            });        
-    }
-    return false;
+                });        
+            }
+         return false;
 });
 });
 function clearFields(){

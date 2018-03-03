@@ -345,7 +345,8 @@ class Item_Model extends CI_Model{
     //     return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'warehouse'=>3,'type'=>3]);
     // }
     function getStockType($id) {
+     // echo $id;
         $stock = $this->db->where('id',$id)->get('stock')->row();
-        return $stock->type; 
+        return $stock->stockType; 
     }
 }
