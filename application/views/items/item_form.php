@@ -86,9 +86,8 @@ initialize();
     
 <? } ?>
 $('form').submit(function() {
-    <? if( $this->session->userdata('type') == 1 ) { ?>
-        alert("Do you want to purchase?")
-    <? }?>
+    
+  
     var stock = $('select[name=stockType]').val();
     
     $.ajax({

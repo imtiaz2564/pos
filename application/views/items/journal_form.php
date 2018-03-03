@@ -7,20 +7,48 @@
     <div class="panel-body">
         <div class="row">
             <?$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>   
-            <div class="col-md-6">                        
-                <div class="form-group">
+                <?=$form_open?>
+                    <?php foreach($inputs as $input) { ?>
+                    <div class="col-md-3"><?php
+                        if($input['label'] !=''){?>
+                            <div class="form-group">
+                                <label><?=$input['label']?> :</label>
+                                <?=$input['html']?>
+                            </div>
+                            <?php }else{
+                                    echo $input['html'];
+                                }
+                            ?></div><?php
+                        }?>
+                    </div>
+                <?=$form_close?>
+    
+                <!-- <div class="form-group">
                     <label>Customer ID :</label>
                     <input type="text" name="idCustomer" value="" class="form-control" placeholder="Customer ID" />
-                </div>
+                </div> -->
+                <!-- <div class="form-group">
+                <label>Business Name ( Customer ) :</label>
+                        <select name = "idCustomer" class="form-control autocomplete">
+                        <? //foreach($people as $people) {?>
+                        <option  value = <?//=$people['id']?>><?//=$people['businessName']?></option>
+                        <?// } ?>
+                    </select>
+                 </div>    -->
+                 <div class="col-md-3">                        
+            
                 <div class="form-group">
                     <label>Customer Name :</label>
                         <input type="text" name="customer" value="" class="form-control" placeholder="Customer Name">
                 </div>
+                </div>
+                <div class="col-md-3">                        
+            
                 <div class="form-group">
-            <label>Phone :</label>
-            <input type="text" name="phone" value="" class="form-control" placeholder="Phone">
-        </div>
-            </div>
+                    <label>Phone :</label>
+                    <input type="text" name="phone" value="" class="form-control" placeholder="Phone">
+                </div>
+         </div>
             <? } ?>
             <?//$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>   
             <!-- <div class="col-md-6">                        
@@ -39,62 +67,47 @@
             <label>Phone :</label>
             <input type="text" name="phone" value="" class="form-control" placeholder="Phone">
         </div>
-        </div> -->
-        <?=$form_open?>
-        <?php foreach($inputs as $input) { ?>
-            <div class="col-md-6"><?php
-                if($input['label'] !=''){?>
-                    <div class="form-group">
-                        <label><?=$input['label']?> :</label>
-                        <?=$input['html']?>
-                        </div>
-                    <?php }else{
-                            echo $input['html'];
-                          }
-                    ?></div><?php
-                }?>
-        </div>
-    <?=$form_close?>
+        </div> --> 
     <? //$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
     <div class="row">
-    <div  class= "input-group customerInfo" id = "cusinfo" style="">
-    <div class= "input-group customerInfo"><h1>Customer Info</h1></div>
-    <div class= "input-group customerInfo">
-        <label>Customer Name: </label>
-        <label style="color:#0000FF" id="cusName"></label>
+        <div  class= "input-group customerInfo" id = "cusinfo" style="">
+        <div class= "input-group customerInfo"><h1>Customer Info</h1></div>
+        <div class= "input-group customerInfo">
+            <label>Customer Name: </label>
+            <label style="color:#0000FF" id="cusName"></label>
+        </div>
+        <div class= "input-group customerInfo">
+            <label>Business Name: </label>
+            <label style="color:#0000FF" id="businessName"></label>
+        </div>
+        <div class= "input-group customerInfo">
+            <label>Customer Email: </label>
+            <label style="color:#0000FF" id="email"></label>
+        </div>
+        <div class= "input-group customerInfo">
+            <label>Address: </label>
+            <label style="color:#0000FF" id="address"></label>
+        </div>
+        <div class= "input-group customerInfo">
+            <label>Business Address: </label>
+            <label style="color:#0000FF" id="businessAddress"></label>
+        </div>
+        <div class= "input-group customerInfo">
+            <label>Area: </label>
+            <label style="color:#0000FF" id="area"></label>
+        </div>
+        <div class= "input-group customerInfo">
+            <label>District: </label>
+            <label style="color:#0000FF" id="district"></label>
+        </div>
+        <div class= "input-group customerInfo">
+            <label>Opening Balance: </label>
+            <label style="color:#0000FF" id="openingBalance"></label>
+        <div class= "input-group customerInfo">
+            <label>Current Balance: </label>
+            <label style="color:#0000FF" id="currentBalance"></label>
+        </div>
     </div>
-    <div class= "input-group customerInfo">
-        <label>Business Name: </label>
-        <label style="color:#0000FF" id="businessName"></label>
-    </div>
-    <div class= "input-group customerInfo">
-        <label>Customer Email: </label>
-        <label style="color:#0000FF" id="email"></label>
-    </div>
-    <div class= "input-group customerInfo">
-        <label>Address: </label>
-        <label style="color:#0000FF" id="address"></label>
-    </div>
-    <div class= "input-group customerInfo">
-        <label>Business Address: </label>
-        <label style="color:#0000FF" id="businessAddress"></label>
-    </div>
-    <div class= "input-group customerInfo">
-        <label>Area: </label>
-        <label style="color:#0000FF" id="area"></label>
-    </div>
-    <div class= "input-group customerInfo">
-        <label>District: </label>
-        <label style="color:#0000FF" id="district"></label>
-    </div>
-    <div class= "input-group customerInfo">
-        <label>Opening Balance: </label>
-        <label style="color:#0000FF" id="openingBalance"></label>
-    <div class= "input-group customerInfo">
-        <label>Current Balance: </label>
-        <label style="color:#0000FF" id="currentBalance"></label>
-    </div>
-</div>
 </div>
 <? //} ?>
 <?// $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
@@ -268,9 +281,9 @@ $.ajaxSetup({ cache: false });
 
 <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
    
-$('input[name=idCustomer],input[name=phone],input[name=customer]').keypress(function(e) {
-            
-    if(e.which == 13) {
+// $('input[name=idCustomer],input[name=phone],input[name=customer]').keypress(function(e) {
+    $('select[name=customer_id]').change(function() {         
+    // if(e.which == 13) {
         $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -288,7 +301,7 @@ $('input[name=idCustomer],input[name=phone],input[name=customer]').keypress(func
             district = data["district"];
             openingBalance = data["openingBalance"];
             currentBalance = data["totalBalance"]; 
-            $('input[name=idCustomer]').val(customer_code);
+            //$('input[name=idCustomer]').val(customer_code);
             $('input[name=phone]').val(phone);
             $('input[name=customer]').val(name);
         
@@ -306,8 +319,8 @@ $('input[name=idCustomer],input[name=phone],input[name=customer]').keypress(func
     });
         
         
-    }
-    text =$('input[name=idCustomer]').val();
+    // }
+    text =$('select[name=customer_id]').val();
     if( text.length > 0 ) {
         $('#cusinfo').show();    
         $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');

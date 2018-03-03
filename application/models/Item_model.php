@@ -135,7 +135,8 @@ class Item_Model extends CI_Model{
         // return ($uomCost->labourCost *  $query->quantity)+($query->unit_price	*  $query->quantity);
     }
     function getCustomerData($id){
-        $query = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people');
+        //$query = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people');
+        $query = $this->db->where('id',$id)->get('people');
         return $query->row();
     }
     function getSupplierData($id){
@@ -174,10 +175,16 @@ class Item_Model extends CI_Model{
     function getCustomerBalance($id) {
         $subTotal = 0;
         $total = 0;
-        $peopleID = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row(); 
+        $peopleID = $this->db->where('id',$id)->get('people')->row();
+        
+        //$peopleID = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row(); 
+        
         //$query = $this->db->select('sum(amount) as total')->where('type',0)->where('peopleID',$id)->or_where('name',$id)->or_where('phone',$id)->get('finance')->row();
         $query = $this->db->select('sum(amount) as total')->where('peopleID',$peopleID->id)->get('finance')->row();
-        $openingBalance = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row();
+        //$openingBalance = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row();
+        $openingBalance = $this->db->where('id',$id)->get('people')->row();
+        
+        
         //$data = $this->db->where('customer_id', $id)->or_where('customer',$id)->or_where('phone',$id)->get('journals')->result();
             
         $data = $this->db->where('customer_id', $peopleID->id)->get('journals')->result();

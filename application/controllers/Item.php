@@ -209,16 +209,19 @@ class Item extends CI_Controller {
         }
         
         $this->crud->init('journals',[
+            'customer_id' => 'Business Name ( Customer) ',
+            
             'date' => 'Posting Date',
-            //'customer_id' => 'Customer ID',
-            // 'phone' => 'Phone',
+            //'phone' => 'Phone',
             // 'customer' => 'Customer Name',
             'description' => 'Description',
             //'price_type' => 'Price Type',
         ]);
         //$this->crud->set_option('price_type',['0'=>'CP Price','1'=>'TP Price']);
         //$this->crud->join('customer','people','id','name','type=0'); // Customer
-    
+        $this->crud->join('customer_id','people','id','businessName'); // Customer
+        $this->crud->order(['2','1','0','4','3']);
+
         $this->crud->custom_form('items/journal_form');
         $this->crud->custom_view('items/journalViewOut');
         
@@ -227,7 +230,6 @@ class Item extends CI_Controller {
         $this->crud->set_hidden('type','1'); // Journal Type: OUT
         $this->crud->set_hidden('status','1');
         //$this->crud->set_hidden('item_type','1'); // Item Type: Medicine
-
         $this->crud->change_type('description','textarea');
         $this->crud->change_type('date','date');
         
@@ -236,6 +238,7 @@ class Item extends CI_Controller {
             'title' => 'Sales Register',
         ];
         $data['deliveryType'] = $this->item_model->getDeliveryType();    
+        //$data['people'] = $this->item_model->getPeople();
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }
