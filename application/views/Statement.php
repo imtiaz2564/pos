@@ -15,8 +15,8 @@
                         <label>Business Name ( Customer ) :</label>
                         <select name = "customerId" class="form-control autocomplete">
                         <option  value = "0" >ALL</option>
-                        <? foreach($customers as $customer) {?>
-                        <option  value = <?=$customer['id']?>><?=$customer['businessName']?></option>
+                        <? foreach($people as $people) {?>
+                        <option  value = <?=$people['id']?>><?=$people['businessName']?></option>
                         <? } ?>
                         </select>
      
@@ -24,8 +24,8 @@
                     
                     <label>Business Name ( Customer ) :</label>
                     <select name = "customerId" class="form-control autocomplete">
-                    <? foreach($customers as $customer) {?>
-                    <option  value = <?=$customer['id']?>><?=$customer['businessName']?></option>
+                    <? foreach($people as $people) {?>
+                    <option  value = <?=$people['id']?>><?=$people['businessName']?></option>
                     <? } ?>
                     </select>
  
@@ -34,8 +34,8 @@
                     <label>Compnay Name ( Supplier ):</label>
                     <select name = "supplierId" class="form-control autocomplete">
                     <option  value = "0" >ALL</option>
-                    <? foreach($suppliers as $supplier) {?>
-                    <option  value = <?=$supplier['id']?>><?=$supplier['businessName']?></option>
+                    <? foreach($people as $people) {?>
+                    <option  value = <?=$people['id']?>><?=$people['businessName']?></option>
                     <? } ?>
                     </select>
  
@@ -43,8 +43,8 @@
                     
                     <label>Compnay Name ( Supplier ):</label>
                     <select name = "supplierId" class="form-control autocomplete">
-                    <? foreach($suppliers as $supplier) {?>
-                    <option  value = <?=$supplier['id']?>><?=$supplier['businessName']?></option>
+                    <? foreach($people as $people) {?>
+                    <option  value = <?=$people['id']?>><?=$people['businessName']?></option>
                     <? } ?>
                     </select>
  

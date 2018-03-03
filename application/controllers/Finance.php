@@ -81,7 +81,7 @@ class Finance extends CI_Controller {
     public function customer($id) {
         $this->load->model('item_model');
         $data['title'] = ' ';
-        $data['customers'] = $this->item_model->getCustomers();
+        $data['people'] = $this->item_model->getPeople();
         $data['content'] = $this->load->view('Statement.php',$data,true);
         $this->load->view('template',$data);
     }
@@ -91,14 +91,14 @@ class Finance extends CI_Controller {
         $this->load->view('TotalSalesReport.php',$data);
        
     }
-    public function supplier($id) {
-        $this->load->model('item_model');
-        $data['title'] = '';
-        $data['suppliers'] = $this->item_model->getSuppliers();
-        $data['content'] = $this->load->view('Statement.php',$data,true);
-        //$data['content'] = $this->load->view('SupplierReport\SupplierHistoryView.php',$data,true);
-        $this->load->view('template',$data);
-    }
+    // public function supplier($id) {
+    //     $this->load->model('item_model');
+    //     $data['title'] = '';
+    //     $data['suppliers'] = $this->item_model->getSuppliers();
+    //     $data['content'] = $this->load->view('Statement.php',$data,true);
+    //     //$data['content'] = $this->load->view('SupplierReport\SupplierHistoryView.php',$data,true);
+    //     $this->load->view('template',$data);
+    // }
     function getcustomerstatement( $customerID , $datfrom , $datto ) {
         $this->load->model('item_model');
         $data['title'] = '';
@@ -113,7 +113,7 @@ class Finance extends CI_Controller {
         $data['history'] = $this->item_model->getSupplierHistory( $supplierID , $datfrom , $datto );
         $this->load->view('supplierReport/SupplierHistoryView.php',$data);
     }
-    function getSupplierStatement( $supplierID , $datfrom , $datto ){
+    function getSupplierStatement( $supplierID , $datfrom , $datto ) {
         $this->load->model('item_model');
         $data['history'] = $this->item_model->getSupplierHistory( $supplierID , $datfrom , $datto );
         //$data['openingBalance'] = $this->item_model->getOpeningBalance($supplierID);

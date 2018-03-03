@@ -13,15 +13,15 @@
         <ul class="nav" id="side-menu">
             <li>
 <!--                <a href="#"><i class="fa fa-bar-chart-o fa-flask"></i> Medicine <span class="fa arrow"></span></a>-->
-                <a href="#"><i class="fa fa-bar-chart-o fa-flask"></i> Items <span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-home"></i> Home <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li><a href="<?=site_url('item/purchase')?>">Purchase</a></li>
                     <!-- <li><a href="<?//=site_url('item/localpurchase/insert')?>">Local Purchase</a></li> -->
                     <li><a href="<?=site_url('item/sale')?>">Sales</a></li>
-                    <li><a href="<?=site_url('item/stock')?>">Item Stock</a></li>
-                    <li><a href="<?=site_url('item/importregister/insert')?>">Import Register</a></li>
-                    <li><a href="<?=site_url('item/refund/insert')?>">Item Refund</a></li>
-                    <li><a href="<?=site_url('item/stockbysupplier')?>">Stock By Supplier</a></li>
+                    <li><a href="<?=site_url('item/stock')?>">Sylhet Stock</a></li>
+                    <li><a href="<?=site_url('item/importregister/insert')?>">Import</a></li>
+                    <li><a href="<?=site_url('item/refund/insert')?>">Refund</a></li>
+                    <li><a href="<?=site_url('item/stockbysupplier')?>">Supplier Stock</a></li>
                 </ul>
             </li>
 <!--
@@ -37,8 +37,8 @@
             <li>
                 <a href="#"><i class="fa fa-dollar"></i> Accounts<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li><a href="<?=site_url('finance/receives/insert')?>">Customer</a></li>
-                    <li><a href="<?=site_url('finance/payments/insert')?>">Supplier</a></li>
+                    <li><a href="<?=site_url('finance/receives/insert')?>">Customer Payments</a></li>
+                    <li><a href="<?=site_url('finance/payments/insert')?>">Supplier Payments</a></li>
                 </ul>
             </li>
             <li>

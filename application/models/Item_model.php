@@ -284,14 +284,14 @@ class Item_Model extends CI_Model{
         $reminder =  $query->totalquantity - $data->transfer;
         return $reminder;
     }
-    function getCustomers(){
-        $query =  $this->db->where('type','0')->get('people')->result_array();
+    function getPeople(){
+        $query =  $this->db->get('people')->result_array();
         return $query;
     }
-    function getSuppliers(){
-        $query =  $this->db->where('type','1')->get('people')->result_array();
-        return $query;
-    }
+    // function getSuppliers(){
+    //     $query =  $this->db->where('type','1')->get('people')->result_array();
+    //     return $query;
+    // }
     // function getCustomerStatement( $customerID , $datfrom , $datto ) {
     //     $salesData = $this->db->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('journals')->result();
     //     $data2 = $this->db->where('peopleID', $customerID)->get('finance')->result_array();

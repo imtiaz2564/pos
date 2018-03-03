@@ -268,7 +268,7 @@ class Item extends CI_Controller {
                  'quantity' => 'Quantity',
              ]);
             $this->crud->display_fields(['Supplier','Item Name','Unit Price','Quantity','Stock Type','Total']);
-            $this->crud->join('warehouse','people','id','name'); // Medicine only
+            $this->crud->join('warehouse','people','id','businessName'); // Medicine only
             $this->crud->set_hidden('date',date('Y-m-d'));
         
 

@@ -13,12 +13,15 @@
             <?php  if( $this->session->userdata('type') == 1 ) { ?>
                 <td><input type="text" name="discount" value="" class="form-control" placeholder="Discount"></td>
             <? } ?>
+            <?php  if( $this->session->userdata('type') == 0 ) { ?>
             <td> 
                 <select name = "stockType" >
                     <option value="supplier">Supplier Stock</option>
                     <option value="sylhet">Sylhet Stock</option>
                 </select>
-            </td>   
+            </td> 
+            <? } ?> 
+              
             <td><input type="text" name="total" value="" class="form-control" placeholder="total"></td>
         </tr>
     </table>
