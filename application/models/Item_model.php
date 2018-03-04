@@ -156,7 +156,7 @@ class Item_Model extends CI_Model{
         }
         $total = [];
         foreach( $salesData as $salesData ) {
-            $data = $this->db->select('date,journal_id,sum(quantity * unit_price) + labourCost - sum(discount) - '.$salesData['totalDiscount'].' as total ')->where('journal_id', $salesData['journalId'])->get('stock')->result_array();
+            $data = $this->db->select('stock.date,stock.journal_id,sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total ')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->result_array();
             $data[0]['name'] = $salesData['cusName'];
             $data[0]['code'] = $salesData['cusID'];
             $data[0]['salesDescription'] = $salesData['salesDescription'];

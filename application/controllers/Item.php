@@ -486,7 +486,6 @@ class Item extends CI_Controller {
     function localStockUpdate($item_name , $quantity ) {
         $this->load->model('item_model');
         $this->item_model->updateStock($item_name , $quantity ,'3' , '7');
-        die( json_encode(['error'=>'Updated Sylhet  Stock']));
     }
     function getStockType($id){
         $this->load->model('item_model');
