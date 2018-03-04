@@ -8,12 +8,12 @@
         <?=$form_open?>
         <div class="row">
         <? if( $this->uri->segment(2) == 'receives' ) { ?>   
-            <div class="col-md-6">                        
+            <!-- <div class="col-md-6">                        
                 <div class="form-group">
                     <label>Customer ID :</label>
                     <input type="text" name="peopleID" value="" class="form-control" placeholder="Customer ID" />
                 </div>
-            </div>
+            </div> -->
             <? } ?>
                 <?php foreach($inputs as $input){
                     ?><div class="col-md-6"><?php
@@ -79,8 +79,9 @@
     </div>
     </div>
    <script>
-    $('input[name=peopleID],input[name=phone],input[name=name]').keypress(function(e) {
-    if(e.which == 13) {
+    // $('input[name=peopleID],input[name=phone],input[name=name]').keypress(function(e) {
+    // if(e.which == 13) {
+        $('select[name=peopleID]').change(function() {    
         $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -115,7 +116,7 @@
              $('#totalBalance').html(totalBalance);
             }
         });
-    }
+    //}
 });
 $('#customerAccounts').submit(function() {
     name = $('input[name=name]').val();

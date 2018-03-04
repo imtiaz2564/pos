@@ -7,22 +7,7 @@
     <div class="panel-body">
         <?=$form_open?>
         <div class="row">
-            <? if( $this->uri->segment(2) == 'payments' ) { ?>   
-                    <div class="col-md-6">                        
-                        <div class="form-group">
-                            <label>Supplier ID :</label>
-                            <input type="text" name="peopleID" value="" class="form-control" placeholder="Supplier ID" />
-                        </div>
-                        <div class="form-group">
-                            <label>Supplier Name :</label>
-                            <input type="text" name="name" value="" class="form-control" placeholder="Supplier Name" />
-                        </div>
-                        <div class="form-group">
-                            <label>Phone :</label>
-                            <input type="text" name="phone" value="" class="form-control" placeholder="Phone" />
-                        </div>
-                    </div>
-            <? } ?>
+            
                 <?php foreach($inputs as $input){
                     ?><div class="col-md-6"><?php
                         if($input['label'] !=''){?>
@@ -37,6 +22,22 @@
                 }?>
         </div>
     <?=$form_close?>
+    <? if( $this->uri->segment(2) == 'payments' ) { ?>   
+                    <div class="col-md-6">                        
+                        <!-- <div class="form-group">
+                            <label>Supplier ID :</label>
+                            <input type="text" name="peopleID" value="" class="form-control" placeholder="Supplier ID" />
+                        </div> -->
+                        <!-- <div class="form-group">
+                            <label>Supplier Name :</label>
+                            <input type="text" name="name" value="" class="form-control" placeholder="Supplier Name" />
+                        </div>
+                        <div class="form-group">
+                            <label>Phone :</label>
+                            <input type="text" name="phone" value="" class="form-control" placeholder="Phone" />
+                        </div>
+                    </div> -->
+            <? } ?>
     </div>
     <div><h1>Supplier Info</h1></div>
     <div>
@@ -89,8 +90,10 @@
    <script>
    
 $.ajaxSetup({ cache: false });
-    $('input[name=peopleID],input[name=phone],input[name=name]').keypress(function(e) {
-    if(e.which == 13) {
+    // $('input[name=peopleID],input[name=phone],input[name=name]').keypress(function(e) {
+    // if(e.which == 13) {
+        $('select[name=peopleID]').change(function() {    
+       
         $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -126,7 +129,7 @@ $.ajaxSetup({ cache: false });
              $('#currentBalance').html(totalBalance);
             }
         });
-    }
+    //}
 });
 $('#supplierAccounts').submit(function() {
     // name = $('input[name=name]').val();

@@ -140,7 +140,8 @@ class Item_Model extends CI_Model{
         return $query->row();
     }
     function getSupplierData($id){
-         $query = $this->db->where('type',1)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people');
+        //$query = $this->db->where('type',1)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people');
+        $query = $this->db->where('type',1)->where('id',$id)->get('people');
         return $query->row();
     }
     function getUnitPrice($item){
@@ -202,11 +203,14 @@ class Item_Model extends CI_Model{
     function getSupplierBalance($id) {
         $subTotal = 0;
         $total = 0;
-        $peopleID = $this->db->where('type',1)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row(); 
-       
+        //$peopleID = $this->db->where('type',1)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row(); 
+        $peopleID = $this->db->where('type',1)->where('id',$id)->get('people')->row();
+
         $query = $this->db->select('sum(amount) as total')->where('peopleID',$peopleID->id)->get('finance')->row();
        
-        $openingBalance = $this->db->where('type',1)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row();
+        //$openingBalance = $this->db->where('type',1)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row();
+       
+        $openingBalance = $this->db->where('type',1)->where('id',$id)->get('people')->row();
        
         //$data = $this->db->where('supplier_id', $peopleID->id)->get('journals')->result();
         $data = $this->db->where('warehouse', $peopleID->id)->get('stock')->result();
@@ -262,7 +266,7 @@ class Item_Model extends CI_Model{
     }
     function getRemainingBySupplier(){
         $total = []; 
-        $query = $this->db->select('people.id as supplierid,stock.item_name as itemid, people.name as customerName,items.name,sum(stock.quantity) as quantity,')->join('items','items.id=item_name','left')->join('people','stock.warehouse = people.id','left')->where('stock.type',0)->group_by('people.name')->group_by('items.name')->get('stock')->result_array();
+        $query = $this->db->select('people.id as supplierid,stock.item_name as itemid, people.name as customerName,items.name,sum(stock.quantity) as quantity,')->join('items','items.id=item_name','left')->join('people','stock.warehouse = people.id','left')->where('stock.type',0)->where('stock.stockType',0)->group_by('people.name')->group_by('items.name')->get('stock')->result_array();
         foreach( $query as $data){
             $res = $this->db->select('sum(stock.quantity) as quantity')->where('stock.warehouse',$data['supplierid'])->where('stock.item_name',$data['itemid'])->where('stock.type',2)->get('stock')->row();
         
@@ -286,7 +290,7 @@ class Item_Model extends CI_Model{
         return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'warehouse'=>$warehouse ,'type'=>$type]);
     }
     function checkStock( $warehouse ,  $item_name ) {
-        $query = $this->db->select('sum(quantity) as totalquantity,')->join('items','items.id=item_name','left')->where('warehouse',$warehouse)->where('item_name',$item_name)->where('stock.type',0)->get('stock')->row();
+        $query = $this->db->select('sum(quantity) as totalquantity,')->join('items','items.id=item_name','left')->where('warehouse',$warehouse)->where('item_name',$item_name)->where('stock.type',0)->where('stock.stockType',0)->get('stock')->row();
         $data = $this->db->select('sum(quantity) as transfer')->where('warehouse',$warehouse)->where('item_name',$item_name)->where('type',2)->get('stock')->row();
         $reminder =  $query->totalquantity - $data->transfer;
         return $reminder;
@@ -345,7 +349,6 @@ class Item_Model extends CI_Model{
     //     return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'warehouse'=>3,'type'=>3]);
     // }
     function getStockType($id) {
-     // echo $id;
         $stock = $this->db->where('id',$id)->get('stock')->row();
         return $stock->stockType; 
     }

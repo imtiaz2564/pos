@@ -21,13 +21,16 @@ class Finance extends CI_Controller {
         $data['title'] = 'Suplier Payments';
         
         $this->crud->init('finance',[
+            'peopleID' => 'Business Name( Supplier )',
+            'name' => 'Customer Name',
+            'phone' => 'Phone',
             'date' => 'Date',
             'amount' => 'Amount',
             'paymentType' => 'Payment Type',
             'description' => 'Detail',
         ]);
         $this->crud->set_option('paymentType',['0'=>'Cash','1'=>'TT','2'=>'Online','3'=>'bKash']);
-        
+        $this->crud->join('peopleID','people','id','businessName','people.type=1');
         
         $this->crud->set_hidden('finance.type','1'); // Payment
         
@@ -37,7 +40,8 @@ class Finance extends CI_Controller {
         $this->crud->set_rule('amount','required');
         $this->crud->change_type('date','date');
         //$this->crud->change_type('description','textarea');
-        //$this->crud->order([0,1,3,4,2,5,6]);
+        //$this->crud->order([3,0,1,2,4,5]);
+        $this->crud->order([5,0,1,2,3,4,6,7]);
         
         //$this->crud->use_modal();
         $this->crud->custom_form('accounts/Supplier_Accounts_Form');
@@ -49,7 +53,7 @@ class Finance extends CI_Controller {
         $data['title'] = 'Customer Receives';
         
         $this->crud->init('finance',[
-            //'peopleID' => 'Customer ID',
+            'peopleID' => 'Business Name( Customer )',
             'name' => 'Customer Name',
             'phone' => 'Phone',
             'date' => 'Date',
@@ -62,7 +66,8 @@ class Finance extends CI_Controller {
         //$this->crud->join('peopleID','people','id','name','type=0'); // Customer
 
         $this->crud->set_hidden('type','0'); // Receive
-        
+        $this->crud->join('peopleID','people','id','businessName','people.type=0');
+      
         if($this->uri->segment(3) == 'ajax')
             $this->crud->ci->db->where('finance.type','0'); // Receive. Apply where clause only when fetch data.
         
@@ -70,7 +75,7 @@ class Finance extends CI_Controller {
         $this->crud->set_rule('amount','required');
         $this->crud->change_type('date','date');
         //$this->crud->change_type('description','textarea');
-       // $this->crud->order([0,1,3,4,2,5,6]);
+        $this->crud->order([5,0,1,2,3,4,6,7]);
         
         //$this->crud->use_modal();
         $this->crud->custom_form('accounts/Customer_Accounts_Form');

@@ -123,9 +123,9 @@ foreach($info as $info)
     <tr>
         <td><?=$refund["date"]?></td>
         <td><?=$refund["reason"]?></td>
-        <td><?=(-$totalRefund)?></td>
         <td></td> 
-        <? $paid = $paid-$totalRefund ?>
+        <td><?=$totalRefund?></td>
+        <? $paid = $paid+$totalRefund ?>
         <td></td>
         <td><?=$paid?></td>
     </tr>
