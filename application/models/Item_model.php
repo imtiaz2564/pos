@@ -248,13 +248,15 @@ class Item_Model extends CI_Model{
         $total = $openingBalance->openingBalance+$query->total;
        
         $purchase = $this->db->select('sum(stock.quantity * stock.unit_price) as purchase ')->where('type', 0)->where('warehouse', $id)->get('stock')->row();
+        $refund = $this->db->select('sum(stock.quantity * stock.unit_price) as refund ')->where('type', 4)->where('customer_id', $id)->get('stock')->row(); 
+         
         $salesData = $this->db->select('people.name as cusName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('customer_id', $id)->get('journals')->result_array();
         $totalSales = 0;
         foreach( $salesData as $salesData ) {
         $data = $this->db->select('sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total ')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->row();
             $totalSales += $data->total;
         }
-        return $total+$purchase->purchase-$totalSales;
+        return $total+$refund->refund+$purchase->purchase-$totalSales;
          
     } 
     function checkBusinessName($businessName) {

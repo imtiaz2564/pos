@@ -80,7 +80,7 @@ class Item extends CI_Controller {
 
         $this->crud->init('stock',[
             'item_name' => 'Item Name',
-            'warehouse' => 'Supplier',
+            'warehouse' => 'Business Name(Supplier)',
             'quantity' => 'Quantity',
             'transportCost' => 'Transport Cost',
             'labourCost' => 'Labour Cost',
@@ -92,7 +92,7 @@ class Item extends CI_Controller {
 
         ]);
         $this->crud->join('item_name','items','id','name','type=1');
-        $this->crud->join('warehouse','people','id','name','type=1');
+        $this->crud->join('warehouse','people','id','businessName');
         $this->crud->before_save($this, 'checkStock');
         $this->crud->after_save($this, 'stockUpdate');
         $this->crud->change_type('date','date');
@@ -439,7 +439,7 @@ class Item extends CI_Controller {
         $data['title'] = 'Item Refund';
 
         $this->crud->init('stock',[
-            'customer_id' => 'Customer ID',
+            'customer_id' => 'Business Name(Customer)',
             'item_name' => 'Item Name',
             'quantity' => 'Quantity',
             'unit_price' => 'Unit Price',
@@ -448,7 +448,7 @@ class Item extends CI_Controller {
         ]);
         $this->crud->join('item_name','items','id','name','type=1');
         $this->crud->change_type('date','date');
-        $this->crud->join('customer_id','people','id','businessName','type=0');
+        $this->crud->join('customer_id','people','id','businessName');
         $this->crud->set_rule('item_name','required');
         $this->crud->change_type('reason','textarea');
         $this->crud->set_hidden('type','4'); // 4 for refund
