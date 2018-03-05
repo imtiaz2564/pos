@@ -90,20 +90,6 @@ $('form').submit(function() {
   
     var stock = $('select[name=stockType]').val();
    
-    $.ajax({
-           type: "POST",
-           dataType: "json",
-           url: $(this).attr('action'),
-           data: $(this).serialize(),
-           success: function(data){
-               if( typeof data['error'] !== 'undefined' ){
-                   $('.error').html(data['error']).slideDown();
-               }else{
-                   reloadData();
-                   clearFields();
-               }
-           }
-         });
          if( stock == "2") {
             item = $('select[name=item_name]').val();
             quantity = $('input[name=quantity]').val();
@@ -121,16 +107,31 @@ $('form').submit(function() {
                         }
                     }
                 });        
-            }
-         return false;
+        }
+        
+    $.ajax({
+           type: "POST",
+           dataType: "json",
+           url: $(this).attr('action'),
+           data: $(this).serialize(),
+           success: function(data){
+               if( typeof data['error'] !== 'undefined' ){
+                   $('.error').html(data['error']).slideDown();
+               }else{
+                   reloadData();
+                   clearFields();
+               }
+           }
+         });
+        return false;
 });
 });
 function clearFields(){
     //$('input[name=grandTotal]').val(' ');
-    $('select[name=warehouse]').val(' ');
-    $('select[name=item_name]').val(' ');
-    $('input[name=quantity]').val(' ');
-    $('input[name=unit_price]').val(' ');
+    // $('select[name=warehouse]').val(' ');
+    // $('select[name=item_name]').val(' ');
+    $('input[name=quantity]').val(0);
+    $('input[name=unit_price]').val(0);
     $('input[name=total]').val(' ');
     $('input[name=item_name]').val(' ');
     $('input[name=uom]').val(' ');

@@ -355,6 +355,7 @@ class Item extends CI_Controller {
         $result = $this->item_model->getSupplierData($cusid);
         
         $balance =  $this->item_model->getSupplierBalance($cusid);
+       //$balance =  $this->item_model->getCustomerBalance($cusid);
        
         $data['id'] = $result->id;
         $data['name'] = $result->name;
