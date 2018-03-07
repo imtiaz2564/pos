@@ -71,9 +71,9 @@
     <tr>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
         <td>Opening Balance</td>
+        <td></td>
+        <td></td>
         <td><?=$info['openingBalance']?></td>
     </tr>
     <? $paid = $info['openingBalance']; 

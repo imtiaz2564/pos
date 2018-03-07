@@ -177,12 +177,15 @@ class Item_Model extends CI_Model{
     function getCustomerBalance($id) {
        // $subTotal = 0;
         $total = 0;
+        $type = ['0','1'];
         //$peopleID = $this->db->where('id',$id)->get('people')->row();
         
         //$peopleID = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row(); 
         
         //$query = $this->db->select('sum(amount) as total')->where('type',0)->where('peopleID',$id)->or_where('name',$id)->or_where('phone',$id)->get('finance')->row();
-        $query = $this->db->select('sum(amount) as total')->where('peopleID',$id)->get('finance')->row();
+        $query = $this->db->select('sum(amount) as total')->where('peopleID',$id)->where_in('paymentType',$type)->get('finance')->row();
+        $cashback = $this->db->select('sum(amount) as cashback')->where('peopleID',$id)->where_in('paymentType','2')->get('finance')->row();
+        
         //$openingBalance = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row();
         $openingBalance = $this->db->where('id',$id)->get('people')->row();
         
@@ -191,7 +194,7 @@ class Item_Model extends CI_Model{
             
        // $data = $this->db->where('customer_id', $peopleID->id)->get('journals')->result();
         
-        $total = $openingBalance->openingBalance+$query->total;
+        $total = $openingBalance->openingBalance+$query->total-$cashback->cashback;
         // foreach($data as $data) {
         //     $stock = $this->db->where('journal_id' , $data->id)->get('stock')->result();
         //     foreach($stock as $stock){
