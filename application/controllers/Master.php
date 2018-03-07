@@ -60,7 +60,7 @@ class Master extends CI_Controller {
             'phone' => 'Phone',
             'email' => 'Email',
         ]);
-        $this->crud->set_option('thana',['0'=>'Kanaighat','1'=>'Companiganj','2'=>'Gowainghat',3=>'Golabganj',4=>'Zakiganj','5'=>'Jaintiapur','6'=>'Dakshin Surma','7'=>'Fenchuganj','8'=>'Balaganj','9'=>'Beanibazar','10'=>'Bishwanath','11'=>'Sylhet Sadar']);
+        $this->crud->set_option('thana',['0'=>'Kanaighat','1'=>'Companiganj','2'=>'Gowainghat','3'=>'Golabganj',4=>'Zakiganj','5'=>'Jaintiapur','6'=>'Dakshin Surma','7'=>'Fenchuganj','8'=>'Balaganj','9'=>'Beanibazar','10'=>'Bishwanath','11'=>'Sylhet Sadar']);
         $this->crud->set_hidden('type','0'); // Customer
         $this->crud->ci->db->where('type','0'); // Customer
         $this->crud->set_rule('name','required');

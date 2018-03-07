@@ -14,7 +14,7 @@
     foreach( $sales as $sales) { ?>
     <tr>
         <td><?=$sales["date"]?></td>
-        <td><?=$sales["name"]?></td>
+        <td><?=$sales["businessName"]?></td>
         <td><?=$sales["code"]?></td>
         <td><?=$sales["journal_id"]?></td>
         <td><?=$sales["total"]?></td>

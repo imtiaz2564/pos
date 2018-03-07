@@ -1,4 +1,4 @@
-<div class="modal-body" style="max-height:400px; overflow-y:scroll;">
+<div class="modal-body" style="max-height:450px; overflow-y:scroll;">
     <div class="page-header">
         <div class='page-heading text-center'>
             <h1>Amin Brothers</h1>
@@ -7,9 +7,7 @@
         </div>
     </div>
 <table>
-<?
-foreach($info as $info)
-?>
+<? foreach($info as $info) ?>
     <thead>
         <tr>
             <th>Customer Code: </th>
@@ -63,9 +61,10 @@ foreach($info as $info)
         <tr>
             <td><b>Date</b></td>
             <td><b>Sales Description</b></td>
+            <td><b>Account Description</b></td>
             <td><b>Payable Amounts</b></td>
             <td><b>Paid Amounts</b></td>
-            <td><b>Account Description</b></td>
+            <!-- <td><b>Account Description</b></td> -->
             <td><b>Balance</b></td>
         </tr>
     </thead>
@@ -77,7 +76,8 @@ foreach($info as $info)
         <td>Opening Balance</td>
         <td><?=$info['openingBalance']?></td>
     </tr>
-    <? $paid = $info['openingBalance']; foreach( $salesData as $sales) 
+    <? $paid = $info['openingBalance']; 
+    foreach( $salesData as $sales) 
     foreach( $sales as $sales)
     { //$payable  = $sales["quantity"]*$sales["unit_price"];
         $payable  = $sales["total"];
@@ -85,9 +85,9 @@ foreach($info as $info)
         ?>
         <tr>
         <td><?=$sales["date"]?></td>
-        <td><?=$sales["salesDescription"]?></td>
-        <td><?=$payable?></td>
+        <td><?=$sales["journalID"]?></td>
         <td></td>
+        <td><?=$payable?></td>
         <td></td>
         <td><?=$paid?></td>
     </tr>
@@ -106,14 +106,30 @@ foreach($info as $info)
         </tr>
 
         <? } ?>
+        <? foreach( $cashBack as $cashBack) { //new added
+        // print_r($cashBack);
+        // die(); 
+            $cash  = $cashBack["amount"];
+            $paid = $paid + $cash;
+            ?>
+        <tr>
+            <td><?=$cashBack["date"]?></td>
+            <td><?=$cashBack["description"]?></td>
+            <td></td>
+            <td><?=$cash?></td>
+            <td></td>
+            <td><?=$paid?></td>
+        </tr>
+
+        <? } ?>
     <?  foreach($statement as $state) {   ?>
     <tr>
         <td><?=$state["date"]?></td>
         <td></td>
+        <td><?=$state["description"]?></td>
         <td></td>
         <td><?=$state["amount"]?></td>
         <? $paid = $paid+$state["amount"] ?>
-        <td><?=$state["description"]?></td>
         <td><?=$paid?></td>
     </tr>
     <? } ?>
@@ -124,9 +140,9 @@ foreach($info as $info)
         <td><?=$refund["date"]?></td>
         <td><?=$refund["reason"]?></td>
         <td></td> 
+        <td></td>
         <td><?=$totalRefund?></td>
         <? $paid = $paid+$totalRefund ?>
-        <td></td>
         <td><?=$paid?></td>
     </tr>
     <? } ?>

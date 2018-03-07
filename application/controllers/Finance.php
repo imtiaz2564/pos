@@ -29,7 +29,7 @@ class Finance extends CI_Controller {
             'paymentType' => 'Payment Type',
             'description' => 'Detail',
         ]);
-        $this->crud->set_option('paymentType',['0'=>'Cash','1'=>'TT','2'=>'Online','3'=>'bKash']);
+        $this->crud->set_option('paymentType',['0'=>'Cash','1'=>'Bank']);
         $this->crud->join('peopleID','people','id','businessName','people.type=1');
         
         $this->crud->set_hidden('finance.type','1'); // Payment
@@ -61,8 +61,8 @@ class Finance extends CI_Controller {
             'paymentType' => 'Payment Type',
             'description' => 'Detail',
         ]);
-        $this->crud->set_option('paymentType',['0'=>'Cash','1'=>'TT','2'=>'Online','3'=>'bKash']);
-
+        $this->crud->set_option('paymentType',['0'=>'Cash','1'=>'Bank','2'=>'Cash Back']);
+        
         //$this->crud->join('peopleID','people','id','name','type=0'); // Customer
 
         $this->crud->set_hidden('type','0'); // Receive
@@ -111,7 +111,7 @@ class Finance extends CI_Controller {
        
         $data['history'] = $this->item_model->getSupplierHistory( $customerID , $datfrom , $datto );//new
         $data['statement'] = $this->item_model->getCustomerStatement($customerID , $datfrom , $datto);
-        
+        $data['cashBack'] = $this->item_model->getCashBack($customerID , $datfrom , $datto);
         $data['info'] = $this->item_model->getOpeningBalance($customerID);
         $data['refund'] = $this->item_model->getRefund($customerID , $datfrom , $datto);
         $this->load->view('CustomerStatement.php',$data);

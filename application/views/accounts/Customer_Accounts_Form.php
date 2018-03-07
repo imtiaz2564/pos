@@ -123,7 +123,7 @@ $('#customerAccounts').submit(function() {
     phone = $('input[name=phone]').val();
     date = $('input[name=date]').val();
     amount = $('input[name=amount]').val();
-    paymentType = $('input[name=paymentType]').val();
+    paymentType = $('select[name=paymentType]').val();
     description = $('input[name=description]').val(); 
     ppl_ID = parseInt($('#pplID').val());
     $.ajax({

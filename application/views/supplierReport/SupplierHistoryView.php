@@ -14,7 +14,7 @@
     <?  foreach( $history as $history) { ?>
     <tr>
         <td><?=$history["date"]?></td>
-        <td><?=$history["supplier"]?></td>
+        <td><?=$history["businessName"]?></td>
         <td><?=$history["supplierID"]?></td>
         <td><?=$history["itemName"]?></td>
         <td><?=$history["quantity"]?></td>
