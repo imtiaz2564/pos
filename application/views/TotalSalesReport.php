@@ -16,7 +16,7 @@
         <td><?=$sales["date"]?></td>
         <td><?=$sales["businessName"]?></td>
         <td><?=$sales["code"]?></td>
-        <td><?=$sales["journal_id"]?></td>
+        <td><?=$sales["journalID"]?></td>
         <td><?=$sales["total"]?></td>
     </tr>
     <? } ?>

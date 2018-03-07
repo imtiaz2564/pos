@@ -107,8 +107,7 @@
 
         <? } ?>
         <? foreach( $cashBack as $cashBack) { //new added
-        // print_r($cashBack);
-        // die(); 
+         
             $cash  = $cashBack["amount"];
             $paid = $paid + $cash;
             ?>
