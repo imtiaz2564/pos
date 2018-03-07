@@ -109,7 +109,7 @@
         <? foreach( $cashBack as $cashBack) { //new added
          
             $cash  = $cashBack["amount"];
-            $paid = $paid + $cash;
+            $paid = $paid - $cash;
             ?>
         <tr>
             <td><?=$cashBack["date"]?></td>
