@@ -107,14 +107,20 @@ class Finance extends CI_Controller {
     function getcustomerstatement( $customerID , $datfrom , $datto ) {
         $this->load->model('item_model');
         $data['title'] = '';
-        $data['salesData'] = $this->item_model->getSalesData( $customerID , $datfrom , $datto );
+        $data['result'] = $this->item_model->getCustomerStatement($customerID , $datfrom , $datto);
+        //die();
+        // $data['salesData'] = $this->item_model->getSalesData( $customerID , $datfrom , $datto );
        
-        $data['history'] = $this->item_model->getSupplierHistory( $customerID , $datfrom , $datto );//new
-        $data['statement'] = $this->item_model->getCustomerStatement($customerID , $datfrom , $datto);
-        $data['cashBack'] = $this->item_model->getCashBack($customerID , $datfrom , $datto);
-        $data['info'] = $this->item_model->getOpeningBalance($customerID);
-        $data['refund'] = $this->item_model->getRefund($customerID , $datfrom , $datto);
-        $this->load->view('CustomerStatement.php',$data);
+        // $data['history'] = $this->item_model->getSupplierHistory( $customerID , $datfrom , $datto );//new
+        
+        // $data['statement'] = $this->item_model->getCustomerStatement($customerID , $datfrom , $datto);
+    
+        // $data['cashBack'] = $this->item_model->getCashBack($customerID , $datfrom , $datto);
+      
+        // $data['info'] = $this->item_model->getOpeningBalance($customerID);
+        // $data['refund'] = $this->item_model->getRefund($customerID , $datfrom , $datto);
+        //$this->load->view('CustomerStatement.php',$data);
+        $this->load->view('accounts/StatementView.php',$data);
     }
     public function getSupplierHistory($supplierID , $datfrom , $datto) {
         $this->load->model('item_model');
