@@ -325,11 +325,11 @@ class Item extends CI_Controller {
     //     echo json_encode($data); 
     
     // }
-    public function beforeSave($post){
+    public function beforeSave($post) {
         unset($post['total']); return $post;
         //unset($post['stockType']); return $post;
     }
-    function getCustomerData($cusid){
+    function getCustomerData($cusid) {
         $this->load->model('item_model');
         $data = [];
         $result = $this->item_model->getCustomerData($cusid);
