@@ -37,7 +37,8 @@ class Master extends CI_Controller {
         $this->crud->set_hidden('type','1'); // Supplier
         $this->crud->ci->db->where('type','1'); // Supplier
         $this->crud->extra_fields($this,['getPayable'=>'Payable']);
-        
+        $this->crud->before_save($this , 'checkSupplier');
+
         $this->crud->set_rule('name','required');
         $this->crud->use_modal();
         $data['content']=$this->crud->run();
@@ -120,7 +121,18 @@ class Master extends CI_Controller {
         $query = $this->item_model->checkBusinessName($post['businessName']);
         if( isset( $query->businessName ) ){
             die( json_encode(['error'=>'Business Name is exist already']));
-       }
+        }
+        return $post;
+    }
+    function checkSupplier($post){
+        $data = $this->item_model->checkPhoneNumber($post['phone']);
+        if( isset( $data->phone ) ){
+             die( json_encode(['error'=>'Phone Number is exist already / Insert Phone Number']));
+        }
+        $query = $this->item_model->checkBusinessName($post['businessName']);
+        if( isset( $query->businessName ) ){
+            die( json_encode(['error'=>'Business Name is exist already / Insert Business Name']));
+        }
         return $post;
     }
 }

@@ -368,14 +368,14 @@ class Item_Model extends CI_Model{
     //     $cashBack = $this->db->where('peopleID', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->where('paymentType',2)->get('finance')->result_array();
     //     return $cashBack;
     // }
-    // function getSupplierHistory( $supplierID , $datfrom , $datto){
-    //     if( $supplierID == 0 ) {
-    //         $salesData = $this->db->select('people.name as supplier,people.businessName as businessName,people.code as supplierID,items.name as itemName,stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,journals.description as purchaseDescription')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('stock.type', 0)->where('stock.date >=',$datfrom)->where('stock.date <=',$datto)->get('stock')->result_array();
-    //         return $salesData;
-    //     }    
-    //     $salesData = $this->db->select('people.name as supplier,people.businessName as businessName,people.code as supplierID,items.name as itemName,stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,journals.description as purchaseDescription')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('warehouse', $supplierID)->where('stock.date >=',$datfrom)->where('stock.date <=',$datto)->get('stock')->result_array();
-    //     return $salesData;
-    // }
+    function getSupplierHistory( $supplierID , $datfrom , $datto){
+        if( $supplierID == 0 ) {
+            $salesData = $this->db->select('people.name as supplier,people.businessName as businessName,people.code as supplierID,items.name as itemName,stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,journals.description as purchaseDescription')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('stock.type', 0)->where('stock.date >=',$datfrom)->where('stock.date <=',$datto)->get('stock')->result_array();
+            return $salesData;
+        }    
+        $salesData = $this->db->select('people.name as supplier,people.businessName as businessName,people.code as supplierID,items.name as itemName,stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,journals.description as purchaseDescription')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('warehouse', $supplierID)->where('stock.date >=',$datfrom)->where('stock.date <=',$datto)->get('stock')->result_array();
+        return $salesData;
+    }
     // function getOpeningBalance($customerID){
     //     $data = $this->db->where('id',$customerID)->get('people')->result_array();
     //     return $data;//->openingBalance; 
