@@ -38,7 +38,8 @@ class Crud{
     private $before_save=null;
 	private $after_save=null;
 	private $before_update=null;
-	private $after_update=null;
+    private $after_update=null;
+    private $after_delete=null;
 	private $before_list=null;
     
 		
@@ -514,7 +515,14 @@ class Crud{
     }
 	function delete($id){
 		if($this->ci->crud_model->deleteData($id)){
-				redirect($this->ci->uri->segment(1).'/'.$this->ci->uri->segment(2));
+           
+            if($this->after_delete != null){
+                $func=$this->after_delete;
+                if(method_exists($this->child,$func)){
+                    $this->data=$this->child->$func($this->data);
+                }
+            }
+            redirect($this->ci->uri->segment(1).'/'.$this->ci->uri->segment(2));
 		}
 	}
 	function push_data($array){
@@ -545,6 +553,10 @@ class Crud{
 	function after_update($object,$function){
 		$this->child=$object;
 		$this->after_update=$function;
+    }
+    function after_delete($object,$function){
+		$this->child=$object;
+		$this->after_delete=$function;
 	}
 	function change_type($field,$type){
 		$this->types[$field]=$type;

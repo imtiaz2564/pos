@@ -73,13 +73,14 @@ class Finance extends CI_Controller {
         
         //$this->crud->set_rule('peopleID','required');
         $this->crud->set_rule('amount','required');
+        $this->crud->set_rule('date','required');
         $this->crud->change_type('date','date');
         //$this->crud->change_type('description','textarea');
         $this->crud->order([5,0,1,2,3,4,6,7]);
         
         //$this->crud->use_modal();
         $this->crud->custom_form('accounts/Customer_Accounts_Form');
-         $this->crud->form_extra('id="customerAccounts"');
+        $this->crud->form_extra('id="customerAccounts"');
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }
@@ -135,5 +136,6 @@ class Finance extends CI_Controller {
         $data['statement'] = $this->item_model->getCustomerStatement( $supplierID , $datfrom , $datto );
         $this->load->view('supplierReport/SupplierStatement.php',$data);
     }
+    
     
 }

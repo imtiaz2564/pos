@@ -7,9 +7,8 @@
     <div class="panel-body">
         <?=$form_open?>
         <div class="row">
-            
-                <?php foreach($inputs as $input){
-                    ?><div class="col-md-6"><?php
+            <?php foreach( $inputs as $input ) { 
+                ?><div class="col-md-6"><?php
                         if($input['label'] !=''){?>
                         <div class="form-group">
                             <label><?=$input['label']?> :</label>

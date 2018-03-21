@@ -295,8 +295,9 @@ class Item extends CI_Controller {
         $this->crud->set_hidden('date',date('Y-m-d'));
         // $this->crud->display_fields(['Item Name','Item Code','Unit']);
         $this->crud->before_save($this, 'beforeSave');
-       // $this->crud->set_rule('item_id','is_natural_no_zero'); 
-       
+       //$this->crud->set_rule('item_id','is_natural_no_zero'); 
+       $this->crud->after_delete($this, 'afterDelete');
+
         $this->crud->set_rule('item_name','is_natural_no_zero');
         $this->crud->custom_form('items/item_form');
         $this->crud->custom_list('items/item_list');
@@ -463,6 +464,20 @@ class Item extends CI_Controller {
         $this->load->model('item_model');
         $this->item_model->updateStock($post['item_name'] , $post['quantity'] , '3' , '5');
         die( json_encode(['error'=>'Updated Stock']));
+    }
+    function afterDelete($post) {
+        $this->load->model('item_model');
+            $id = $this->item_model->getUnsavedItem();
+            if(isset($id->id)){
+                $this->session->set_userdata('journal_id',$id->id);
+                if( $this->session->userdata('type') == 1 ) {
+                    redirect('item/out/edit/'.$id->id);
+                }
+                else{
+                    redirect('item/in/edit/'.$id->id);
+                }
+                
+            }
     }
     // public function localpurchase() {
     //     $data['title'] = 'Local Purchase';

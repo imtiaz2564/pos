@@ -64,7 +64,10 @@
             <li>
                 <a href="#"><i class="fa fa-list"></i> Reports <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href=""></a></li>
+                        <li><a href="<?=site_url('report/customertransaction')?>">Customer Transaction Report</a></li>
+                        <li><a href="#">Supplier Transaction Report</a></li>
+                        <li><a href="<?=site_url('report/paymentreport')?>">Daily Payment Report</a></li>
+                        <li><a href="#">Daily Receives Report</a></li>
                     </ul> 
             </li>
             <li><a href="<?=site_url('auth/logout')?>"><i class="fa fa-sign-out"></i> Logout</a></li>

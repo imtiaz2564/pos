@@ -2,8 +2,9 @@
 	<div class="panel-heading">
         <?php if(! $hide_controls){ ?>
             <div class="btn-group pull-right">
-                <?=get_insert_button($modal)?>
-                <?=get_edit_button('',$modal)?>
+                <?//=get_insert_button($modal)?>
+                <?//=get_edit_button('',$modal)?>
+                <?=get_delete_button('',$modal)?>
             </div>
         <?php } ?>
 		<div class="clearfix"></div>
@@ -54,6 +55,7 @@ $(document).ready(function() {
                 var data = datatable.fnGetData( this );
                 if(data!==null)
                 $('#crud-edit').prop('href','<?=get_edit_url('')?>/'+data[0]);
+                $('#crud-delete').prop('href','<?=get_delete_url('')?>/'+data[0]);
             });
             $('#crud-table tr').dblclick( function () {
                 alert('double-clicked');

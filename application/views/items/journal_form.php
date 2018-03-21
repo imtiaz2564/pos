@@ -369,9 +369,7 @@ $('#formJournal').submit(function() {
 //      });
     
 <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
-   // var journalId = '<?//=$this->uri->segment(4)?>';
- 
-
+    // var journalId = '<?//=$this->uri->segment(4)?>';
     $.ajax({
        type: 'POST',
        url: '<?=site_url('item/getstockdata')?>'+'/'+journalId+'/'+labourCost+'/'+totalDiscount+'/',
@@ -389,7 +387,7 @@ $('#formJournal').submit(function() {
         type: "POST",
         dataType: "json",
         url: $('#formJournal').attr('action'),
-         data:{ date: date, customer_id:cus_ID, supplier_id:sup_ID, phone:phone, customer:customer, description:description, totalDiscount:totalDiscount, labourCost:labourCost, transportCost:transportCost},
+        data:{ date: date, customer_id:cus_ID, supplier_id:sup_ID, phone:phone, customer:customer, description:description, totalDiscount:totalDiscount, labourCost:labourCost, transportCost:transportCost},
         success: function(data){
             if( typeof data['error'] !== 'undefined' ){
                $('.error').html(data['error']).slideDown();
@@ -402,7 +400,7 @@ $('#formJournal').submit(function() {
             <? } ?>
            }
        }
-     });
+    });
     return false;
 });
 </script>

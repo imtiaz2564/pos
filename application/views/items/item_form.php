@@ -1,36 +1,38 @@
 <?=$this->session->flashdata('');?>
-<?=$form_open?>
-    <table class="table-inside">
-        <tr>
-            <?php foreach($inputs as $input){
-                if($input['label'] != ''){?>
-                <td><?=$input['html']?></td>
-            <?php }else{
-                    echo $input['html'];
-                }
-            }?>
-            <input type="submit" style="display:none"/>
-            <?php  if( $this->session->userdata('type') == 1 ) { ?>
-                <td><input type="text" name="discount" value="" class="form-control" placeholder="Discount"></td>
-            <? } ?>
-            <?php  if( $this->session->userdata('type') == 0 ) { ?>
-            <td> 
-                <select name = "stockType" >
-                    <option value="0">Supplier Stock</option>
-                    <option value="2">Sylhet Stock</option>
-                </select>
-            </td> 
+   <?=$form_open?>
+        <table class="table-inside">
+            <tr>
+                <?php foreach($inputs as $input) {
+                    if ($input['label'] != '') {?>
+                    <td><?=$input['html']?></td>
+                    <?php } else {
+                        echo $input['html'];
+                    }
+                }?>
+                <input type="submit" style="display:none"/>
+                    <?php  if( $this->session->userdata('type') == 1 ) { ?>
+                        <td><input type="text" name="discount" value="" class="form-control" placeholder="Discount"></td>
+                    <? } ?>
+                <?php  if( $this->session->userdata('type') == 0 ) { ?>
+                <td> 
+                    <select name = "stockType" >
+                        <option value="0">Supplier Stock</option>
+                        <option value="2">Sylhet Stock</option>
+                    </select>
+                </td> 
             <? } ?> 
-              
-            <td><input type="text" name="total" value="" class="form-control" placeholder="total"></td>
-        </tr>
-    </table>
-    
-<?=$form_close?>
-<div class="form-group" style='float: right;'>
-        <label>Grand Total: </label>
-        <label class="form-group delivery"><input type="text" style="color:#0000FF" name="grandTotal" value="" class="form-control" placeholder="Grand Total" readonly></label>
-   
+                <td><input type="text" name="total" value="" class="form-control" placeholder="total"></td>
+            </tr>
+        </table>
+        <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+        <?//=$submit?>
+    </div> -->
+    <?=$form_close?>
+    <div class="form-group" style='float: right;'>
+            <label>Grand Total: </label>
+            <label class="form-group delivery"><input type="text" style="color:#0000FF" name="grandTotal" value="" class="form-control" placeholder="Grand Total" readonly></label>
+    </div>
 </div>
 <script>
 
