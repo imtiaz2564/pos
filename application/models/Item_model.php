@@ -430,20 +430,17 @@ class Item_Model extends CI_Model{
         $salesData = $this->db->select('people.name as cusName ,people.businessName as businessName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('journals')->result_array();
         $totalSales = [];
         foreach( $salesData as $salesData ) {
-        $sales = $this->db->select('stock.date as date,stock.journal_id as journalID,sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total, "sales" as type')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->result_array();
-        // $data[0]['name'] = $salesData['cusName'];
-        // $data[0]['businessName'] = $salesData['businessName'];
-        // $data[0]['code'] = $salesData['cusID'];
-        // $data[0]['journalID'] = $salesData['journalID'];
+            $sales = $this->db->select('stock.date as date,stock.journal_id as journalID,sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total, "sales" as type')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->result_array();
+            // $data[0]['name'] = $salesData['cusName'];
+            // $data[0]['businessName'] = $salesData['businessName'];
+            // $data[0]['code'] = $salesData['cusID'];
+            // $data[0]['journalID'] = $salesData['journalID'];
 
-        //$totalSales[] = $data;
-    
-        $final[] = $sales; 
-           
-    }
+            //$totalSales[] = $data;
+        
+            $final[] = $sales; 
+        }
         //$final[] = $totalSales;
-       
-        //return $total;
         foreach( $final as $data)
         foreach( $data as $data){
             $result[] =$data;
@@ -455,12 +452,11 @@ class Item_Model extends CI_Model{
             return $t1 - $t2; 
         }
         usort($result,'date_compare');
-        // usort($result, function($a, $b) {
-        //     return $a['date'] - $b['date'];
-        // });
-       
-        //  print_r($result);
-        //  die();
+        return $result;
+    }
+    function getPaymentData($from , $to) {
+        $paymentType = [0,1];
+        $result = $this->db->join('people','people.id=peopleID','left')->where('date >=',$from)->where('date <=',$to)->where_in('paymentType',$paymentType)->get('finance')->result_array();
         return $result;
     }
 }

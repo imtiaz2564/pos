@@ -16,6 +16,9 @@ class Report extends CI_Controller {
         $this->load->library('crud','','crud');
         $this->load->model('item_model');
     }
+    public function index(){
+        redirect('item/index');
+    }
     function paymentreport() {
         $this->load->model('item_model');
         $data['title'] = ' ';
@@ -23,6 +26,11 @@ class Report extends CI_Controller {
         $data['content'] = $this->load->view('Reports/paymentReport.php',$data,true);
         $this->load->view('template',$data);
 
+    }
+    function getpaymentReport($fromDate , $toDate){
+        $this->load->model('item_model');
+        $data['paymentData'] = $this->item_model->getPaymentData($fromDate , $toDate); 
+        $this->load->view('Reports/PaymentReportDetails.php',$data);
     }
     function customertransaction() {
         $this->load->model('item_model');
