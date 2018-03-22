@@ -3,8 +3,13 @@
     <table class="table table-report">
         <thead>
             <tr>
-                
-                
+               <td>No</td>
+               <td>Date</td> 
+               <td>Business Name</td>
+               <td>Description</td>
+               <td>Type</td>
+               <td>Money IN</td>
+               <td>Money OUT</td> 
             </tr>
         </thead>
         <? $i = 1; $totalIn = 0; $totalOut = 0; foreach( $paymentData as $paymentData) { ?>
