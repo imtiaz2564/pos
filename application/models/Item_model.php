@@ -460,55 +460,97 @@ class Item_Model extends CI_Model{
         return $result;
     }
     function getCustomerTransaction($datfrom , $datto){
-        $salesData = $this->db->select('people.businessName , journals.date  ,journals.type ,journals.customer_id as customerID, sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - journals.totalDiscount as totalSales , "sales" as type')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->where('journals.date >=',$datfrom)->where('journals.date <=',$datto)->where('people.type',0)->group_by('journals.customer_id')->group_by('journals.date')->get('journals')->result_array();
-        $transaction[] = $salesData; 
+        //$salesData = $this->db->select('people.businessName , journals.date  ,journals.type ,journals.customer_id as customerID, sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - journals.totalDiscount as totalSales , "sales" as type')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->where('journals.date >=',$datfrom)->where('journals.date <=',$datto)->where('people.type',0)->group_by('journals.customer_id')->group_by('journals.date')->get('journals')->result_array();
+         
+        $totalsales =0;
+        $sales = $this->db->select('people.name as cusName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('journals.date >=',$datfrom)->where('journals.date <=',$datto)->get('journals')->result_array();
+            
+        foreach( $sales as $sales ) {
+            $res = $this->db->select('sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$sales['totalDiscount'].' as total ')->join('journals','journals.id=journal_id','left')->where('journal_id', $sales['journalId'])->get('stock')->row();
+            $totalsales += $res->total;
+            print_r($sales);
+        
+        }
+        // echo $totalsales;
+        // die();
+        $transaction[] = $totalsales;
+
         $purchaseData = $this->db->select('people.id as customerID,people.businessName,stock.date as date,sum(stock.unit_price * stock.quantity) as purchaseprice ,"purchase" as type')->join('people','people.id=warehouse','left')->join('journals','journals.id=journal_id','left')->where('stock.date >=',$datfrom)->where('stock.date <=',$datto)->group_by('stock.warehouse')->group_by('stock.date')->get('stock')->result_array();
         $transaction[] = $purchaseData;
         $finance = $this->db->select('people.id as customerID,people.businessName,finance.date as date,sum(finance.amount) as amount ,finance.paymentType as paymentType,"finance" as type')->join('people','people.id=finance.peopleID','left')->where('finance.date >=',$datfrom)->where('finance.date <=',$datto)->group_by('finance.date')->group_by('finance.peopleID')->get('finance')->result_array();
         $transaction[] = $finance;
+        $total = 0;
+        $totalSales = 0;
         foreach($transaction as $data)
-        foreach($data as $data){
-                //print_r($data);
-                if($data['customerID'] == " "){
-                    $data['customerID'] = 0;
-                }
-                $total = 0;
-            $query = $this->db->select('sum(amount) as total')->where('peopleID',$data['customerID'])->where('date >',$datfrom)->where('type',1)->get('finance')->row();
-            $openingBalance = $this->db->select('people.openingBalance as balance')->where('id',$data['customerID'])->get('people')->row();
-        //  print_r($openingBalance->balance);
-        //     die();
-            if($openingBalance->balance == " "){
-                $openingBalance->balance = 0;
-            }
-            if($query->total == " "){
-                $query->total = 0;
-            }
-            $total = $openingBalance->balance+$query->total;
-            // echo $total;
+        foreach($data as $data) {
+            print_r($data);
+            if(!empty($data['customerID'])) {
+        
+            // $query = $this->db->select('sum(amount) as total')->where('peopleID',$data['customerID'])->where('date >',$datfrom)->where('type',1)->get('finance')->row();
+           
+            // $openingBalance = $this->db->select('people.openingBalance as balance')->where('id',$data['customerID'])->get('people')->row();
+            // $total = $openingBalance->balance+$query->total;    
+        
             
-            $purchase = $this->db->select('sum(stock.quantity * stock.unit_price) as purchase ')->where('date > ',$datfrom)->where('type', 0)->where('warehouse', $data['customerID'])->get('stock')->row();
-            if($purchase->purchase == " "){
-                $purchase->purchase = 0;
-            }
-            $refund = $this->db->select('sum(stock.quantity * stock.unit_price) as refund ')->where('date > ',$datfrom)->where('type', 4)->where('customer_id', $data['customerID'])->get('stock')->row(); 
-                if($refund->refund == " "){
-                $refund->refund = 0;
-            }
-            $salesData = $this->db->select('people.name as cusName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('date < ',$datfrom)->where('customer_id', $data['customerID'])->get('journals')->result_array();
-            $totalSales = 0;
+            // $purchase = $this->db->select('sum(stock.quantity * stock.unit_price) as purchase ')->where('date > ',$datfrom)->where('type', 0)->where('warehouse', $data['customerID'])->get('stock')->row();
+            // $refund = $this->db->select('sum(stock.quantity * stock.unit_price) as refund ')->where('date > ',$datfrom)->where('type', 4)->where('customer_id', $data['customerID'])->get('stock')->row(); 
+            // $salesData = $this->db->select('people.name as cusName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('date > ',$datfrom)->where('customer_id', $data['customerID'])->get('journals')->result_array();
+            // $totalSales = 0;
+            // foreach( $salesData as $salesData ) {
+            // $data2 = $this->db->select('sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total ')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->row();
+            //     $totalSales += $data2->total;
+            // }
+            // $pevBalance =  $total+$refund->refund+$purchase->purchase-$totalSales;
+            // $data ['pevBalance'] = $pevBalance;
+            // $final[] = $data;
+            //$total = 0;
+            $type = [0,1];
+            $query = $this->db->select('sum(amount) as total')->where('peopleID',$data['customerID'])->where_in('paymentType',$type)->get('finance')->row();
+           
+            $cashback = $this->db->select('sum(amount) as cashback')->where('peopleID',$data['customerID'])->where('paymentType',2)->get('finance')->row();
+            $openingBalance = $this->db->where('id',$data['customerID'])->get('people')->row();
+          
+            
+            
+          
+            $total = ($openingBalance->openingBalance+$query->total)-$cashback->cashback;
+          
+    
+            $purchase = $this->db->select('sum(stock.quantity * stock.unit_price) as purchase ')->where('type', 0)->where('warehouse', $data['customerID'])->get('stock')->row();
+            $refund = $this->db->select('sum(stock.quantity * stock.unit_price) as refund ')->where('type', 4)->where('customer_id', $data['customerID'])->get('stock')->row(); 
+            $salesData = $this->db->select('people.name as cusName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('customer_id', $data['customerID'])->get('journals')->result_array();
+            
             foreach( $salesData as $salesData ) {
-            $data2 = $this->db->select('sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total ')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->row();
+                $data2 = $this->db->select('sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total ')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->row();
                 $totalSales += $data2->total;
+            
             }
-            $pevBalance =  $total+$refund->refund+$purchase->purchase-$totalSales;
-            $data ['pevBalance'] = $pevBalance;
-            // echo $pevBalance;
-            // die();
-            $final[] = $data;
-            //die(); 
+            //echo $totalSales;
+            //$final[] = $data;
+            $prevbalance = ($total+$refund->refund+$purchase->purchase)-$totalSales; 
+            echo $prevbalance;
+            die();       
         }
-        print_r($final);
-        die();
-        //return $total;
+        
+   
+    }
+    
+    }
+    function getImportData($datfrom , $datto){
+        $importData = $this->db->select('people.id as customerID,people.businessName,stock.unloaddate as unloadDate,stock.unit_price as unitPrice ,stock.transport as transport, stock.quantity as quantity,stock.receiver as receiverName,items.name as itemName')->join('items','items.id=stock.item_name','left')->join('people','people.id=stock.warehouse','left')->where('stock.unloaddate >=',$datfrom)->where('stock.unloaddate <=',$datto)->where('stock.type',2)->get('stock')->result_array();
+        
+        return $importData;
+    }
+    function getsalesreportData($datfrom , $datto){
+       
+        $salesData = $this->db->select('people.businessName , journals.date  ,journals.type ,journals.customer_id as customerID, sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - journals.totalDiscount as totalSales , "sales" as type')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->where('journals.date >=',$datfrom)->where('journals.date <=',$datto)->group_by('journals.customer_id')->group_by('journals.date')->get('journals')->result_array();
+        return $salesData;
+ 
+    }
+    function getsalesItemData($datfrom , $datto){
+        
+        $salesItemData = $this->db->select('stock.date as date , items.name as itemName , sum(stock.quantity) as quantity')->join('items','items.id=stock.item_name','left')->where('stock.date >=',$datfrom)->where('stock.date <=',$datto)->group_by('stock.item_name')->group_by('stock.date')->get('stock')->result_array();
+        return $salesItemData;
+ 
     }
 }

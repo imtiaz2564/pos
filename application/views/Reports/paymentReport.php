@@ -35,7 +35,15 @@
             alert('Insert Date');
             return false;
         }
+        <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'paymentreport' ) { ?>
         $('#reportdetails').load('<?=site_url('report/getpaymentreport')?>/'+salesFrom+'/'+salesTo+'/');
+        <? } ?>
+        <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'importreport' ) { ?>
+        $('#reportdetails').load('<?=site_url('report/getimportreport')?>/'+salesFrom+'/'+salesTo+'/');
+        <? } ?>
+        <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'salesreport' ) { ?>
+        $('#reportdetails').load('<?=site_url('report/getsalesreport')?>/'+salesFrom+'/'+salesTo+'/');
+        <? } ?>
     }
 </script>
 

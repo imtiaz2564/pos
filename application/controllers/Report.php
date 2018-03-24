@@ -42,5 +42,28 @@ class Report extends CI_Controller {
         $data['paymentData'] = $this->item_model->getCustomerTransaction($fromDate , $toDate); 
         $this->load->view('Reports/CustomerTransactionReport.php',$data);
     }
+    function importreport(){
+        $data['title'] = ' ';
+        $data['content'] = $this->load->view('Reports/paymentReport.php',$data,true);
+        $this->load->view('template',$data);
+    }
+    function getimportreport($fromDate , $toDate){
+        $this->load->model('item_model');
+        $data['importData'] = $this->item_model->getImportData($fromDate , $toDate); 
+        $this->load->view('Reports/ImportReport.php',$data);
+        
+    }
+    function salesreport(){
+        $data['title'] = ' ';
+        $data['content'] = $this->load->view('Reports/paymentReport.php',$data,true);
+        $this->load->view('template',$data);
+    }
+    function getsalesreport($fromDate , $toDate){
+        $this->load->model('item_model');
+        $data['salesData'] = $this->item_model->getsalesreportData($fromDate , $toDate); 
+        $data['salesItemData'] = $this->item_model->getsalesItemData($fromDate , $toDate); 
+        $this->load->view('Reports/SalesReport.php',$data);
+        
+    }
 }
  
