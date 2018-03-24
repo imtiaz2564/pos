@@ -475,8 +475,8 @@ class Item_Model extends CI_Model{
                 $total = 0;
             $query = $this->db->select('sum(amount) as total')->where('peopleID',$data['customerID'])->where('date >',$datfrom)->where('type',1)->get('finance')->row();
             $openingBalance = $this->db->select('people.openingBalance as balance')->where('id',$data['customerID'])->get('people')->row();
-         print_r($openingBalance->balance);
-            die();
+        //  print_r($openingBalance->balance);
+        //     die();
             if($openingBalance->balance == " "){
                 $openingBalance->balance = 0;
             }

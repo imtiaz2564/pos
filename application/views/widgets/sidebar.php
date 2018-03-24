@@ -13,8 +13,8 @@
         <ul class="nav" id="side-menu">
             <li>
 <!--                <a href="#"><i class="fa fa-bar-chart-o fa-flask"></i> Medicine <span class="fa arrow"></span></a>-->
-                <a href="#"><i class="fa fa-home"></i> Home <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
+                    <a href="#"><i class="fa fa-home"></i> Home <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
                     <li><a href="<?=site_url('item/purchase')?>">Purchase</a></li>
                     <!-- <li><a href="<?//=site_url('item/localpurchase/insert')?>">Local Purchase</a></li> -->
                     <li><a href="<?=site_url('item/sale')?>">Sales</a></li>

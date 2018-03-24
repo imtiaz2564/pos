@@ -18,7 +18,7 @@ class Finance extends CI_Controller {
 	public function index(){
     }
 	public function payments(){
-        $data['title'] = 'Suplier Payments';
+        $data['title'] = 'Payments( Khoroch )';
         
         $this->crud->init('finance',[
             'peopleID' => 'Business Name( Supplier )',
@@ -50,7 +50,7 @@ class Finance extends CI_Controller {
         $this->load->view('template',$data);
 	}
 	public function receives() {
-        $data['title'] = 'Customer Receives';
+        $data['title'] = 'Receives( Joma )';
         
         $this->crud->init('finance',[
             'peopleID' => 'Business Name( Customer )',
