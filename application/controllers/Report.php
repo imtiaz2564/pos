@@ -33,10 +33,14 @@ class Report extends CI_Controller {
         $this->load->view('Reports/PaymentReportDetails.php',$data);
     }
     function customertransaction() {
-        $this->load->model('item_model');
         $data['title'] = ' ';
         $data['content'] = $this->load->view('Reports/TransactionReport.php',$data,true);
         $this->load->view('template',$data);
+    }
+    function getCustomerTransactionData($fromDate , $toDate){
+        $this->load->model('item_model');
+        $data['paymentData'] = $this->item_model->getCustomerTransaction($fromDate , $toDate); 
+        $this->load->view('Reports/CustomerTransactionReport.php',$data);
     }
 }
  

@@ -37,8 +37,8 @@
             <li>
                 <a href="#"><i class="fa fa-dollar"></i> Accounts<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li><a href="<?=site_url('finance/receives/insert')?>">Customer Payments</a></li>
-                    <li><a href="<?=site_url('finance/payments/insert')?>">Supplier Payments</a></li>
+                    <li><a href="<?=site_url('finance/receives/insert')?>">Receives( Joma )</a></li>
+                    <li><a href="<?=site_url('finance/payments/insert')?>">Payments( Khoroch )</a></li>
                     <li><a href="<?=site_url('finance/customer/statement')?>">Statement</a></li>
                     <!-- <a href="<?//=site_url('finance/customer/statement')?>" class="btn btn-info" role="button">Customer Statement</a> -->
                 </ul>
@@ -67,7 +67,6 @@
                         <li><a href="<?=site_url('report/customertransaction')?>">Customer Transaction Report</a></li>
                         <li><a href="#">Supplier Transaction Report</a></li>
                         <li><a href="<?=site_url('report/paymentreport')?>">Daily Payment Report</a></li>
-                        <li><a href="#">Daily Receives Report</a></li>
                     </ul> 
             </li>
             <li><a href="<?=site_url('auth/logout')?>"><i class="fa fa-sign-out"></i> Logout</a></li>

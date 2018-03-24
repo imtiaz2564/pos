@@ -1,4 +1,14 @@
-<div class="modal-body" style="max-height:450px; overflow-y:scroll;">
+
+
+
+    <? 
+//     foreach( $result as $result) { 
+// print_r($result);
+//     }
+//     die(); 
+    ?> 
+  
+  <div class="modal-body" style="max-height:450px; overflow-y:scroll;">
     <div class="page-header">
         <div class='page-heading text-center'>
             <h1>Amin Brothers</h1>
@@ -64,8 +74,10 @@
             <td><b>Date</b></td>
             <td><b>Sales/Purchase Description</b></td>
             <td><b>Account Description</b></td>
-            <td><b>Payable Amounts</b></td>
-            <td><b>Paid Amounts</b></td>
+            <!-- <td><b>Payable Amounts</b></td> -->
+            <td><b>Debit</b></td>
+            <!-- <td><b>Paid Amounts</b></td> -->
+            <td><b>Credit</b></td>
             <td><b>Balance</b></td>
         </tr>
     </thead>
@@ -90,11 +102,17 @@
             <td></td>
             <td></td>
             <td><?=$supplierpayable?></td>
-        <? } if ( $result['type'] == "deposit" ) { $paid = $paid+$result["depositAmount"];  ?>
+        <? } if ( $result['type'] == "deposit" && $result['paymentType'] == "1") { $paid = $paid-$result["depositAmount"];  ?>
+            <td></td>
+            <td><?=$result["depositDescription"]?></td>
+            <td><?=$result["depositAmount"]?></td>
+            <td></td>
+        <? } if ( $result['type'] == "deposit" && $result['paymentType'] == "0") { $paid = $paid+$result["depositAmount"];  ?>
             <td></td>
             <td><?=$result["depositDescription"]?></td>
             <td></td>
             <td><?=$result["depositAmount"]?></td>
+            
         <? } if ( $result['type'] == "refund" ) { $totalRefund = $result["quantity"]*$result["unit_price"]; $paid = $paid+$totalRefund ?>
             <td></td>
             <td><?=$result["refundDescription"]?></td>
