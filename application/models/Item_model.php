@@ -545,13 +545,13 @@ class Item_Model extends CI_Model{
     $dat = date('Y-m-d');
   
     //     // $salesData = $this->db->select('people.businessName , journals.date  ,journals.type ,journals.customer_id as customerID, sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - journals.totalDiscount as totalSales , "sales" as type')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->where('journals.date >=',$datfrom)->where('journals.date <=',$datto)->group_by('journals.customer_id')->group_by('journals.date')->get('journals')->result_array();
-        $salesData = $this->db->select('people.businessName , journals.date  ,journals.type ,journals.customer_id as customerID, sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - journals.totalDiscount as totalSales , "sales" as type')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->where('journals.date = ',$dat)->group_by('journals.customer_id')->group_by('journals.date')->get('journals')->result_array();
+        $salesData = $this->db->select('people.businessName , journals.date  ,journals.type ,journals.customer_id as customerID, sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - journals.totalDiscount as totalSales , "sales" as type')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->where('journals.date = ',$dat)->where('journals.type = ',1)->group_by('journals.customer_id')->group_by('journals.date')->get('journals')->result_array();
          return $salesData;
  
     }
     function getsalesItemData(){
         $dat = date('Y-m-d');
-        $salesItemData = $this->db->select('stock.date as date , items.name as itemName , sum(stock.quantity) as quantity')->join('items','items.id=stock.item_name','left')->where('stock.date =',$dat)->group_by('stock.item_name')->group_by('stock.date')->get('stock')->result_array();
+        $salesItemData = $this->db->select('stock.date as date , items.name as itemName , sum(stock.quantity) as quantity')->join('items','items.id=stock.item_name','left')->where('stock.type =',1)->where('stock.date =',$dat)->group_by('stock.item_name')->group_by('stock.date')->get('stock')->result_array();
         return $salesItemData;
  
     }
