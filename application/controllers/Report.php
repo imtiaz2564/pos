@@ -55,15 +55,27 @@ class Report extends CI_Controller {
     }
     function salesreport(){
         $data['title'] = ' ';
-        $data['content'] = $this->load->view('Reports/paymentReport.php',$data,true);
+        $data['content'] = $this->load->view('Reports/salesReportTemplate.php',$data,true);
         $this->load->view('template',$data);
     }
-    function getsalesreport($fromDate , $toDate){
-        $this->load->model('item_model');
-        $data['salesData'] = $this->item_model->getsalesreportData($fromDate , $toDate); 
-        $data['salesItemData'] = $this->item_model->getsalesItemData($fromDate , $toDate); 
-        $this->load->view('Reports/SalesReport.php',$data);
+    // function getsalesreport($fromDate , $toDate){
+    //     $this->load->model('item_model');
+    //     $data['salesData'] = $this->item_model->getsalesreportData($fromDate , $toDate); 
+    //     $data['salesItemData'] = $this->item_model->getsalesItemData($fromDate , $toDate); 
+    //     $this->load->view('Reports/SalesReport.php',$data);
         
+    // }
+    function getsalesreport($reporttype){
+        $this->load->model('item_model');
+        if($reporttype == "customer"){
+            $data['salesData'] = $this->item_model->getsalesreportData(); 
+            $this->load->view('Reports/SalesReport.php',$data);
+        }
+        if($reporttype == "item"){
+            $data['salesItemData'] = $this->item_model->getsalesItemData(); 
+            $this->load->view('Reports/SalesReportByItem.php',$data);
+        
+        } 
     }
 }
  
