@@ -7,25 +7,23 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <fieldset>
                     <div class="col-md-3 form-group">
-                            <label>Date ( From ) :</label>
-                            <input type="text" name="salesFrom" value="" class="form-control date" data-date-format="YYYY-MM-DD">
+                        <label>Date ( From ) :</label>
+                        <input type="text" name="salesFrom" value="" class="form-control date" data-date-format="YYYY-MM-DD">
                     </div>
                     <div class="col-md-3 form-group">
-                            <label>Date ( To ) :</label>
-                            <input type="text" name="salesTo" value="" class="form-control date" data-date-format="YYYY-MM-DD">
+                        <label>Date ( To ) :</label>
+                        <input type="text" name="salesTo" value="" class="form-control date" data-date-format="YYYY-MM-DD">
                     </div>
-                    <div class="col-md-3 form-group" class="form-group report" id = "reportType">
-                    
-                    <label class="form-group report">Select Criteria: </label> 
-                    <select class="form-group report"  name = "reportType" >
-                        <option class="form-group report" value="0">None</option>
-                        <option class="form-group report" value="customer">Filter By Customer</option>
-                        <option class="form-group report" value="item">Filter By Item</option>
-                    </select>
+                    <div class="col-md-3 form-group">
+                        <label>Criteria: </label> 
+                        <select class="form-control report"  name = "reportType" >
+                            <option class="form-group report" value="0">None</option>
+                            <option class="form-group report" value="customer">Filter By Customer</option>
+                            <option class="form-group report" value="item">Filter By Item</option>
+                        </select>
+
                     </div>
-                </fieldset>   
             </div>
             <div id = "reportdetails" ></div>
     </div>
