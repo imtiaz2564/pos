@@ -9,12 +9,19 @@
                <td>Amount</td>
             </tr>
         </thead>
-        <? $i = 1;  foreach( $salesData as $salesData) { ?>
+        <? $i = 1; $total=0; foreach( $salesData as $salesData) { $total +=$salesData["totalSales"];?>
         <tr>
             <td><?=$i++?></td>
             <td><?=$salesData["date"]?></td>
             <td><?=$salesData["businessName"]?></td>
             <td><?=$salesData["totalSales"]?></td>
-        <? } ?>   
+         </tr>   
+        <? } ?>
+        <tr>
+            <td><b>Total</b></td>
+            <td></td>
+            <td></td>
+            <td><?=$total?></td>
+        </tr>   
     </table>  
 </div>

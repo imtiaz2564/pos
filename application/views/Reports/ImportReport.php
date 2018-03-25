@@ -5,6 +5,7 @@
             <tr>
                <td>No</td>
                <td>Date</td> 
+               <td>Business Name</td>
                <td>Item Name</td>
                <td>Quantity</td>
                <td>Transport Name</td>
@@ -15,6 +16,7 @@
         <tr>
             <td><?=$i++?></td>
             <td><?=$importData["unloadDate"]?></td>
+            <td><?=$importData["businessName"]?></td>
             <td><?=$importData["itemName"]?></td>
             <td><?=$importData["quantity"]?></td>
             <td><?=$importData["transport"]?></td>

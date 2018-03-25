@@ -66,7 +66,9 @@
                     <ul class="nav nav-second-level">
                         <!-- <li><a href="<?//=site_url('report/customertransaction')?>">Customer Transaction Report</a></li>
                         <li><a href="#">Supplier Transaction Report</a></li> -->
+                        <li><a href="#">Daily Purchase Report</a></li>
                         <li><a href="<?=site_url('report/salesreport')?>">Daily Sales Report</a></li>
+                      
                         <li><a href="<?=site_url('report/paymentreport')?>">Daily Payment Report</a></li>
                         <li><a href="<?=site_url('report/importreport')?>">Daily Import Report</a></li>
                     </ul> 

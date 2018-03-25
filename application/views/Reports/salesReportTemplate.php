@@ -8,6 +8,14 @@
         <div class="panel-body">
             <div class="row">
                 <fieldset>
+                    <div class="col-md-3 form-group">
+                            <label>Date ( From ) :</label>
+                            <input type="text" name="salesFrom" value="" class="form-control date" data-date-format="YYYY-MM-DD">
+                    </div>
+                    <div class="col-md-3 form-group">
+                            <label>Date ( To ) :</label>
+                            <input type="text" name="salesTo" value="" class="form-control date" data-date-format="YYYY-MM-DD">
+                    </div>
                     <div class="col-md-3 form-group" class="form-group report" id = "reportType">
                     
                     <label class="form-group report">Select Criteria: </label> 
@@ -23,9 +31,18 @@
     </div>
 </div>
 <script>
+
 $('select[name=reportType]').on('change', function(){
+    var salesFrom = $('input[name=salesFrom]').val();
+        var salesTo = $('input[name=salesTo]').val();
+        if(salesFrom.length  ==  ' ' || salesTo.length  ==  ' ' ){
+            alert('Insert Date');
+            return false;
+        }
+
+
     reportType = $('select[name=reportType]').val();
-    $('#reportdetails').load('<?=site_url('report/getsalesreport')?>/'+reportType+'/');
+    $('#reportdetails').load('<?=site_url('report/getsalesreport')?>/'+reportType+'/'+salesFrom+'/'+salesTo+'/');
           
 });
    

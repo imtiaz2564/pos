@@ -65,17 +65,23 @@ class Report extends CI_Controller {
     //     $this->load->view('Reports/SalesReport.php',$data);
         
     // }
-    function getsalesreport($reporttype){
+    function getsalesreport($reporttype, $datFrom , $datTo){
         $this->load->model('item_model');
         if($reporttype == "customer"){
-            $data['salesData'] = $this->item_model->getsalesreportData(); 
+            $data['salesData'] = $this->item_model->getsalesreportData($datFrom , $datTo); 
             $this->load->view('Reports/SalesReport.php',$data);
         }
         if($reporttype == "item"){
-            $data['salesItemData'] = $this->item_model->getsalesItemData(); 
+            $data['salesItemData'] = $this->item_model->getsalesItemData($datFrom , $datTo); 
             $this->load->view('Reports/SalesReportByItem.php',$data);
         
         } 
+    }
+    function purchaseReport(){
+        $data['title'] = ' ';
+        $data['content'] = $this->load->view('Reports/salesReportTemplate.php',$data,true);
+        $this->load->view('template',$data);
+
     }
 }
  
