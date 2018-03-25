@@ -15,6 +15,7 @@
                         <label>Date ( To ) :</label>
                         <input type="text" name="salesTo" value="" class="form-control date" data-date-format="YYYY-MM-DD">
                     </div>
+                    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'salesreport' ) { ?>            
                     <div class="col-md-3 form-group">
                         <label>Criteria: </label> 
                         <select class="form-control report"  name = "reportType" >
@@ -22,8 +23,17 @@
                             <option class="form-group report" value="customer">Filter By Customer</option>
                             <option class="form-group report" value="item">Filter By Item</option>
                         </select>
-
                     </div>
+                    <? } if( $this->uri->segment(2) == 'purchasereport' ) {?>
+                        <div class="col-md-3 form-group">
+                        <label>Criteria: </label> 
+                        <select class="form-control report"  name = "reportType" >
+                            <option class="form-group report" value="0">None</option>
+                            <option class="form-group report" value="supplier">Filter By Supplier</option>
+                            <option class="form-group report" value="item">Filter By Item</option>
+                        </select>
+                    </div>
+                    <? } ?> 
             </div>
             <div id = "reportdetails" ></div>
     </div>
@@ -37,16 +47,15 @@ $('select[name=reportType]').on('change', function(){
             alert('Insert Date');
             return false;
         }
-
-
-    reportType = $('select[name=reportType]').val();
-    $('#reportdetails').load('<?=site_url('report/getsalesreport')?>/'+reportType+'/'+salesFrom+'/'+salesTo+'/');
-          
-});
+        reportType = $('select[name=reportType]').val();
+        <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'salesreport' ) { ?>
+            $('#reportdetails').load('<?=site_url('report/getsalesreport')?>/'+reportType+'/'+salesFrom+'/'+salesTo+'/');
+        <? } ?>
+        <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'purchasereport' ) { ?>
+            $('#reportdetails').load('<?=site_url('report/getpurchasereport')?>/'+reportType+'/'+salesFrom+'/'+salesTo+'/');
+        <? } ?>      
+    });
    
-   // function submitPaymentData(){
-        //$('#reportdetails').load('<?//=site_url('report/getpaymentreport')?>/'+salesFrom+'/'+salesTo+'/');
-   // }
 </script>
 
 

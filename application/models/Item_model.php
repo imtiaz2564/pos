@@ -553,11 +553,16 @@ class Item_Model extends CI_Model{
         //$dat = date('Y-m-d');
        // $salesItemData = $this->db->select('stock.date as date , items.name as itemName , sum(stock.quantity) as quantity')->join('items','items.id=stock.item_name','left')->where('stock.type =',1)->where('stock.date =',$dat)->group_by('stock.item_name')->group_by('stock.date')->get('stock')->result_array();
        $salesItemData = $this->db->select('items.name as itemName , people.businessName , journals.date  ,journals.type ,journals.customer_id as customerID,sum(stock.quantity) as quantity, sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - journals.totalDiscount as totalSales')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->join('items','items.id=stock.item_name','left')->where('journals.date >=',$datFrom)->where('journals.date <=',$datTo)->where('journals.type = ',1)->group_by('stock.item_name')->group_by('journals.date')->get('journals')->result_array();
-        //  foreach($salesItemData as $salesItemData){
-        //      print_r($salesItemData);
-        //  }
-        //  die();
        return $salesItemData;
  
+    }
+    function getpurchasereportData($datFrom , $datTo){
+        $purchaseData = $this->db->select('stock.date as date , people.businessName  , sum(stock.quantity * stock.unit_price) as totalPurchase ')->join('people','stock.warehouse=people.id','left')->where('stock.date >=',$datFrom)->where('stock.date <=',$datTo)->where('stock.type = ',0)->group_by('stock.warehouse')->group_by('stock.date')->get('stock')->result_array();
+        return $purchaseData;
+
+    }
+    function getpurchaseItemData($datFrom , $datTo){
+        $purchaseItemData = $this->db->select('stock.date as date , items.name as itemName , sum(stock.quantity) as quantity, sum(stock.quantity * stock.unit_price) as totalPurchase')->join('people','stock.warehouse=people.id','left')->join('items','items.id=stock.item_name','left')->where('stock.date >=',$datFrom)->where('stock.date <=',$datTo)->where('stock.type = ',0)->group_by('stock.item_name')->group_by('stock.date')->get('stock')->result_array();
+        return $purchaseItemData;
     }
 }

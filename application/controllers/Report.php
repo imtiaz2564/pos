@@ -65,22 +65,34 @@ class Report extends CI_Controller {
     //     $this->load->view('Reports/SalesReport.php',$data);
         
     // }
-    function getsalesreport($reporttype, $datFrom , $datTo){
+    function getsalesreport($reporttype, $datFrom , $datTo) {
         $this->load->model('item_model');
         if($reporttype == "customer"){
             $data['salesData'] = $this->item_model->getsalesreportData($datFrom , $datTo); 
             $this->load->view('Reports/SalesReport.php',$data);
         }
-        if($reporttype == "item"){
+        if($reporttype == "item") {
             $data['salesItemData'] = $this->item_model->getsalesItemData($datFrom , $datTo); 
             $this->load->view('Reports/SalesReportByItem.php',$data);
         
         } 
     }
-    function purchaseReport(){
+    function purchaseReport() {
         $data['title'] = ' ';
         $data['content'] = $this->load->view('Reports/salesReportTemplate.php',$data,true);
         $this->load->view('template',$data);
+
+    }
+    function getpurchasereport($reporttype, $datFrom , $datTo) {
+        $this->load->model('item_model');
+        if($reporttype == "supplier"){
+            $data['purchaseData'] = $this->item_model->getpurchasereportData($datFrom , $datTo); 
+            $this->load->view('Reports/PurchaseBySupplier.php',$data);
+        }
+        if($reporttype == "item") {
+            $data['purchaseItemData'] = $this->item_model->getpurchaseItemData($datFrom , $datTo); 
+            $this->load->view('Reports/PurchaseReportByItem.php',$data);
+        }
 
     }
 }
