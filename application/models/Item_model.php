@@ -546,8 +546,9 @@ class Item_Model extends CI_Model{
   
     //     // $salesData = $this->db->select('people.businessName , journals.date  ,journals.type ,journals.customer_id as customerID, sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - journals.totalDiscount as totalSales , "sales" as type')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->where('journals.date >=',$datfrom)->where('journals.date <=',$datto)->group_by('journals.customer_id')->group_by('journals.date')->get('journals')->result_array();
         //$salesData = $this->db->select('people.businessName , journals.date  ,journals.type ,journals.customer_id as customerID, sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - journals.totalDiscount as totalSales , "sales" as type')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->where('journals.date >=',$datFrom)->where('journals.date <=',$datTo)->where('journals.type = ',1)->group_by('journals.customer_id')->group_by('journals.date')->get('journals')->result_array();
-        $salesData = $this->db->select('people.businessName ,journals.labourCost as labourCost,journals.date  ,journals.type ,journals.customer_id as customerID, sum(stock.quantity * stock.unit_price) + sum(journals.labourCost) - sum(stock.discount) - journals.totalDiscount as totalSales , "sales" as type')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->where('journals.date >=',$datFrom)->where('journals.date <=',$datTo)->where('journals.type = ',1)->group_by('journals.customer_id')->group_by('journals.date')->get('journals')->result_array();
-        
+       // $salesData = $this->db->select('people.businessName ,journals.labourCost as labourCost,journals.date  ,journals.type ,journals.customer_id as customerID, sum(stock.quantity * stock.unit_price) + sum(journals.labourCost) - sum(stock.discount) - journals.totalDiscount as totalSales , "sales" as type')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->where('journals.date >=',$datFrom)->where('journals.date <=',$datTo)->where('journals.type = ',1)->group_by('journals.customer_id')->group_by('journals.date')->get('journals')->result_array();
+        //return $salesData;
+        $salesData = $this->db->select('stock.date as date ,sum(stock.quantity * stock.unit_price) +journals.labourCost -stock.discount - journals.totalDiscount as totalSales , stock.journal_id ,people.businessName,  journals.customer_id as customerID, journals.labourCost as labourCost')->join('journals','journals.id = stock.journal_id')->join('people','people.id=journals.customer_id')->where('stock.date >=',$datFrom)->where('stock.date <=',$datTo)->where('stock.type = ',1)->group_by('stock.journal_id')->get('stock')->result_array();
         return $salesData;
  
     }
@@ -559,12 +560,14 @@ class Item_Model extends CI_Model{
  
     }
     function getpurchasereportData($datFrom , $datTo){
-        $purchaseData = $this->db->select('stock.date as date , people.businessName  , sum(stock.quantity * stock.unit_price) as totalPurchase ')->join('people','stock.warehouse=people.id','left')->where('stock.date >=',$datFrom)->where('stock.date <=',$datTo)->where('stock.type = ',0)->group_by('stock.warehouse')->group_by('stock.date')->get('stock')->result_array();
+        $purchaseData = $this->db->select('stock.date as date ,items.name as itemName,sum(stock.quantity) as quantity , people.businessName  , sum(stock.quantity * stock.unit_price) as totalPurchase ')->join('people','stock.warehouse=people.id','left')->join('items','items.id=stock.item_name','left')->where('stock.date >=',$datFrom)->where('stock.date <=',$datTo)->where('stock.type = ',0)->group_by('stock.warehouse')->group_by('stock.item_name')->group_by('stock.date')->get('stock')->result_array();
         return $purchaseData;
 
     }
     function getpurchaseItemData($datFrom , $datTo){
-        $purchaseItemData = $this->db->select('stock.date as date , items.name as itemName , sum(stock.quantity) as quantity, sum(stock.quantity * stock.unit_price) as totalPurchase')->join('people','stock.warehouse=people.id','left')->join('items','items.id=stock.item_name','left')->where('stock.date >=',$datFrom)->where('stock.date <=',$datTo)->where('stock.type = ',0)->group_by('stock.item_name')->group_by('stock.date')->get('stock')->result_array();
+        // $purchaseItemData = $this->db->select('stock.date as date , items.name as itemName , sum(stock.quantity) as quantity, sum(stock.quantity * stock.unit_price) as totalPurchase')->join('people','stock.warehouse=people.id','left')->join('items','items.id=stock.item_name','left')->where('stock.date >=',$datFrom)->where('stock.date <=',$datTo)->where('stock.type = ',0)->group_by('stock.item_name')->group_by('stock.date')->get('stock')->result_array();
+        // return $purchaseItemData;
+        $purchaseItemData = $this->db->select('items.name as itemName, sum(stock.quantity) as quantity, stock.date')->join('people','stock.warehouse=people.id','left')->join('items','items.id=stock.item_name','left')->where('stock.date >=',$datFrom)->where('stock.date <=',$datTo)->where('stock.type = ',0)->group_by('stock.item_name')->get('stock')->result_array();
         return $purchaseItemData;
     }
 }
