@@ -52,7 +52,7 @@ class Item extends CI_Controller {
         $this->load->view('template',$data);
     } 
 	public function stock(){
-        $data['title'] = 'Item Stock';
+        $data['title'] = 'Live AB Stock';
         $this->crud->init('items',[
             'name' => 'Item Name',
         ]);

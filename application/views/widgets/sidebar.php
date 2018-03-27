@@ -18,10 +18,10 @@
                     <li><a href="<?=site_url('item/purchase')?>">Purchase</a></li>
                     <!-- <li><a href="<?//=site_url('item/localpurchase/insert')?>">Local Purchase</a></li> -->
                     <li><a href="<?=site_url('item/sale')?>">Sales</a></li>
-                    <li><a href="<?=site_url('item/stock')?>">Sylhet Stock</a></li>
+                    <li><a href="<?=site_url('item/stock')?>">AB Stock</a></li>
                     <li><a href="<?=site_url('item/importregister/insert')?>">Import</a></li>
                     <li><a href="<?=site_url('item/refund/insert')?>">Refund</a></li>
-                    <li><a href="<?=site_url('item/stockbysupplier')?>">Supplier Stock</a></li>
+                    <li><a href="<?=site_url('item/stockbysupplier')?>">Live Supplier Stock</a></li>
                 </ul>
             </li>
 <!--
@@ -68,8 +68,8 @@
                         <li><a href="#">Supplier Transaction Report</a></li> -->
                         <li><a href="<?=site_url('report/purchasereport')?>">Daily Purchase Report</a></li>
                         <li><a href="<?=site_url('report/salesreport')?>">Daily Sales Report</a></li>
-                      
                         <li><a href="<?=site_url('report/paymentreport')?>">Daily Payment Report</a></li>
+                        <li><a href="<?=site_url('report/stockreport')?>">Daily AB Stock Report</a></li>
                         <li><a href="<?=site_url('report/importreport')?>">Daily Import Report</a></li>
                     </ul> 
             </li>

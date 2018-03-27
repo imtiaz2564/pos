@@ -95,5 +95,14 @@ class Report extends CI_Controller {
         }
 
     }
+    function stockreport(){
+        $this->load->model('item_model');
+        $data['title'] = ' ';
+        $data['previousstock'] = $this->item_model->getPreviousStock();
+        // $data['importstock'] = $this->item_model->getImportStock();
+        // $data['soldstock'] = $this->item_model->getSoldStock(); 
+        $data['content'] = $this->load->view('Reports/StockReport.php',$data,true);
+        $this->load->view('template',$data);
+    }
 }
  

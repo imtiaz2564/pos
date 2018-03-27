@@ -570,4 +570,23 @@ class Item_Model extends CI_Model{
         $purchaseItemData = $this->db->select('items.name as itemName, sum(stock.quantity) as quantity, stock.date')->join('people','stock.warehouse=people.id','left')->join('items','items.id=stock.item_name','left')->where('stock.date >=',$datFrom)->where('stock.date <=',$datTo)->where('stock.type = ',0)->group_by('stock.item_name')->get('stock')->result_array();
         return $purchaseItemData;
     }
+    function getPreviousStock() {
+        $dat = date('Y-m-d');
+        $total = [];
+        $data = [];
+        
+        $items = $this->db->select('sum(stock.quantity) as importQuantity,stock.item_name as itemId,items.name as itemName')->join('items','items.id=stock.item_name','left')->where('stock.type = ',2)->where('stock.date = ',$dat)->group_by('stock.item_name')->get('stock')->result_array();
+        foreach($items as $item){
+            $data1 = $this->db->select('sum(quantity) as previousQuantity')->where('stock.type',2)->where('stock.date < ',$dat)->where('stock.item_name = ',$item['itemId'])->get('stock');
+            //$data2 = $this->db->select('sum(quantity) as importQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',2)->where('stock.date =',$dat)->get('stock');
+            $data3 = $this->db->select('sum(quantity) as soldQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',1)->where('stock.date = ',$dat)->get('stock');
+            $data['name'] = $item['itemName']; 
+            $data['previous'] = $data1->row()->previousQuantity;
+            //$data['import'] = $data2->row()->importQuantity;
+            $data['import'] = $item['importQuantity'];;
+            $data['sold'] = $data3->row()->soldQuantity;
+            $total[] = $data;
+        }
+        return $total;
+    }
 }
