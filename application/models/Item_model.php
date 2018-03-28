@@ -319,10 +319,10 @@ class Item_Model extends CI_Model{
     //     $this->db->where('journal_id', $journalid); //which row want to upgrade  
     //     $this->db->update('stock');
     // } 
-    function updateStock( $item_name , $quantity,  $warehouse , $type ){
+    function updateStock( $item_name , $quantity, $date ,  $warehouse , $type ){
         // $query = $this->db->select('sum(quantity) as totalquantity')->where('warehouse',$warehouse)->where('item_name',$item_name)->get('stock')->row();
         // $rest = $query->totalquantity-$quantity;
-        return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'warehouse'=>$warehouse ,'type'=>$type]);
+        return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'date'=>$date,'warehouse'=>$warehouse ,'type'=>$type]);
     }
     function checkStock( $warehouse ,  $item_name ) {
         $query = $this->db->select('sum(quantity) as totalquantity,')->join('items','items.id=item_name','left')->where('warehouse',$warehouse)->where('item_name',$item_name)->where('stock.type',0)->where('stock.stockType',0)->get('stock')->row();
@@ -455,7 +455,7 @@ class Item_Model extends CI_Model{
         return $result;
     }
     function getPaymentData($from , $to) {
-        $paymentType = [0,1];
+        $paymentType = [0,1,2];
         $result = $this->db->join('people','people.id=peopleID','left')->where('date >=',$from)->where('date <=',$to)->where_in('paymentType',$paymentType)->get('finance')->result_array();
         return $result;
     }
@@ -574,16 +574,23 @@ class Item_Model extends CI_Model{
         $dat = date('Y-m-d');
         $total = [];
         $data = [];
-        
-        $items = $this->db->select('sum(stock.quantity) as importQuantity,stock.item_name as itemId,items.name as itemName')->join('items','items.id=stock.item_name','left')->where('stock.type = ',2)->where('stock.date = ',$dat)->group_by('stock.item_name')->get('stock')->result_array();
+        $type = ['3','5','7'];
+         
+        $items = $this->db->select('items.name as itemName , items.id as itemId')->where('items.type = ',1)->get('items')->result_array();
+        //$items = $this->db->select('sum(stock.quantity) as importQuantity,stock.item_name as itemId,items.name as itemName')->join('items','items.id=stock.item_name','left')->where('stock.type = ',2)->where('stock.date = ',$dat)->group_by('stock.item_name')->get('stock')->result_array();
         foreach($items as $item){
-            $data1 = $this->db->select('sum(quantity) as previousQuantity')->where('stock.type',2)->where('stock.date < ',$dat)->where('stock.item_name = ',$item['itemId'])->get('stock');
-            //$data2 = $this->db->select('sum(quantity) as importQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',2)->where('stock.date =',$dat)->get('stock');
+            // print_r($item);
+            // die();
+           
+            $data1 = $this->db->select('sum(quantity) as previousQuantity')->where_in('stock.type',$type)->where('stock.warehouse',3)->where('stock.date < ',$dat)->where('stock.item_name = ',$item['itemId'])->get('stock');
+            $query = $this->db->select('sum(quantity) as total')->where('item_name',$item['itemId'])->where('type',1)->get('stock');
+      
+            $data2 = $this->db->select('sum(quantity) as importQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',2)->where('stock.date =',$dat)->get('stock');
             $data3 = $this->db->select('sum(quantity) as soldQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',1)->where('stock.date = ',$dat)->get('stock');
             $data['name'] = $item['itemName']; 
-            $data['previous'] = $data1->row()->previousQuantity;
-            //$data['import'] = $data2->row()->importQuantity;
-            $data['import'] = $item['importQuantity'];;
+            $data['previous'] = $data1->row()->previousQuantity - $query->row()->total;
+            $data['import'] = $data2->row()->importQuantity;
+            //$data['import'] = $item['importQuantity'];;
             $data['sold'] = $data3->row()->soldQuantity;
             $total[] = $data;
         }

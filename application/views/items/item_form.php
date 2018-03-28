@@ -17,7 +17,7 @@
                 <td> 
                     <select name = "stockType" >
                         <option value="0">Supplier Stock</option>
-                        <option value="2">Sylhet Stock</option>
+                        <option value="2">AB Stock</option>
                     </select>
                 </td> 
             <? } ?> 

@@ -1,4 +1,4 @@
-<div class="modal-body" style="max-height:400px; overflow-y:scroll;">
+<div class="modal-body" style="max-height:450px; overflow-y:scroll;">
     <h1>Daily AB Stock</h1>
     <table class="table table-report">
         <thead>
@@ -12,9 +12,9 @@
                <td>Balance</td>
             </tr>
         </thead>
-        <? $i = 0; foreach( $previousstock as $stock ) {  ?>
+        <? $i = 0; foreach( $previousstock as $stock ) { $i++; ?>
         <tr>
-            <td><?=$i++?></td>
+            <td><?=$i?></td>
             <td><?=date('Y-m-d')?></td>
             <td><?=$stock['name']?></td>
             <td><?=$stock['previous']?></td>

@@ -9,35 +9,75 @@
                <td>Description</td>
                <td>Type</td>
                <td>Money IN</td>
-               <td>Money OUT</td> 
+               <td>Money OUT</td>
+               <td>Cash Back</td> 
             </tr>
         </thead>
-        <? $i = 1; $totalIn = 0; $totalOut = 0; foreach( $paymentData as $paymentData) { ?>
+        <? $i = 1; $totalIn = 0; $totalOut = 0; $totalCashIn = 0; $totalBankIn = 0;
+        $totalCashOut = 0; $totalBankOut = 0; $cashBack = 0;
+        foreach( $paymentData as $paymentData) { ?>
         <tr>
             <td><?=$i++?></td>
             <td><?=$paymentData["date"]?></td>
             <td><?=$paymentData["businessName"]?></td>
             <td><?=$paymentData["description"]?></td>
-            <? if($paymentData["paymentType"] == 0) { ?>
+            <? if($paymentData["paymentType"] == 0){ ?>
                 <td><?="Cash"?></td>
-            <? } if($paymentData["paymentType"] == 1) { ?>
+            <? }if($paymentData["paymentType"] == 1){ ?>
                 <td><?="Bank"?></td>
-            <? } if($paymentData["paymentType"] == 2) { ?>
+            <? }if($paymentData["paymentType"] == 2){ ?>
                 <td><?="Cash Back"?></td>
-            <? } ?>    
-            <? if( $paymentData["type"] == 0 ) { $totalIn += $paymentData["amount"]; ?>
-
-            <td><?=$paymentData["amount"]?></td>
-            <? } else {?>
-                <td><?=0?></td>
-            <? } ?>
-            <? if( $paymentData["type"] == 1 ) { $totalOut += $paymentData["amount"];?>
-            <td><?=$paymentData["amount"]?></td>
-            <? } else {?>
-                <td><?=0?></td>
-            <? } ?>
-        </tr>
+            <? }if($paymentData["type"] == 0 && $paymentData["paymentType"] == 0 ){
+                    $totalCashIn += $paymentData["amount"];
+                }
+                if($paymentData["type"] == 0 && $paymentData["paymentType"] == 1 ){
+                    $totalBankIn += $paymentData["amount"];
+                }
+                if($paymentData["type"] == 1 && $paymentData["paymentType"] == 0 ){
+                    $totalCashOut += $paymentData["amount"];
+                }
+                if($paymentData["type"] == 1 && $paymentData["paymentType"] == 1){
+                    $totalBankOut += $paymentData["amount"];
+                }
+                if($paymentData["type"] == 0 && $paymentData["paymentType"] != 2){
+                    $totalIn += $paymentData["amount"]; ?>
+                    <td><?=$paymentData["amount"]?></td>
+                    <td><?=0?></td>
+                <? }
+                if($paymentData["type"] == 0 && $paymentData["paymentType"] == 2){
+                    $cashBack += $paymentData["amount"];?>
+                    <td><?=0?></td>
+                    <td><?=0?></td>
+                    <td><?=$paymentData["amount"]?></td>
+                <?}else{?>
+                    <td><?=0?></td>
+                <? } ?>
+                <? if( $paymentData["type"] == 1 ) { $totalOut += $paymentData["amount"];?>
+                    <td><?=$paymentData["amount"]?></td>
+                    <td><?=0?></td>
+                <? } ?>
+            </tr>
         <? } ?>
+        <tr>
+            <td>Total Cash</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><?=$totalCashIn?></td>
+            <td><?=$totalCashOut?></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Total Bank</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><?=$totalBankIn?></td>
+            <td><?=$totalBankOut?></td>
+            <td></td>
+        </tr>
         <tr>
             <td>Total</td>
             <td></td>
@@ -46,6 +86,7 @@
             <td></td>
             <td><?=$totalIn?></td>
             <td><?=$totalOut?></td>
+            <td><?=$cashBack?></td>
         </tr>
     </table>    
 </div>
