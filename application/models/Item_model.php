@@ -16,7 +16,7 @@ class Item_Model extends CI_Model{
         $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where_in('type',$type)->where('warehouse','3')->get('stock');
         $in = $query->row()->total;
 
-        $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type','1')->get('stock');
+        $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type',1)->get('stock');
         $out = $query->row()->total;
         
         return $in-$out;
@@ -583,7 +583,7 @@ class Item_Model extends CI_Model{
             // die();
            
             $data1 = $this->db->select('sum(quantity) as previousQuantity')->where_in('stock.type',$type)->where('stock.warehouse',3)->where('stock.date < ',$dat)->where('stock.item_name = ',$item['itemId'])->get('stock');
-            $query = $this->db->select('sum(quantity) as total')->where('item_name',$item['itemId'])->where('type',1)->get('stock');
+            $query = $this->db->select('sum(quantity) as total')->where('item_name',$item['itemId'])->where('type',1)->where('stock.date < ',$dat)->get('stock');
       
             $data2 = $this->db->select('sum(quantity) as importQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',2)->where('stock.date =',$dat)->get('stock');
             $data3 = $this->db->select('sum(quantity) as soldQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',1)->where('stock.date = ',$dat)->get('stock');
