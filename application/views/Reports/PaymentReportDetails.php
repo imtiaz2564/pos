@@ -89,7 +89,7 @@
             <td><?=$cashBack?></td>
         </tr>
         <tr>
-            <? $handCashCheque = $totalIn - $totalOut - $cashBack; ?>
+            <? $handCashCheque = $totalCashIn - $totalCashOut - $cashBack; ?>
             <td>Hand Cash and Cheque</td>
             <td><?=$handCashCheque?></td>
             <td></td>
