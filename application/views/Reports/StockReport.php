@@ -6,10 +6,10 @@
                <td>No</td>
                <td>Date</td> 
                <td>Item Name</td> 
-               <td>Previous Stock</td>
-               <td>Import</td>
-               <td>Sold</td>
-               <td>Balance</td>
+               <td>OLD Stock</td>
+               <td>Today IN</td>
+               <td>Today OUT</td>
+               <td>Current Stock</td>
             </tr>
         </thead>
         <? $i = 0; foreach( $previousstock as $stock ) { $i++; ?>

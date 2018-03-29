@@ -319,7 +319,8 @@ class Item_Model extends CI_Model{
     //     $this->db->where('journal_id', $journalid); //which row want to upgrade  
     //     $this->db->update('stock');
     // } 
-    function updateStock( $item_name , $quantity, $date ,  $warehouse , $type ){
+    function updateStock( $item_name , $quantity,  $warehouse , $type ){
+        $date = date('Y-m-d');
         // $query = $this->db->select('sum(quantity) as totalquantity')->where('warehouse',$warehouse)->where('item_name',$item_name)->get('stock')->row();
         // $rest = $query->totalquantity-$quantity;
         return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'date'=>$date,'warehouse'=>$warehouse ,'type'=>$type]);
@@ -586,10 +587,12 @@ class Item_Model extends CI_Model{
             $query = $this->db->select('sum(quantity) as total')->where('item_name',$item['itemId'])->where('type',1)->where('stock.date < ',$dat)->get('stock');
       
             $data2 = $this->db->select('sum(quantity) as importQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',2)->where('stock.date =',$dat)->get('stock');
+            $localPurchase = $this->db->select('sum(quantity) as localQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',7)->where('stock.date =',$dat)->get('stock');
+            
             $data3 = $this->db->select('sum(quantity) as soldQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',1)->where('stock.date = ',$dat)->get('stock');
             $data['name'] = $item['itemName']; 
             $data['previous'] = $data1->row()->previousQuantity - $query->row()->total;
-            $data['import'] = $data2->row()->importQuantity;
+            $data['import'] = $data2->row()->importQuantity+$localPurchase->row()->localQuantity;
             //$data['import'] = $item['importQuantity'];;
             $data['sold'] = $data3->row()->soldQuantity;
             $total[] = $data;

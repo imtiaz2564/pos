@@ -26,6 +26,7 @@ class Item extends CI_Controller {
             'discount' => 'Discount',
             'truck' => 'Delivery By Truck',
             'thela' => 'Delivery By Thela',
+            'labourCost' => 'Unload Labour Cost',
         ]);
         $this->crud->set_hidden('type','1'); // 1 for item
         if($this->uri->segment(3) == 'ajax') {   
@@ -242,7 +243,7 @@ class Item extends CI_Controller {
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }
-    public function ajax_itemlist(){
+    public function ajax_itemlist() {
         $id = $this->session->userdata('journal_id');
         // die();
         // $this->session->userdata('out',$this->uri->segment(2));
@@ -501,16 +502,17 @@ class Item extends CI_Controller {
     // }
     function localStockUpdate($item_name , $quantity ) {
         $this->load->model('item_model');
-        $this->item_model->updateStock($item_name , $quantity ,'3' , '7');
+        
+        $this->item_model->updateStock($item_name , $quantity , 3 , 7);
     }
-    function getStockType($id){
+    function getStockType($id) {
         $this->load->model('item_model');
         $query = $this->item_model->getStockType($id);
-        if( $query == "2" ) {
-            return "Sylhet Stock";
+        if( $query == 2 ) {
+            return "AB Stock";
 
         }
-        if( $query == "0" ) {
+        if( $query == 0 ) {
             return "Supplier Stock";
 
         }
