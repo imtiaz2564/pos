@@ -301,7 +301,7 @@ class Item_Model extends CI_Model{
     }
     function getRemainingBySupplier(){
         $total = []; 
-        $query = $this->db->select('people.id as supplierid,stock.item_name as itemid, people.name as customerName,people.businessName as businessName,items.name,sum(stock.quantity) as quantity,')->join('items','items.id=item_name','left')->join('people','stock.warehouse = people.id','left')->where('stock.type',0)->where('stock.stockType',0)->group_by('people.name')->group_by('items.name')->get('stock')->result_array();
+        $query = $this->db->select('people.id as supplierid,stock.item_name as itemid, people.name as customerName,people.businessName as businessName,items.name,sum(stock.quantity) as quantity,')->join('items','items.id=item_name','left')->join('people','stock.warehouse = people.id','left')->where('stock.type',0)->where('stock.stockType',0)->group_by('people.businessName')->group_by('items.name')->get('stock')->result_array();
         foreach( $query as $data){
             $res = $this->db->select('sum(stock.quantity) as quantity')->where('stock.warehouse',$data['supplierid'])->where('stock.item_name',$data['itemid'])->where('stock.type',2)->get('stock')->row();
         
