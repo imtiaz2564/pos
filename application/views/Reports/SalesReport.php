@@ -1,11 +1,3 @@
-<?
-// foreach( $salesData as $salesData){
-//     print_r($salesData);
-
-
-// }
-// die();
-?>
 <div class="modal-body" style="max-height:400px; overflow-y:scroll;">
     <h1>Daily Sales Report By Customer</h1>        
     <table class="table table-report">

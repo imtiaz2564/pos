@@ -13,7 +13,7 @@ class Item_Model extends CI_Model{
         
         // return $in-$out;
         $type = ['3','5','7'];
-        $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where_in('type',$type)->where('warehouse','3')->get('stock');
+        $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where_in('type',$type)->where('warehouse',3)->get('stock');
         $in = $query->row()->total;
 
         $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type',1)->get('stock');
@@ -319,7 +319,7 @@ class Item_Model extends CI_Model{
     //     $this->db->where('journal_id', $journalid); //which row want to upgrade  
     //     $this->db->update('stock');
     // } 
-    function updateStock( $item_name , $quantity,  $warehouse , $type ){
+    function updateStock( $item_name , $quantity, $date, $warehouse , $type ){
         $date = date('Y-m-d');
         // $query = $this->db->select('sum(quantity) as totalquantity')->where('warehouse',$warehouse)->where('item_name',$item_name)->get('stock')->row();
         // $rest = $query->totalquantity-$quantity;

@@ -91,12 +91,9 @@ $('form').submit(function() {
     
   
     var stock = $('select[name=stockType]').val();
-   alert(stock);
-         if( stock == "2") {
+     if( stock == "2") {
             item = $('select[name=item_name]').val();
             quantity = $('input[name=quantity]').val();
-           alert(item);
-           alert(quantity);
             $.ajax({
                     type: 'POST',
                     dataType: 'json',

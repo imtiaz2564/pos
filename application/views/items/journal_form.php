@@ -7,49 +7,45 @@
     <div class="panel-body">
         <div class="row">
         <?=$form_open?>
-                    <?php foreach($inputs as $input) { ?>
-                    <div class="col-md-3"><?php
-                        if($input['label'] !=''){?>
-                            <div class="form-group">
-                                <label><?=$input['label']?> :</label>
-                                <?=$input['html']?>
-                            </div>
-                            <?php }else{
-                                    echo $input['html'];
-                                }
-                            ?></div><?php
-                        }?>
-                    </div>
-                <?=$form_close?>
-    
-            <?$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>   
-               
-                <!-- <div class="form-group">
-                    <label>Customer ID :</label>
-                    <input type="text" name="idCustomer" value="" class="form-control" placeholder="Customer ID" />
-                </div> -->
-                <!-- <div class="form-group">
-                <label>Business Name ( Customer ) :</label>
-                        <select name = "idCustomer" class="form-control autocomplete">
-                        <? //foreach($people as $people) {?>
-                        <option  value = <?//=$people['id']?>><?//=$people['businessName']?></option>
-                        <?// } ?>
-                    </select>
-                 </div>    -->
-                 <div class="col-md-3">                        
-            
+            <?php foreach($inputs as $input) { ?>
+                <div class="col-md-3"><?php
+                    if($input['label'] !=''){?>
+                        <div class="form-group">
+                            <label><?=$input['label']?> :</label>
+                            <?=$input['html']?>
+                        </div>
+                        <?php }else{
+                                echo $input['html'];
+                            }
+                        ?></div><?php
+                    }?>
+                </div>
+        <?=$form_close?>
+        <?$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>   
+        <!-- <div class="form-group">
+            <label>Customer ID :</label>
+            <input type="text" name="idCustomer" value="" class="form-control" placeholder="Customer ID" />
+        </div> -->
+        <!-- <div class="form-group">
+        <label>Business Name ( Customer ) :</label>
+                <select name = "idCustomer" class="form-control autocomplete">
+                <? //foreach($people as $people) {?>
+                <option  value = <?//=$people['id']?>><?//=$people['businessName']?></option>
+                <?// } ?>
+            </select>
+            </div>    -->
+            <div class="col-md-3">                        
                 <div class="form-group">
                     <label>Customer Name :</label>
-                        <input type="text" name="customer" value="" class="form-control" placeholder="Customer Name">
+                    <input type="text" name="customer" value="" class="form-control" placeholder="Customer Name">
                 </div>
-                </div>
-                <div class="col-md-3">                        
-            
+            </div>
+            <div class="col-md-3">                        
                 <div class="form-group">
                     <label>Phone :</label>
                     <input type="text" name="phone" value="" class="form-control" placeholder="Phone">
                 </div>
-         </div>
+            </div>
             <? } ?>
             <?//$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>   
             <!-- <div class="col-md-6">                        
@@ -371,16 +367,16 @@ $('#formJournal').submit(function() {
 <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
     // var journalId = '<?//=$this->uri->segment(4)?>';
     $.ajax({
-       type: 'POST',
-       url: '<?=site_url('item/getstockdata')?>'+'/'+journalId+'/'+labourCost+'/'+totalDiscount+'/',
-       async: false,
-       success: function(data) {
-           var win=window.open();
-           win.document.write(data)
-           win.print();
-           win.close();
-       }
-     });
+        type: 'POST',
+        url: '<?=site_url('item/getstockdata')?>'+'/'+journalId+'/'+labourCost+'/'+totalDiscount+'/',
+        async: false,
+        success: function(data) {
+            var win=window.open();
+            win.document.write(data)
+            win.print();
+            win.close();
+        }
+    });
     <? } ?>  
     
     $.ajax({
