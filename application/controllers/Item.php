@@ -427,7 +427,7 @@ class Item extends CI_Controller {
     }
     public function stockUpdate($post) {
         $this->load->model('item_model');
-        $this->item_model->updateStock($post['item_name'] , $post['quantity'],$post['date'],  '3' , '3');
+        $this->item_model->updateStock($post['item_name'] , $post['quantity'] ,  3 , 3);
         die( json_encode(['error'=>'Updated Stock']));
   
     }

@@ -90,10 +90,10 @@ initialize();
 <? } ?>
 $('form').submit(function() {
      var stock = $('select[name=stockType]').val();
-    // if( stock == " "){
-    //     alert("select Stock Type");
-    //     return false;
-    // }
+    if( stock == " "){
+        alert("select Stock Type");
+        return false;
+    }
      if( stock == "2") {
             item = $('select[name=item_name]').val();
             quantity = $('input[name=quantity]').val();
