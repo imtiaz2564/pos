@@ -12,28 +12,26 @@
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
             <li>
-<!--                <a href="#"><i class="fa fa-bar-chart-o fa-flask"></i> Medicine <span class="fa arrow"></span></a>-->
-                    <a href="#"><i class="fa fa-home"></i> Home <span class="fa arrow"></span></a>
+                <!--<a href="#"><i class="fa fa-bar-chart-o fa-flask"></i> Medicine <span class="fa arrow"></span></a>-->
+                <a href="#"><i class="fa fa-home"></i> Home <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                    <li><a href="<?=site_url('item/purchase')?>">Purchase</a></li>
-                    <!-- <li><a href="<?//=site_url('item/localpurchase/insert')?>">Local Purchase</a></li> -->
-                    <li><a href="<?=site_url('item/sale')?>">Sales</a></li>
-                    <li><a href="<?=site_url('item/stock')?>">AB Stock</a></li>
-                    <li><a href="<?=site_url('item/importregister/insert')?>">Import</a></li>
-                    <li><a href="<?=site_url('item/refund/insert')?>">Refund</a></li>
-                    <li><a href="<?=site_url('item/stockbysupplier')?>">Live Supplier Stock</a></li>
-                </ul>
+                        <li><a href="<?=site_url('item/purchase')?>">Purchase</a></li>
+                        <!-- <li><a href="<?//=site_url('item/localpurchase/insert')?>">Local Purchase</a></li> -->
+                        <li><a href="<?=site_url('item/sale')?>">Sales</a></li>
+                        <li><a href="<?=site_url('item/stock')?>">AB Stock</a></li>
+                        <li><a href="<?=site_url('item/importregister/insert')?>">Import</a></li>
+                        <li><a href="<?=site_url('item/refund/insert')?>">Refund</a></li>
+                        <li><a href="<?=site_url('item/stockbysupplier')?>">Live Supplier Stock</a></li>
+                    </ul>
             </li>
-<!--
-            <li>
+            <!--<li>
                 <a href="#"><i class="fa fa-tag"></i> Raw Material <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li><a href="<?//=site_url('raw/stock')?>">Stock Status</a></li>
                     <li><a href="<?//=site_url('raw/in')?>">Stock In</a></li>
                     <li><a href="<?//=site_url('raw/out')?>">Stock Out</a></li>
                 </ul>
-            </li>
--->
+            </li>-->
             <li>
                 <a href="#"><i class="fa fa-dollar"></i> Accounts<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -49,7 +47,7 @@
                     <li><a href="<?=site_url('item/index')?>">Items List</a></li>
                     <li><a href="<?=site_url('item/category')?>">Category List</a></li>
                     <!-- <li><a href="<?//=site_url('master/sales')?>">Sale Price Revision</a></li> -->
-<!--                    <li><a href="<?//=site_url('raw/index')?>">Raw Materials</a></li>-->
+                    <!--<li><a href="<?//=site_url('raw/index')?>">Raw Materials</a></li>-->
                     <li><a href="<?=site_url('master/suppliers')?>">Suppliers List</a></li>
                     <li><a href="<?=site_url('master/customers')?>">Customers List</a></li>
                 </ul>

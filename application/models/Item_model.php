@@ -599,4 +599,8 @@ class Item_Model extends CI_Model{
         }
         return $total;
     }
+    function getUnloadCost($itemId){
+        $query = $this->db->where('id',$itemId)->get('items')->row();
+        return $query->labourCost;
+    }
 }

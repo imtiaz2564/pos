@@ -1,9 +1,6 @@
 <div class="panel panel-white">
     <div class="panel-header">
-        <h4 class="panel-title">
-         
-        </h4>
-
+        <h4 class="panel-title"></h4>
     </div>
     <?=$form_open?>
     <div class="panel-body">
@@ -23,16 +20,28 @@
             }
         }?>
     </div>
-    </div>    
-    <div class="modal-footer">
+</div>    
+<div class="modal-footer">
         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-        <?=$submit?>
-    </div>
-    <?=$form_close?>
+    <?=$submit?>
+</div>
+<?=$form_close?>
 </div>
 <script>
-
 $(function(){
+    $('select[name=item_name]').on('change', function(){
+    //itemName = $('select[name=item_name]').val();
+    $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '<?=site_url('item/getunloadcost')?>'+'/'+$(this).val()+'/', 
+            success: function (data) {
+                var labourCost = data['labourCost'];
+                $('input[name=labourCost]').val(labourCost);
+            }
+        });
+
+});
 $('form').submit(function() {
     $.ajax({
            type: "POST",
@@ -47,7 +56,7 @@ $('form').submit(function() {
                }
            }
          });
-    return false;
-});
+        return false;
+    });
 }); 
 </script>

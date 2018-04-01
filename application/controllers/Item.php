@@ -517,5 +517,10 @@ class Item extends CI_Controller {
 
         }
     }
+    function getUnloadCost($itemId){
+        $this->load->model('item_model');
+        $data['labourCost'] = $this->item_model->getUnloadCost($itemId);
+        echo json_encode($data);
+    }
 
 }
