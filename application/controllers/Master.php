@@ -50,15 +50,16 @@ class Master extends CI_Controller {
         $this->crud->set_default('code',$default); 
         $this->crud->init('people',[
             'code' => 'Customer Code',
-            'name' => 'Customer Name',
-            'businessName' => 'Business Name',
+            'name' => 'Customer Name / Contact Person',
+            'businessName' => 'Business Name( Customer )',
             'address' => 'Home Address',
             'businessAddress' => 'Business Address',
             'area' => 'Area',
             'thana' => 'Thana',
             'openingBalance' => 'Opening Balance',
             'district' => 'District',
-            'phone' => 'Phone',
+            'phone' => 'Phone 1',
+            'phone2' => 'Phone 2',
             'email' => 'Email',
         ]);
         $this->crud->set_option('thana',['0'=>'Kanaighat','1'=>'Companiganj','2'=>'Gowainghat','3'=>'Golabganj',4=>'Zakiganj','5'=>'Jaintiapur','6'=>'Dakshin Surma','7'=>'Fenchuganj','8'=>'Balaganj','9'=>'Beanibazar','10'=>'Bishwanath','11'=>'Sylhet Sadar']);

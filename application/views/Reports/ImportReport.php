@@ -14,7 +14,9 @@
                <td>Unload Labour Charge</td>
             </tr>
         </thead>
-        <? $i = 1; $totalTransportCost = 0; $totalLabourCost = 0; foreach( $importData as $importData) { $totalTransportCost += $importData["transportCost"]; $totalLabourCost += $importData["labourCost"]; ?>
+        <? $i = 1; $totalTransportCost = 0; $totalLabourCost = 0; foreach( $importData as $importData) { 
+            $labourCost = $importData["labourCost"] * $importData["quantity"];  
+            $totalTransportCost += $importData["transportCost"]; $totalLabourCost += $labourCost; ?>
         <tr>
             <td><?=$i++?></td>
             <td><?=$importData["unloadDate"]?></td>
@@ -24,7 +26,8 @@
             <td><?=$importData["receiverName"]?></td>
             <td><?=$importData["transport"]?></td>
             <td><?=$importData["transportCost"]?></td>
-            <td><?=$importData["labourCost"]?></td>
+            <td><?=$labourCost?></td>
+            <!-- <td><?//=$importData["labourCost"]?></td> -->
         </tr>
         <? } ?>   
         <tr>

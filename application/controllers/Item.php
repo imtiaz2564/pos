@@ -21,7 +21,7 @@ class Item extends CI_Controller {
         $data['title'] = 'Items List';
         $this->crud->init('items',[
             'name' => 'Item Name',
-            'parent' => 'Parent',
+            'parent' => 'Category',
             'mrp' => 'MRP',
             'discount' => 'Discount',
             'truck' => 'Delivery By Truck',

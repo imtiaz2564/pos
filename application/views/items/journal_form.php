@@ -48,12 +48,12 @@
                     <label style="color:#0000FF" id="cusCode"></label>
                 </div>
                 <div class= "input-group customerInfo">
-                    <label>Customer Name: </label>
-                    <label style="color:#0000FF" id="cusName"></label>
+                    <label>Business Name( Customer ): </label>
+                    <label style="color:#0000FF" id="businessName"></label>
                 </div>
                 <div class= "input-group customerInfo">
-                    <label>Business Name: </label>
-                    <label style="color:#0000FF" id="businessName"></label>
+                    <label>Customer Name / Contact Person: </label>
+                    <label style="color:#0000FF" id="cusName"></label>
                 </div>
                 <!-- <div class= "input-group customerInfo">
                     <label>Customer Email: </label>
