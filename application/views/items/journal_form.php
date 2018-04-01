@@ -156,12 +156,6 @@
             <label>Labour Cost: </label>
             <label><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost"></label>
         </div> -->
-    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
-        <div class="form-group" style='float: right;'>
-            <label>Transport Cost: </label>
-            <label><input type="text" name="transportCost" value="" class="form-control" placeholder="Transport Cost"></label>
-        </div>
-    <?}?>
     <? //$uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
     <div  class="form-group delivery" id = "deliveryType" style='float: right;'>
         <label class="form-group delivery">Delivery Type: </label> 
@@ -202,8 +196,9 @@
         $('#deliveryType').hide();
     });
 var journalId = '<?=$this->uri->segment(4)?>';
+var delivery = $('select[name=deliveryType]').val();
 $('select[name=deliveryType]').on('change', function(){
-  delivery = $('select[name=deliveryType]').val();
+
     $.ajax({
             type: 'GET',
             dataType: 'json',
@@ -334,7 +329,13 @@ $.ajaxSetup({ cache: false });
 });
 <?}?>
 $('#formJournal').submit(function() {
+    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
 
+    if( delivery == 0 ){
+        alert('Select delivery type');
+        return false;
+    }
+<? } ?>
     cus_ID = parseInt($('#cusId').val());
     sup_ID = parseInt($('#supId').val());
    
@@ -349,7 +350,7 @@ $('#formJournal').submit(function() {
     customer = $('input[name=customer]').val();
     description = $('input[name=description]').val();
     labourCost = $('input[name=labourCost]').val();
-    transportCost = $('input[name=transportCost]').val(); 
+    //transportCost = $('input[name=transportCost]').val(); 
     totalDiscount = $('input[name=totalDiscount]').val();
     var journalId = '<?=$this->uri->segment(4)?>';
 //    $.ajax({
@@ -383,7 +384,7 @@ $('#formJournal').submit(function() {
         type: "POST",
         dataType: "json",
         url: $('#formJournal').attr('action'),
-        data:{ date: date, customer_id:cus_ID, supplier_id:sup_ID, phone:phone, customer:customer, description:description, totalDiscount:totalDiscount, labourCost:labourCost, transportCost:transportCost},
+        data:{ date: date, customer_id:cus_ID, supplier_id:sup_ID, phone:phone, customer:customer, description:description, totalDiscount:totalDiscount, labourCost:labourCost},
         success: function(data){
             if( typeof data['error'] !== 'undefined' ){
                $('.error').html(data['error']).slideDown();

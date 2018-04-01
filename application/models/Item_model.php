@@ -319,7 +319,7 @@ class Item_Model extends CI_Model{
     //     $this->db->where('journal_id', $journalid); //which row want to upgrade  
     //     $this->db->update('stock');
     // } 
-    function updateStock( $item_name , $quantity, $date, $warehouse , $type ){
+    function updateStock( $item_name , $quantity, $warehouse , $type ){
         $date = date('Y-m-d');
         // $query = $this->db->select('sum(quantity) as totalquantity')->where('warehouse',$warehouse)->where('item_name',$item_name)->get('stock')->row();
         // $rest = $query->totalquantity-$quantity;

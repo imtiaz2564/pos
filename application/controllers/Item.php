@@ -99,6 +99,8 @@ class Item extends CI_Controller {
         $this->crud->change_type('date','date');
         $this->crud->change_type('unloadDate','date');
         $this->crud->set_rule('item_name','required');
+        $this->crud->set_rule('labourCost','required');
+        
         $this->crud->set_hidden('type','2'); // 2 for transfer
         $this->crud->order(['10','9','8','7','6','4','5','0','2','1','3']);
         $this->crud->custom_form('items/import_form');

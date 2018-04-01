@@ -16,6 +16,7 @@
                 <?php  if( $this->session->userdata('type') == 0 ) { ?>
                 <td> 
                     <select name = "stockType" >
+                        <option value=" ">None</option>
                         <option value="0">Supplier Stock</option>
                         <option value="2">AB Stock</option>
                     </select>
@@ -88,9 +89,11 @@ initialize();
     
 <? } ?>
 $('form').submit(function() {
-    
-  
-    var stock = $('select[name=stockType]').val();
+    // var stock = $('select[name=stockType]').val();
+    // if( stock == " "){
+    //     alert("select Stock Type");
+    //     return false;
+    // }
      if( stock == "2") {
             item = $('select[name=item_name]').val();
             quantity = $('input[name=quantity]').val();
