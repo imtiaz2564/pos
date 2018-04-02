@@ -27,11 +27,12 @@ class Master extends CI_Controller {
         $this->crud->init('people',[
             'code' => 'Company ID/Supplier ID',
             'name' => 'Suplier Name/Contact Person',
-            'businessName' => 'Company Name',
+            'businessName' => 'Business Name( Supplier )',
             'businessAddress' => 'Business Address',
             'openingBalance' => 'Opening Balance',
             'district' => 'District',
-            'phone' => 'Phone',
+            'phone' => 'Phone 1',
+            'phone2' => 'Phone 2',
             'email' => 'Email',
         ]);
         $this->crud->set_hidden('type','1'); // Supplier

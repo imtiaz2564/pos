@@ -130,7 +130,7 @@ $.ajaxSetup({ cache: false });
         });
     //}
 });
-$('#supplierAccounts').submit(function() {
+ $('#supplierAccounts').submit(function() {
     // name = $('input[name=name]').val();
     // phone = $('input[name=phone]').val();
     date = $('input[name=date]').val();
@@ -139,7 +139,6 @@ $('#supplierAccounts').submit(function() {
     detail = $('input[name=description]').val();
     ppl_ID = parseInt($('#pplID').val());
     type =  1;
-
     $.ajax({
        type: "POST",
        dataType: "json",

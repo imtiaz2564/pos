@@ -34,6 +34,11 @@ class Item extends CI_Controller {
         }
         $this->crud->join('parent','items','id','name','items.type=0');
         $this->crud->set_rule('name','required');
+        $this->crud->set_rule('parent','required');
+        $this->crud->set_rule('mrp','required');
+        $this->crud->set_rule('truck','required');
+        $this->crud->set_rule('thela','required');
+        $this->crud->set_rule('labourCost','required');
         $this->crud->set_search('name');
         $this->crud->use_modal();
         $data['content']=$this->crud->run();
@@ -479,11 +484,13 @@ class Item extends CI_Controller {
         ]);
         $this->crud->join('item_name','items','id','name','type=1');
         $this->crud->change_type('date','date');
+        $this->crud->set_default('date',date('Y-m-d'));
         $this->crud->join('customer_id','people','id','businessName');
         $this->crud->set_rule('item_name','required');
         $this->crud->change_type('reason','textarea');
         $this->crud->set_hidden('type','4'); // 4 for refund
         $this->crud->after_save($this, 'refundStockUpdate');
+        $this->crud->before_save($this, 'checkRefund');
         
         $this->crud->order(['4','5','0','1','2','3','6']);
         $this->crud->custom_form('items/refund_form');
@@ -550,6 +557,28 @@ class Item extends CI_Controller {
         $this->load->model('item_model');
         $data['labourCost'] = $this->item_model->getUnloadCost($itemId);
         echo json_encode($data);
+    }
+    function checkRefund($post){
+        if(empty($post['item_name'])){
+            die( json_encode(['error'=>'Select Item Name']));
+        
+        }
+        if(empty($post['customer_id'])){
+            die( json_encode(['error'=>'Select Business Name']));
+        
+        }
+        if(empty($post['quantity'])){
+            die( json_encode(['error'=>'Insert the Quantity']));
+        }
+        if(empty($post['unit_price'])){
+            die( json_encode(['error'=>'Insert the Unit Price']));
+        }
+        if(empty($post['quantity'])){
+            die( json_encode(['error'=>'Insert the Quantity']));
+        }
+        if(empty($post['reason'])){
+            die( json_encode(['error'=>'Insert the Reason']));
+        }
     }
 
 }

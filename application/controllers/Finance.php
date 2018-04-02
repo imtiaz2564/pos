@@ -33,19 +33,22 @@ class Finance extends CI_Controller {
         $this->crud->join('peopleID','people','id','businessName','people.type=1');
         
         $this->crud->set_hidden('finance.type','1'); // Payment
-        
+        //$this->crud->before_save($this, 'checkPayments');
+       
+
         if($this->uri->segment(3) == 'ajax')
             $this->crud->ci->db->where('finance.type','1'); // Payment. Apply where clause only when fetch data.
         
         $this->crud->set_rule('amount','required');
         $this->crud->change_type('date','date');
+        $this->crud->set_default('date',date('Y-m-d'));
         //$this->crud->change_type('description','textarea');
         //$this->crud->order([3,0,1,2,4,5]);
         $this->crud->order([5,0,1,2,3,4,6,7]);
         
         //$this->crud->use_modal();
         $this->crud->custom_form('accounts/Supplier_Accounts_Form');
-        $this->crud->form_extra('id="supplierAccounts"');
+       // $this->crud->form_extra('id="supplierAccounts"');
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
 	}
@@ -67,7 +70,8 @@ class Finance extends CI_Controller {
 
         $this->crud->set_hidden('type','0'); // Receive
         $this->crud->join('peopleID','people','id','businessName','people.type=0');
-      
+        //$this->crud->before_save($this, 'checkReceives');
+       
         if($this->uri->segment(3) == 'ajax')
             $this->crud->ci->db->where('finance.type','0'); // Receive. Apply where clause only when fetch data.
         
@@ -136,6 +140,17 @@ class Finance extends CI_Controller {
         $data['statement'] = $this->item_model->getCustomerStatement( $supplierID , $datfrom , $datto );
         $this->load->view('supplierReport/SupplierStatement.php',$data);
     }
-    
+    // function checkPayments($post){
+    //     if(empty($post['amount'])){
+    //         die( json_encode(['error'=>'Select Business Name']));
+        
+    //     }
+    // }
+    // function checkReceives($post){
+    //     if(empty($post['amount'])){
+    //         die( json_encode(['error'=>'Select Business Name']));
+        
+    //     }
+    // }
     
 }
