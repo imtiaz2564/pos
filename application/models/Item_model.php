@@ -432,7 +432,7 @@ class Item_Model extends CI_Model{
         $salesData = $this->db->select('people.name as cusName ,people.businessName as businessName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('journals')->result_array();
         $totalSales = [];
         foreach( $salesData as $salesData ) {
-            $sales = $this->db->select('stock.date as date,stock.journal_id as journalID,sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total, "sales" as type')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->result_array();
+            $sales = $this->db->select('journals.date as date,stock.journal_id as journalID,sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total, "sales" as type')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->result_array();
             // $data[0]['name'] = $salesData['cusName'];
             // $data[0]['businessName'] = $salesData['businessName'];
             // $data[0]['code'] = $salesData['cusID'];
@@ -550,8 +550,24 @@ class Item_Model extends CI_Model{
         //$salesData = $this->db->select('people.businessName , journals.date  ,journals.type ,journals.customer_id as customerID, sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - journals.totalDiscount as totalSales , "sales" as type')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->where('journals.date >=',$datFrom)->where('journals.date <=',$datTo)->where('journals.type = ',1)->group_by('journals.customer_id')->group_by('journals.date')->get('journals')->result_array();
        // $salesData = $this->db->select('people.businessName ,journals.labourCost as labourCost,journals.date  ,journals.type ,journals.customer_id as customerID, sum(stock.quantity * stock.unit_price) + sum(journals.labourCost) - sum(stock.discount) - journals.totalDiscount as totalSales , "sales" as type')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->where('journals.date >=',$datFrom)->where('journals.date <=',$datTo)->where('journals.type = ',1)->group_by('journals.customer_id')->group_by('journals.date')->get('journals')->result_array();
         //return $salesData;
-        $salesData = $this->db->select('stock.date as date ,sum(stock.quantity * stock.unit_price) +journals.labourCost -stock.discount - journals.totalDiscount as totalSales , stock.journal_id ,people.businessName,  journals.customer_id as customerID, journals.labourCost as labourCost')->join('journals','journals.id = stock.journal_id')->join('people','people.id=journals.customer_id')->where('stock.date >=',$datFrom)->where('stock.date <=',$datTo)->where('stock.type = ',1)->group_by('stock.journal_id')->get('stock')->result_array();
-        return $salesData;
+        
+        //$salesData = $this->db->select('stock.date as date ,sum(stock.quantity * stock.unit_price) +journals.labourCost -stock.discount - journals.totalDiscount as totalSales , stock.journal_id ,people.businessName,  journals.customer_id as customerID, journals.labourCost as labourCost')->join('journals','journals.id = stock.journal_id')->join('people','people.id=journals.customer_id')->where('stock.date >=',$datFrom)->where('stock.date <=',$datTo)->where('stock.type = ',1)->group_by('stock.journal_id')->get('stock')->result_array();
+        //return $salesData;
+        
+        $salesData = $this->db->select('people.name as cusName ,people.businessName as businessName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('journals.type', 1)->where('date >=',$datFrom)->where('date <=',$datTo)->get('journals')->result_array();
+      
+        $total = [];
+        foreach( $salesData as $salesData ) {
+            $data = $this->db->select('journals.date as journalDate, journals.labourCost as labourCost,stock.date,stock.journal_id as journalID,sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as totalSales ')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->result_array();
+            $data[0]['name'] = $salesData['cusName'];
+            $data[0]['businessName'] = $salesData['businessName'];
+            $data[0]['code'] = $salesData['cusID'];
+            // $data[0]['journalID'] = $salesData['journalID'];
+
+            $total[] = $data;
+            
+        }
+        return $total;
  
     }
     function getsalesItemData($datFrom , $datTo){

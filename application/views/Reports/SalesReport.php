@@ -11,7 +11,7 @@
                <td>Amount</td>
             </tr>
         </thead>
-        <? $i = 1; $totalLabourCost=0; $total=0; $cusID = " "; foreach( $salesData as $salesData) {
+        <? $i = 1; $totalLabourCost=0; $total=0; $cusID = " ";  foreach( $salesData as $sales) foreach( $sales as $salesData) {
             
              $total +=$salesData["totalSales"];
              
