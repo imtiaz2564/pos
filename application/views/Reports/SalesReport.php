@@ -21,7 +21,7 @@
         <?//if( $cusID != $salesData["customerID"]) {?>
             
             <td><?=$i++?></td>
-            <td><?=$salesData["date"]?></td>
+            <td><?=$salesData["journalDate"]?></td>
             <!-- <td><?//=$salesData["customerID"]?></td> -->
             <td><?=$salesData["businessName"]?></td>
             <td><?=$salesData["labourCost"]?></td>
