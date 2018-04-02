@@ -89,7 +89,7 @@ initialize();
     
 <? } ?>
 $('form').submit(function() {
-     var stock = $('select[name=stockType]').val();
+    var stock = $('select[name=stockType]').val();
     if( stock == " "){
         alert("select Stock Type");
         return false;

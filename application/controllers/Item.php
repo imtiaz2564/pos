@@ -99,8 +99,11 @@ class Item extends CI_Controller {
         $this->crud->change_type('date','date');
         $this->crud->change_type('unloadDate','date');
         $this->crud->set_rule('item_name','required');
-        $this->crud->set_rule('labourCost','required');
-        
+        //$this->crud->set_rule('labourCost','required');
+        //$this->crud->set_rule('date','required');
+        $this->crud->set_default('date',date('Y-m-d'));
+        $this->crud->set_default('unloadDate',date('Y-m-d'));
+ 
         $this->crud->set_hidden('type','2'); // 2 for transfer
         $this->crud->order(['10','9','8','7','6','4','5','0','2','1','3']);
         $this->crud->custom_form('items/import_form');
@@ -140,7 +143,7 @@ class Item extends CI_Controller {
             $this->session->set_userdata('journal_id',$this->uri->segment(4)); 
             //$sup = $this->input->post('idSupplier');
             $this->session->set_userdata('type','0'); // Stock Type: IN
-            
+        
         
         }elseif($this->uri->segment(3) == 'ajax'){ // when we fetch data
 
@@ -155,7 +158,6 @@ class Item extends CI_Controller {
             */
         
         }
-//
         $this->crud->init('journals',[
             'date' => 'Posting Date',
             //'supplier_id' => 'Supplier ID',
@@ -357,10 +359,7 @@ class Item extends CI_Controller {
         $this->load->model('item_model');
         $data = [];
         $result = $this->item_model->getSupplierData($cusid);
-        
         $balance =  $this->item_model->getSupplierBalance($cusid);
-       //$balance =  $this->item_model->getCustomerBalance($cusid);
-       
         $data['id'] = $result->id;
         $data['name'] = $result->name;
         $data['phone'] = $result->phone;
@@ -433,6 +432,34 @@ class Item extends CI_Controller {
     }
     public function checkStock($post) {
         $this->load->model('item_model');
+        
+        if(empty($post['warehouse'])){
+            die( json_encode(['error'=>'Select Business Name']));
+        
+        }
+        if(empty($post['item_name'])){
+            die( json_encode(['error'=>'Select Item Name']));
+        
+        }
+        if(empty($post['driverName'])){
+            die( json_encode(['error'=>'Insert the driver info']));
+        }
+        if(empty($post['receiver'])){
+            die( json_encode(['error'=>'Insert the receiver info']));
+        }
+        if(empty($post['transport'])){
+            die( json_encode(['error'=>'Insert the transport info']));
+        }
+        if(empty($post['quantity'])){
+            die( json_encode(['error'=>'Insert the quantity']));
+        }
+        if(empty($post['transportCost'])){
+            die( json_encode(['error'=>'Insert the transport cost']));
+        }
+        if(empty($post['labourCost'])){
+            die( json_encode(['error'=>'Insert the labour cost']));
+        }
+        
         $stock = $this->item_model->checkStock($post['warehouse'] , $post['item_name']);
         if($stock < $post['quantity'] ){
             die( json_encode(['error'=>'Number of items are not available']));

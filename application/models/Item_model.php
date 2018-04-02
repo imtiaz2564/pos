@@ -22,7 +22,8 @@ class Item_Model extends CI_Model{
         return $in-$out;
     }
     function insertDraft(){
-        $this->db->insert('journals',['date'=>date('Y-m-d')]);
+         $this->db->insert('journals',['date'=>date('Y-m-d')]);
+        //$this->db->insert('journals',['status'=>0]);
         return $this->db->insert_id();
     }
     function getJournalOutTotal($journal_id){
@@ -157,7 +158,7 @@ class Item_Model extends CI_Model{
         }
         $total = [];
         foreach( $salesData as $salesData ) {
-            $data = $this->db->select('stock.date,stock.journal_id as journalID,sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total ')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->result_array();
+            $data = $this->db->select('journals.date as journalDate,stock.date,stock.journal_id as journalID,sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total ')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->result_array();
             $data[0]['name'] = $salesData['cusName'];
             $data[0]['businessName'] = $salesData['businessName'];
             $data[0]['code'] = $salesData['cusID'];

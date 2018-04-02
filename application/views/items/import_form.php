@@ -1,3 +1,5 @@
+<?=$error;?>
+<?//=$this->session->flashdata('');?>
 <div class="panel panel-white">
     <div class="panel-header">
         <h4 class="panel-title"></h4>
@@ -42,6 +44,7 @@ $(function(){
         });
 
 });
+
 $('form').submit(function() {
     $.ajax({
            type: "POST",
