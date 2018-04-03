@@ -14,6 +14,10 @@ class Auth extends CI_Controller {
             $this->config->item('error_end_delimiter', 'ion_auth')
         );
 
+        $this->load->library('crud');
+        $this->load->helper('html_helper');
+        $this->load->helper('common_helper');
+        $this->load->library('crud','','crud');
 		$this->lang->load('auth');
 	}
 
@@ -43,7 +47,11 @@ class Auth extends CI_Controller {
 				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
 			}
 
-			$this->_render_page('auth/index', $this->data);
+			//$this->_render_page('auth/index', $this->data);
+			
+			$data['title'] = ' ';
+			$data['content'] = $this->load->view('auth/index',$this->data,true);
+			$this->load->view('template',$data);
 		}
 	}
 
@@ -511,8 +519,13 @@ class Auth extends CI_Controller {
 				'type'  => 'password',
 				'value' => $this->form_validation->set_value('password_confirm'),
 			);
-
-			$this->_render_page('auth/create_user', $this->data);
+			$data['title'] = ' ';
+			$data['content'] = $this->load->view('auth/create_user',$this->data,true);
+			$this->load->view('template',$data);
+			// $this->load->view('template',$data);
+			// $this->_render_page('auth/create_user', $this->data);
+			
+			
 		}
 	}
 
@@ -664,7 +677,11 @@ class Auth extends CI_Controller {
 			'type' => 'password'
 		);
 
-		$this->_render_page('auth/edit_user', $this->data);
+		//$this->_render_page('auth/edit_user', $this->data);
+		
+		$data['title'] = ' ';
+		$data['content'] = $this->load->view('auth/edit_user',$this->data,true);
+		$this->load->view('template',$data);
 	}
 
 	// create a new group
@@ -710,7 +727,11 @@ class Auth extends CI_Controller {
 				'value' => $this->form_validation->set_value('description'),
 			);
 
-			$this->_render_page('auth/create_group', $this->data);
+			//$this->_render_page('auth/create_group', $this->data);
+			
+		$data['title'] = ' ';
+		$data['content'] = $this->load->view('auth/create_group',$this->data,true);
+		$this->load->view('template',$data);
 		}
 	}
 

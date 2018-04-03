@@ -11,16 +11,16 @@
                <td>Amount</td>
             </tr>
         </thead>
-        <? $i = 1; $total=0; $totalQuantity=0; foreach( $purchaseData as $purchaseData) { $total +=$purchaseData["totalPurchase"];
-            $totalQuantity += $purchaseData["quantity"];
+        <? $i = 1; $total=0; $totalQuantity=0;  foreach( $purchaseData as $purchase) { $total +=$purchase["totalPurchase"];
+            $totalQuantity += $purchase["quantity"];
             ?>
         <tr>
             <td><?=$i++?></td>
-            <td><?=$purchaseData["date"]?></td>
-            <td><?=$purchaseData["businessName"]?></td>
-            <td><?=$purchaseData["itemName"]?></td>
-            <td><?=$purchaseData["quantity"]?></td>
-            <td><?=$purchaseData["totalPurchase"]?></td>
+            <td><?=$purchase["journalDate"]?></td>
+            <td><?=$purchase["businessName"]?></td>
+            <td><?=$purchase["itemName"]?></td>
+            <td><?=$purchase["quantity"]?></td>
+            <td><?=$purchase["totalPurchase"]?></td>
          </tr>   
         <? } ?>
         <tr>
