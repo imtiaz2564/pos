@@ -132,19 +132,20 @@ class Item extends CI_Controller {
     public function in(){
         $this->load->model('item_model');
         
-        if($this->uri->segment(3) == 'insert'){
-            $id = $this->item_model->getUnsavedItem();
-            if(isset($id->id)){
-                $this->session->set_userdata('journal_id',$id->id);
-                redirect('item/in/edit/'.$id->id);
-            }
-            else{
+         if($this->uri->segment(3) == 'insert'){
+        //     $id = $this->item_model->getUnsavedItem();
+        //     if(isset($id->id)){
+        //         $this->session->set_userdata('journal_id',$id->id);
+        //         redirect('item/in/edit/'.$id->id);
+        //     }
+        //     else{
                 $id = $this->item_model->insertDraft();
                 $this->session->set_userdata('journal_id',$id);
                 redirect('item/in/edit/'.$id);
-            }
+             }
             
-        }elseif($this->uri->segment(3) == 'edit'){
+       // }elseif($this->uri->segment(3) == 'edit'){
+        if($this->uri->segment(3) == 'edit'){
             $this->session->set_userdata('journal_id',$this->uri->segment(4)); 
             //$sup = $this->input->post('idSupplier');
             $this->session->set_userdata('type','0'); // Stock Type: IN
@@ -196,16 +197,16 @@ class Item extends CI_Controller {
         $this->load->model('item_model');
         
         if($this->uri->segment(3) == 'insert'){
-            $id = $this->item_model->getUnsavedItem();
-            if(isset($id->id)){
-                $this->session->set_userdata('journal_id',$id->id);
-                redirect('item/out/edit/'.$id->id);
-            }
-            else{
+            // $id = $this->item_model->getUnsavedItem();
+            // if(isset($id->id)){
+            //     $this->session->set_userdata('journal_id',$id->id);
+            //     redirect('item/out/edit/'.$id->id);
+            // }
+            // else{
                 $id = $this->item_model->insertDraft();
                 $this->session->set_userdata('journal_id',$id);
                 redirect('item/out/edit/'.$id);
-            }
+           // }
         
         }elseif($this->uri->segment(3) == 'edit'){
             $this->session->set_userdata('journal_id',$this->uri->segment(4));        
