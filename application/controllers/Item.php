@@ -255,7 +255,7 @@ class Item extends CI_Controller {
     }
     public function ajax_itemlist() {
         $id = $this->session->userdata('journal_id');
-        // die();
+    
         // $this->session->userdata('out',$this->uri->segment(2));
         // $this->session->set_userdata('seg',$ur);
         $this->crud->init('stock', [

@@ -37,7 +37,6 @@ class Master extends CI_Controller {
         ]);
         $this->crud->set_hidden('type','1'); // Supplier
         $this->crud->ci->db->where('type','1'); // Supplier
-        $this->crud->extra_fields($this,['getPayable'=>'Payable']);
         $this->crud->before_save($this , 'checkSupplier');
 
         $this->crud->set_rule('name','required');
@@ -68,6 +67,7 @@ class Master extends CI_Controller {
         $this->crud->ci->db->where('type','0'); // Customer
         $this->crud->set_rule('name','required');
         $this->crud->before_save($this , 'beforeSave');
+        $this->crud->set_search('name');
         //$this->crud->extra_fields($this, ['getDue'=>'Current Due']);
         
         $this->crud->use_modal();
@@ -111,9 +111,6 @@ class Master extends CI_Controller {
     }
     function getDue( $people_id ){
         return $this->item_model->getDue( $people_id );
-    }
-    function getPayable( $people_id ){
-        return $this->item_model->getPayable( $people_id );
     }
     function beforeSave($post){
         $data = $this->item_model->checkPhoneNumber($post['phone']);

@@ -124,6 +124,10 @@ $('#customerAccounts').submit(function() {
     date = $('input[name=date]').val();
     amount = $('input[name=amount]').val();
     paymentType = $('select[name=paymentType]').val();
+    if( paymentType == '3'){
+        alert('Select Payment Type');
+        return false;
+    }
     description = $('input[name=description]').val(); 
     ppl_ID = parseInt($('#pplID').val());
     $.ajax({

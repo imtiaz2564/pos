@@ -34,8 +34,9 @@ class Crud_Model extends CI_Model{
         // conditions
 		if(is_array($conditions)){
 			foreach($conditions as $condition){
-				$this->db->where($condition);
-			}
+			 	$this->db->where($condition);
+				
+			}	
 		}
         // limit
         $limit = null;

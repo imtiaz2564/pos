@@ -29,7 +29,7 @@ class Finance extends CI_Controller {
             'paymentType' => 'Payment Type',
             'description' => 'Detail',
         ]);
-        $this->crud->set_option('paymentType',['0'=>'Cash','1'=>'Bank']);
+        $this->crud->set_option('paymentType',['3'=>'None','0'=>'Cash','1'=>'Bank']);
         $this->crud->join('peopleID','people','id','businessName','people.type=1');
         
         $this->crud->set_hidden('finance.type','1'); // Payment
@@ -64,7 +64,7 @@ class Finance extends CI_Controller {
             'paymentType' => 'Payment Type',
             'description' => 'Detail',
         ]);
-        $this->crud->set_option('paymentType',['0'=>'Cash','1'=>'Bank','2'=>'Cash Back']);
+        $this->crud->set_option('paymentType',['3'=>'None','0'=>'Cash','1'=>'Bank','2'=>'Cash Back']);
         
         //$this->crud->join('peopleID','people','id','name','type=0'); // Customer
 

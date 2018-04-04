@@ -69,23 +69,6 @@ class Item_Model extends CI_Model{
         
         return $opening + $due - $paid;
     }
-    function getPayable( $people_id ){
-        $journals = $this->db->where('supplier_id',$people_id)->get('journals')->result();
-        $opening = $this->db->where('id',$people_id)->get('people')->row()->openingBalance;
-
-        $payable = 0;
-        foreach($journals as $journal){
-            $payable += $this->getJournalInTotal($journal->id);
-        }
-        
-        $paid = 0;
-        $payments = $this->db->where('peopleID',$people_id)->where('type',1)->get('finance')->result();
-        foreach( $payments as $payment ){
-            $paid += $payment->amount;
-        }
-        
-        return $opening + $payable - $paid;
-    }
     function getCustomerId(){
         $query =  $this->db->where('type','0')->get('people');
         $maxID = $query->num_rows()+1;
@@ -325,6 +308,7 @@ class Item_Model extends CI_Model{
         // $query = $this->db->select('sum(quantity) as totalquantity')->where('warehouse',$warehouse)->where('item_name',$item_name)->get('stock')->row();
         // $rest = $query->totalquantity-$quantity;
         return $this->db->insert('stock',['item_name'=>$item_name,'quantity'=>$quantity,'date'=>$date,'warehouse'=>$warehouse ,'type'=>$type]);
+   
     }
     function checkStock( $warehouse ,  $item_name ) {
         $query = $this->db->select('sum(quantity) as totalquantity,')->join('items','items.id=item_name','left')->where('warehouse',$warehouse)->where('item_name',$item_name)->where('stock.type',0)->where('stock.stockType',0)->get('stock')->row();
@@ -618,14 +602,21 @@ class Item_Model extends CI_Model{
             // die();
            
             $data1 = $this->db->select('sum(quantity) as previousQuantity')->where_in('stock.type',$type)->where('stock.warehouse',3)->where('stock.date < ',$dat)->where('stock.item_name = ',$item['itemId'])->get('stock');
-            $query = $this->db->select('sum(quantity) as total')->where('item_name',$item['itemId'])->where('type',1)->where('stock.date < ',$dat)->get('stock');
+            //$query = $this->db->select('sum(quantity) as total')->where('item_name',$item['itemId'])->where('type',1)->where('stock.date < ',$dat)->get('stock');
+            $query = $this->db->select('sum(stock.quantity) as oldSold')->join('stock','stock.journal_id=journals.id','left')->where('journals.date < ',$dat)->where('stock.item_name = ',$item['itemId'])->where('journals.type = ',1)->get('journals');
       
             $data2 = $this->db->select('sum(quantity) as importQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',2)->where('stock.date =',$dat)->get('stock');
             $localPurchase = $this->db->select('sum(quantity) as localQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',7)->where('stock.date =',$dat)->get('stock');
             
-            $data3 = $this->db->select('sum(quantity) as soldQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',1)->where('stock.date = ',$dat)->get('stock');
+            
+            //$data3 = $this->db->select('sum(quantity) as soldQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',1)->where('stock.date = ',$dat)->get('stock');
+            
+            $data3 = $this->db->select('sum(stock.quantity) as soldQuantity')->join('stock','stock.journal_id=journals.id','left')->where('journals.date =',$dat)->where('stock.item_name = ',$item['itemId'])->where('journals.type = ',1)->get('journals');
+            
+            
+            
             $data['name'] = $item['itemName']; 
-            $data['previous'] = $data1->row()->previousQuantity - $query->row()->total;
+            $data['previous'] = $data1->row()->previousQuantity - $query->row()->oldSold;
             $data['import'] = $data2->row()->importQuantity+$localPurchase->row()->localQuantity;
             //$data['import'] = $item['importQuantity'];;
             $data['sold'] = $data3->row()->soldQuantity;
