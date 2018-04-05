@@ -5,7 +5,7 @@ class Crud_Model extends CI_Model{
     function set_table($table){
 		$this->table=$table;
 	}
-	function get_data($fields,$relations,$options,$conditions){
+	function get_data($fields,$relations,$options,$conditions,$search){
 		$this->db->select('*, '.$this->table.'.'.$this->getPrimaryKey().' as \''.$this->getPrimaryKey().'\'');
 		
 		foreach($fields as $field => $label){
@@ -37,6 +37,17 @@ class Crud_Model extends CI_Model{
 			 	$this->db->where($condition);
 				
 			}	
+		}
+		 // new search
+		 if(is_array($search)){
+			
+			if( isset( $_POST['search']['value'] ) && $_POST['search']['value'] != '' ){
+				if( isset( $this->config['search'] ) && $this->config['search'] != '' ){
+					// $rows = $rows->where( $this->config['search']." LIKE '%".$_POST['search']['value']."%'" );
+					$this->db->where( $this->config['search']." LIKE '%".$_POST['search']['value']."%'" );
+				}
+			}
+				
 		}
         // limit
         $limit = null;

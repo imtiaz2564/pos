@@ -16,9 +16,12 @@ class Item_Model extends CI_Model{
         $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where_in('type',$type)->where('warehouse',3)->get('stock');
         $in = $query->row()->total;
 
-        $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type',1)->get('stock');
-        $out = $query->row()->total;
+       // $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type',1)->get('stock');
+        $data3 = $this->db->select('sum(stock.quantity) as total')->join('stock','stock.journal_id=journals.id','left')->where('stock.item_name',$id)->where('journals.type = ',1)->get('journals');
         
+        
+        // $out = $query->row()->total;
+        $out =  $data3->row()->total; 
         return $in-$out;
     }
     function insertDraft(){
@@ -556,9 +559,9 @@ class Item_Model extends CI_Model{
     }
     function getsalesItemData($datFrom , $datTo){
         //$dat = date('Y-m-d');
-       // $salesItemData = $this->db->select('stock.date as date , items.name as itemName , sum(stock.quantity) as quantity')->join('items','items.id=stock.item_name','left')->where('stock.type =',1)->where('stock.date =',$dat)->group_by('stock.item_name')->group_by('stock.date')->get('stock')->result_array();
-       $salesItemData = $this->db->select('items.name as itemName , people.businessName , journals.date  ,journals.type ,journals.customer_id as customerID,sum(stock.quantity) as quantity, sum(stock.quantity * stock.unit_price) + sum(journals.labourCost) - sum(stock.discount) - sum(journals.totalDiscount) as totalSales')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->join('items','items.id=stock.item_name','left')->where('journals.date >=',$datFrom)->where('journals.date <=',$datTo)->where('journals.type = ',1)->group_by('stock.item_name')->group_by('journals.date')->get('journals')->result_array();
-       return $salesItemData;
+        // $salesItemData = $this->db->select('stock.date as date , items.name as itemName , sum(stock.quantity) as quantity')->join('items','items.id=stock.item_name','left')->where('stock.type =',1)->where('stock.date =',$dat)->group_by('stock.item_name')->group_by('stock.date')->get('stock')->result_array();
+        $salesItemData = $this->db->select('items.name as itemName , people.businessName , journals.date  ,journals.type ,journals.customer_id as customerID,sum(stock.quantity) as quantity, sum(stock.quantity * stock.unit_price) + sum(journals.labourCost) - sum(stock.discount) - sum(journals.totalDiscount) as totalSales')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->join('items','items.id=stock.item_name','left')->where('journals.date >=',$datFrom)->where('journals.date <=',$datTo)->where('journals.type = ',1)->group_by('stock.item_name')->group_by('journals.date')->get('journals')->result_array();
+        return $salesItemData;
  
     }
     function getpurchasereportData($datFrom , $datTo){
@@ -589,11 +592,11 @@ class Item_Model extends CI_Model{
         return $purchaseItemData;
         
     }
-    function getPreviousStock() {
+    function getPreviousStock(){
         $dat = date('Y-m-d');
         $total = [];
         $data = [];
-        $type = ['3','5','7'];
+        $type = ['3','5','7']; // import refund local purchase 
          
         $items = $this->db->select('items.name as itemName , items.id as itemId')->where('items.type = ',1)->get('items')->result_array();
         //$items = $this->db->select('sum(stock.quantity) as importQuantity,stock.item_name as itemId,items.name as itemName')->join('items','items.id=stock.item_name','left')->where('stock.type = ',2)->where('stock.date = ',$dat)->group_by('stock.item_name')->get('stock')->result_array();
