@@ -571,12 +571,10 @@ class Item extends CI_Controller {
         if(empty($post['unit_price'])){
             die( json_encode(['error'=>'Insert the Unit Price']));
         }
-        if(empty($post['quantity'])){
-            die( json_encode(['error'=>'Insert the Quantity']));
-        }
         if(empty($post['reason'])){
             die( json_encode(['error'=>'Insert the Reason']));
         }
+        return $post;
     }
 
 }
