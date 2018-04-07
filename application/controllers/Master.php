@@ -62,7 +62,10 @@ class Master extends CI_Controller {
             'phone2' => 'Phone 2',
             'email' => 'Email',
         ]);
-        $this->crud->set_option('thana',['0'=>'Kanaighat','1'=>'Companiganj','2'=>'Gowainghat','3'=>'Golabganj','4'=>'Zakiganj','5'=>'Jaintiapur','6'=>'Dakshin Surma','7'=>'Fenchuganj','8'=>'Balaganj','9'=>'Beanibazar','10'=>'Bishwanath','11'=>'Sylhet Sadar']);
+        $this->crud->set_option('thana',['0'=>'Kanaighat','1'=>'Companiganj','2'=>'Gowainghat','3'=>'Golabganj','4'=>'Zakiganj','5'=>'Jaintiapur','6'=>'Dakshin Surma','7'=>'Fenchuganj','8'=>'Balaganj','9'=>'Beanibazar','10'=>'Bishwanath','11'=>'Sylhet Sadar',
+        '12'=>'Barlekja','13'=>'Kamalganj','14'=>'Kulaura','15'=>'Moulvibazar Sadar','16'=>'Rajnagar','17'=>'Sreemangal','18'=>'Juri','19'=>'Bishwamvarpur',
+        '20'=>'Chhatak','21'=>'Derai','22'=>'Dakshin Sunamganj','23'=>'Dharampasha','24'=>'Dowarabazar','25'=>'Jagannathpur','26'=>'Jamalganj','27'=>'Sullah',
+        '28'=>'Sunamganj Sadar','29'=>'Tahirpur']);
         $this->crud->set_hidden('type','0'); // Customer
         $this->crud->ci->db->where('type','0'); // Customer
         $this->crud->set_rule('name','required');
