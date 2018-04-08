@@ -634,5 +634,11 @@ class Item_Model extends CI_Model{
         $query = $this->db->where('id',$itemId)->get('items')->row();
         return $query->labourCost;
     }
+    function updateStockDate($date , $id){
+        $this->db->set('date', $date);
+        $this->db->where('journal_id', $id);
+        $this->db->update('stock');
+
+    }
     
 }

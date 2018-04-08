@@ -352,6 +352,7 @@ $('#formJournal').submit(function() {
         async: false,
         success: function(data) {
             var win=window.open();
+            win.focus();
             win.document.write(data)
             win.print();
             win.close();

@@ -1,5 +1,5 @@
 <? foreach($salesData as $data) ?>
-<div class="modal-body" style="max-height:400px; overflow-y:scroll;">
+<div class="modal-body" >
 <h1>Sales Invoices</h1>        
 <table class="table table-report">
      <tr class="top">

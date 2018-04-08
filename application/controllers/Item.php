@@ -171,6 +171,7 @@ class Item extends CI_Controller {
         //if($this->uri->segment(3) == 'edit'){
             //$this->crud->join('supplier_id','people','id','name','people.type=1');
         //}
+        
         $this->crud->custom_view('items/journal_in_list');
         $this->crud->custom_form('items/journal_form');
         
@@ -183,7 +184,8 @@ class Item extends CI_Controller {
         $this->crud->change_type('description','textarea');
         $this->crud->change_type('date','date');
         $this->crud->form_extra('id="formJournal"');
-        
+        $this->crud->after_update($this, 'updateStockDate');
+     
         $data = [
             'title' => 'Purchase Register',
         ];    
@@ -574,6 +576,12 @@ class Item extends CI_Controller {
         if(empty($post['reason'])){
             die( json_encode(['error'=>'Insert the Reason']));
         }
+        return $post;
+    }
+    function updateStockDate($post){
+        $this->load->model('item_model');
+        $id = $this->session->userdata('journal_id');
+        $this->item_model->updateStockDate($post['date'] , $id );
         return $post;
     }
 
