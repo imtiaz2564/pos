@@ -1,0 +1,16 @@
+<?php
+class User_Model extends CI_Model{
+    function __construct(){
+        parent::__construct();
+    }
+	function getAllModules()
+	{
+		//$this->db->from('modules');
+		return $this->db->get('modules')->result_array();
+    }
+    function getPrivilege($user)
+    {
+       $access =$this->db->select('modules as modules')->where('id',$user)->get('users');
+       return explode(',',$access->row()->modules);
+    }
+}
