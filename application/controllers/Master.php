@@ -10,12 +10,13 @@ class Master extends CI_Controller {
         if (!$this->ion_auth->logged_in()){
 			redirect('auth/login', 'refresh');
         }
-        $this->load->model('user_model');
         $this->load->library('crud');
         $this->load->helper('html_helper');
         $this->load->helper('common_helper');
         $this->load->library('crud','','crud');
         $this->load->model('item_model');
+        $this->load->model('user_model');
+       
     }
 	public function index(){
         redirect('item/index');
