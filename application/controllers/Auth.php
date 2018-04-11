@@ -24,7 +24,6 @@ class Auth extends CI_Controller {
 	//redirect if needed, otherwise display the user list
 	function index()
 	{
-
 		if (!$this->ion_auth->logged_in())
 		{
 			//redirect them to the login page
@@ -46,10 +45,10 @@ class Auth extends CI_Controller {
 			{
 				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
 			}
-
 			//$this->_render_page('auth/index', $this->data);
 			
 			$data['title'] = ' ';
+			//$data['modules'] = $this->user_model->getAllModules();
 			$data['content'] = $this->load->view('auth/index',$this->data,true);
 			$this->load->view('template',$data);
 		}
@@ -453,7 +452,8 @@ class Auth extends CI_Controller {
 
 		if ($this->form_validation->run() == true)
 		{
-			$username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
+			$username = strtolower($this->input
+			->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
 			$email    = strtolower($this->input->post('email'));
 			$password = $this->input->post('password');
 
@@ -532,6 +532,10 @@ class Auth extends CI_Controller {
 	//edit a user
 	function edit_user($id)
 	{
+		
+		$this->load->model('user_model');
+
+
 		$this->data['title'] = "Edit User";
 
 		if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
@@ -577,6 +581,13 @@ class Auth extends CI_Controller {
 				if ($this->input->post('password'))
 				{
 					$data['password'] = $this->input->post('password');
+				}
+				if ($this->input->post('permissions'))
+				{
+					// explode(',', $privileges
+					$privileges =$this->input->post('permissions');
+					// die();
+					$data['modules'] = implode(',', $privileges);
 				}
 
 
@@ -676,7 +687,9 @@ class Auth extends CI_Controller {
 			'id'   => 'password_confirm',
 			'type' => 'password'
 		);
-
+		$this->data['modules'] = $this->user_model->getAllModules();
+		$this->data['privilege'] = $this->user_model->getPrivilege($id);
+       
 		//$this->_render_page('auth/edit_user', $this->data);
 		
 		$data['title'] = ' ';

@@ -55,9 +55,9 @@
             <li>
                 <a href="#"><i class="fa fa-wrench fa-fw"></i> Configuration <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <!-- <li><a href="<?//=site_url('Auth/')?>">Users List</a></li> -->
-                        <li><a href="<?=site_url('config/index')?>">Delivery Type</a></li>
-                        <li><a href="<?=site_url('master/warehouse')?>">Warehouse</a></li>
+                        <li><a href="<?=site_url('Auth/')?>">Users List</a></li>
+                        <!-- <li><a href="<?//=site_url('config/index')?>">Delivery Type</a></li>
+                        <li><a href="<?//=site_url('master/warehouse')?>">Warehouse</a></li> -->
                     </ul> 
             </li>
             <li>

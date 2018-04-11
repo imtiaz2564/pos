@@ -9,7 +9,8 @@ class Finance extends CI_Controller {
 		
         if (!$this->ion_auth->logged_in()){
 			redirect('auth/login', 'refresh');
-		}
+        }
+        $this->load->model('user_model');
         $this->load->library('crud');
         $this->load->helper('html_helper');
         $this->load->helper('common_helper');
@@ -18,6 +19,11 @@ class Finance extends CI_Controller {
 	public function index(){
     }
 	public function payments(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(8,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = 'Payments( Khoroch )';
         
         $this->crud->init('finance',[
@@ -53,6 +59,11 @@ class Finance extends CI_Controller {
         $this->load->view('template',$data);
 	}
 	public function receives() {
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(7,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = 'Receives( Joma )';
         
         $this->crud->init('finance',[
@@ -112,6 +123,11 @@ class Finance extends CI_Controller {
     //     $this->load->view('template',$data);
     // }
     function getcustomerstatement( $customerID , $datfrom , $datto ) {
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(9,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $this->load->model('item_model');
         $data['title'] = '';
         $data['result'] = $this->item_model->getCustomerStatement($customerID , $datfrom , $datto);

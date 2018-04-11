@@ -9,7 +9,8 @@ class Master extends CI_Controller {
 		
         if (!$this->ion_auth->logged_in()){
 			redirect('auth/login', 'refresh');
-		}
+        }
+        $this->load->model('user_model');
         $this->load->library('crud');
         $this->load->helper('html_helper');
         $this->load->helper('common_helper');
@@ -20,6 +21,11 @@ class Master extends CI_Controller {
         redirect('item/index');
     }
 	public function suppliers(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(12,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = 'Suppliers List';
         $default = $this->item_model->getSupplierId();
         $this->crud->set_default('code',$default);
@@ -45,6 +51,11 @@ class Master extends CI_Controller {
         $this->load->view('template',$data);
 	}
 	public function customers(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(13,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = 'Customers List';
         $default = $this->item_model->getCustomerId();
         $this->crud->set_default('code',$default); 

@@ -9,7 +9,8 @@ class Report extends CI_Controller {
 		
         if (!$this->ion_auth->logged_in()){
 			redirect('auth/login', 'refresh');
-		}
+        }
+        $this->load->model('user_model');
         $this->load->library('crud');
         $this->load->helper('html_helper');
         $this->load->helper('common_helper');
@@ -20,6 +21,11 @@ class Report extends CI_Controller {
         redirect('item/index');
     }
     function paymentreport() {
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(16,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $this->load->model('item_model');
         $data['title'] = ' ';
         $data['people'] = $this->item_model->getPeople();
@@ -43,6 +49,11 @@ class Report extends CI_Controller {
         $this->load->view('Reports/CustomerTransactionReport.php',$data);
     }
     function importreport(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(18,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = ' ';
         $data['content'] = $this->load->view('Reports/paymentReport.php',$data,true);
         $this->load->view('template',$data);
@@ -54,6 +65,11 @@ class Report extends CI_Controller {
         
     }
     function salesreport(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(15,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = ' ';
         $data['content'] = $this->load->view('Reports/salesReportTemplate.php',$data,true);
         $this->load->view('template',$data);
@@ -78,6 +94,11 @@ class Report extends CI_Controller {
         } 
     }
     function purchaseReport() {
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(14,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = ' ';
         $data['content'] = $this->load->view('Reports/salesReportTemplate.php',$data,true);
         $this->load->view('template',$data);
@@ -96,6 +117,11 @@ class Report extends CI_Controller {
 
     }
     function stockreport(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(7,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $this->load->model('item_model');
         $data['title'] = ' ';
         $data['previousstock'] = $this->item_model->getPreviousStock();

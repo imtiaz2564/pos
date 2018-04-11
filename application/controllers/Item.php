@@ -9,13 +9,25 @@ class Item extends CI_Controller {
 		
         if (!$this->ion_auth->logged_in()){
 			redirect('auth/login', 'refresh');
-		}
+        }
+        $this->load->model('user_model');
+        $this->load->model('item_model');
+        
         $this->load->library('crud');
         $this->load->helper(['html_helper','item_helper','common_helper']);
         $this->load->library('crud','','crud');
         //$this->output->enable_profiler(TRUE);
     }
 	public function index(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(10,$privilege)){
+            redirect('auth', 'refresh');
+        }
+        $data['title'] = 'Category List';
+        $this->crud->init('items',[
+            'name' => 'Category Name',
+        ]);
         if($this->uri->segment(2)=='') redirect('item/index'); // datatable ajax list issue.
         
         $data['title'] = 'Items List';
@@ -45,6 +57,11 @@ class Item extends CI_Controller {
         $this->load->view('template',$data);
     }
     public function category(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(11,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = 'Category List';
         $this->crud->init('items',[
             'name' => 'Category Name',
@@ -58,6 +75,11 @@ class Item extends CI_Controller {
         $this->load->view('template',$data);
     } 
 	public function stock(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(3,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = 'Live AB Stock';
         $this->crud->init('items',[
             'name' => 'Item Name',
@@ -75,6 +97,11 @@ class Item extends CI_Controller {
         $this->load->view('template',$data);
     }
     public function stockbysupplier() {
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(6,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = ' ';
         $this->load->model('item_model');
         $data['supplierInfo'] = $this->item_model->getRemainingBySupplier();
@@ -82,6 +109,11 @@ class Item extends CI_Controller {
         $this->load->view('template',$data);
     }
     function importregister(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(4,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = 'Import Register';
 
         $this->crud->init('stock',[
@@ -120,19 +152,27 @@ class Item extends CI_Controller {
         return $this->item_model->getRemaining($id);
     }
     public function purchase(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(1,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = '';
         $data['content'] = $this->load->view('purchaseView.php',[],true);
         $this->load->view('template',$data);
     }
     public function sale(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(2,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = '';
         $data['content'] = $this->load->view('salesView.php',[],true);
         $this->load->view('template',$data);
     }
     public function in(){
-        $this->load->model('item_model');
-        
-         if($this->uri->segment(3) == 'insert'){
+       if($this->uri->segment(3) == 'insert'){
         //     $id = $this->item_model->getUnsavedItem();
         //     if(isset($id->id)){
         //         $this->session->set_userdata('journal_id',$id->id);
@@ -193,8 +233,6 @@ class Item extends CI_Controller {
         $this->load->view('template',$data);
     }
     public function out(){
-        $this->load->model('item_model');
-        
         if($this->uri->segment(3) == 'insert'){
             // $id = $this->item_model->getUnsavedItem();
             // if(isset($id->id)){
@@ -324,7 +362,7 @@ class Item extends CI_Controller {
     //     return $this->item_model->getJournalOutTotal($journal_id);
     // }
     public function getTotal($id){
-        $this->load->model('item_model');
+        //$this->load->model('item_model');
         return $this->item_model->getTotal($id);
     
     }
@@ -341,7 +379,6 @@ class Item extends CI_Controller {
         //unset($post['stockType']); return $post;
     }
     function getCustomerData($cusid) {
-        $this->load->model('item_model');
         $data = [];
         $result = $this->item_model->getCustomerData($cusid);
         $balance =  $this->item_model->getCustomerBalance($cusid);
@@ -361,7 +398,6 @@ class Item extends CI_Controller {
         echo json_encode($data);
     }
     function getSupplierData($cusid) {
-        $this->load->model('item_model');
         $data = [];
         $result = $this->item_model->getSupplierData($cusid);
         $balance =  $this->item_model->getSupplierBalance($cusid);
@@ -380,7 +416,6 @@ class Item extends CI_Controller {
         echo json_encode($data);
     }
     function getUnitPrice($item) {
-        $this->load->model('item_model');
         $data = [];
         $result = $this->item_model->getUnitPrice($item);
         $data['mrp'] = $result->mrp;
@@ -394,12 +429,10 @@ class Item extends CI_Controller {
     //     return $query->labourCost; 
     // }
     function getDiscount($id) {
-        $this->load->model('item_model');
         $query = $this->item_model->getDiscount($id);
         return $query->discount;
     } 
     function getStockData($journalId,$labourCost = 0,$totalDiscount = 0) {
-        $this->load->model('item_model');
         $data['salesData'] = $this->item_model->getStockData($journalId);
         $data['labourCost'] = $labourCost;
         $data['totalDiscount'] = $totalDiscount;
@@ -407,36 +440,30 @@ class Item extends CI_Controller {
       
     }
     function getDeliveryType($deliveryType,$journalId) {
-        $this->load->model('item_model');
         $query = $this->item_model->getDeliveryCost($deliveryType,$journalId);
         $data['deliveryCost'] = $query->deliveryCost;
         echo json_encode($data);
     }
     function getRemainingBySupplier($id) {
-        $this->load->model('item_model');
         $query = $this->item_model->getRemainingBySupplier($id);
         return $query->quantity;
         
     }
     function getSupplierName($id) {
-       $this->load->model('item_model');
        $query = $this->item_model->getRemainingBySupplier($id);
        return $query->customer;
     
     }
     function insertSupplierId($sup_id , $journalid) {
-        $this->load->model('item_model');
         $this->item_model->insertSupplier($sup_id , $journalid);
 
     }
     public function stockUpdate($post) {
-        $this->load->model('item_model');
         $this->item_model->updateStock($post['item_name'] , $post['quantity'] ,  3 , 3);
         die( json_encode(['error'=>'Updated Stock']));
   
     }
     public function checkStock($post) {
-        $this->load->model('item_model');
         
         if(empty($post['warehouse'])){
             die( json_encode(['error'=>'Select Business Name']));
@@ -498,12 +525,10 @@ class Item extends CI_Controller {
         $this->load->view('template',$data);
     }
     function refundStockUpdate($post) {
-        $this->load->model('item_model');
         $this->item_model->updateStock($post['item_name'] , $post['quantity'] , '3' , '5');
         die( json_encode(['error'=>'Updated Stock']));
     }
     function afterDelete($post) {
-        $this->load->model('item_model');
             $id = $this->item_model->getUnsavedItem();
             if(isset($id->id)){
                 $this->session->set_userdata('journal_id',$id->id);
@@ -537,12 +562,10 @@ class Item extends CI_Controller {
     //     $this->load->view('template',$data);
     // }
     function localStockUpdate($item_name , $quantity ) {
-        $this->load->model('item_model');
         
         $this->item_model->updateStock($item_name , $quantity , 3 , 7);
     }
     function getStockType($id) {
-        $this->load->model('item_model');
         $query = $this->item_model->getStockType($id);
         if( $query == 2 ) {
             return "AB Stock";
@@ -554,7 +577,6 @@ class Item extends CI_Controller {
         }
     }
     function getUnloadCost($itemId){
-        $this->load->model('item_model');
         $data['labourCost'] = $this->item_model->getUnloadCost($itemId);
         echo json_encode($data);
     }
@@ -579,7 +601,6 @@ class Item extends CI_Controller {
         return $post;
     }
     function updateStockDate($post){
-        $this->load->model('item_model');
         $id = $this->session->userdata('journal_id');
         $this->item_model->updateStockDate($post['date'] , $id );
         return $post;
