@@ -142,13 +142,15 @@ $.ajaxSetup({ cache: false });
     }
     detail = $('input[name=description]').val();
     ppl_ID = parseInt($('#pplID').val());
-    type =  1;
+    type =  $('input[name=type]').val();
+    user =  $('input[name=user]').val();
+
     $.ajax({
        type: "POST",
        dataType: "json",
        url: $('#supplierAccounts').attr('action'),
        //data: $('#supplierAccounts').serialize(),
-       data: { date:date , amount:amount , paymentType:paymentType , description:detail , peopleID:ppl_ID , type:type },
+       data: { date:date , amount:amount , paymentType:paymentType , description:detail , peopleID:ppl_ID , type:type , user:user },
        success: function(data){
            if( typeof data['error'] !== 'undefined' ){
                $('.error').html(data['error']).slideDown();

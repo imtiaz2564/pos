@@ -43,6 +43,7 @@ class Master extends CI_Controller {
             'email' => 'Email',
         ]);
         $this->crud->set_hidden('type','1'); // Supplier
+        $this->crud->set_hidden('user',$user); 
         $this->crud->ci->db->where('type','1'); // Supplier
         $this->crud->before_save($this , 'checkSupplier');
 
@@ -79,6 +80,7 @@ class Master extends CI_Controller {
         '20'=>'Chhatak','21'=>'Derai','22'=>'Dakshin Sunamganj','23'=>'Dharampasha','24'=>'Dowarabazar','25'=>'Jagannathpur','26'=>'Jamalganj','27'=>'Sullah',
         '28'=>'Sunamganj Sadar','29'=>'Tahirpur','30'=>'Ajmiriganj','31'=>'Bahubal','32'=>'Baniyachong','33'=>'Chunarughat','34'=>'Habiganj Sadar','35'=>'Lakhai','36'=>'Madhabpur','37'=>'Nabiganj']);
         $this->crud->set_hidden('type','0'); // Customer
+        $this->crud->set_hidden('user',$user);
         $this->crud->ci->db->where('type','0'); // Customer
         $this->crud->set_rule('name','required');
         $this->crud->before_save($this , 'beforeSave');

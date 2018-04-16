@@ -19,7 +19,7 @@
             </fieldset>   
             </div>
             <div id = "reportdetails" ></div>
-            <div class="panel-footer submit">
+            <div id ="submitButton" class="panel-footer submit">
                 <div class="btn-group submit">
                 <a href="#" class = "btn btn-primary pull-right" onclick="return submitPaymentData()">Submit</a>
                 <div class="clearfix"></div>            

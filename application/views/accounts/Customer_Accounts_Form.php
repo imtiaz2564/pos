@@ -124,6 +124,8 @@ $('#customerAccounts').submit(function() {
     date = $('input[name=date]').val();
     amount = $('input[name=amount]').val();
     paymentType = $('select[name=paymentType]').val();
+    type = $('input[name=type]').val();
+    user = $('input[name=user]').val();
     if( paymentType == '3'){
         alert('Select Payment Type');
         return false;
@@ -135,7 +137,7 @@ $('#customerAccounts').submit(function() {
        dataType: "json",
        url: $('#customerAccounts').attr('action'),
        //data: $('#customerAccounts').serialize(),
-       data: {  date:date , amount:amount , paymentType:paymentType , description:description , peopleID:ppl_ID },
+       data: {  date:date , amount:amount , paymentType:paymentType , description:description , peopleID:ppl_ID , user:user , type:type},
        success: function(data){
         if( typeof data['error'] !== 'undefined' ){
             $('.error').html(data['error']).slideDown();

@@ -38,7 +38,9 @@ class Finance extends CI_Controller {
         $this->crud->set_option('paymentType',['3'=>'None','0'=>'Cash','1'=>'Bank']);
         $this->crud->join('peopleID','people','id','businessName','people.type=1');
         
-        $this->crud->set_hidden('finance.type','1'); // Payment
+        $this->crud->set_hidden('type','1'); // Payment
+        $this->crud->set_hidden('user',$user); 
+       
        // $this->crud->before_save($this, 'checkPayments');
        
 
@@ -50,7 +52,7 @@ class Finance extends CI_Controller {
         $this->crud->set_default('date',date('Y-m-d'));
         //$this->crud->change_type('description','textarea');
         //$this->crud->order([3,0,1,2,4,5]);
-        $this->crud->order([5,0,1,2,3,4,6,7]);
+        $this->crud->order([5,0,1,2,3,4,6,7,8]);
         
         //$this->crud->use_modal();
         $this->crud->custom_form('accounts/Supplier_Accounts_Form');
@@ -80,6 +82,8 @@ class Finance extends CI_Controller {
         //$this->crud->join('peopleID','people','id','name','type=0'); // Customer
 
         $this->crud->set_hidden('type','0'); // Receive
+        $this->crud->set_hidden('user',$user); 
+       
         $this->crud->join('peopleID','people','id','businessName','people.type=0');
         $this->crud->set_default('date',date('Y-m-d'));
      
@@ -93,7 +97,7 @@ class Finance extends CI_Controller {
         $this->crud->set_rule('date','required');
         $this->crud->change_type('date','date');
         //$this->crud->change_type('description','textarea');
-        $this->crud->order([5,0,1,2,3,4,6,7]);
+        $this->crud->order([5,0,1,2,3,4,6,7,8]);
         
         //$this->crud->use_modal();
         $this->crud->custom_form('accounts/Customer_Accounts_Form');

@@ -6,7 +6,7 @@
             <u><h3>Statement of account</h3></u>
         </div>
     </div>
-<table>
+<table id = "printTable">
 <? foreach($info as $info) ?>
     <thead>
         <tr>
@@ -56,7 +56,7 @@
     </thead>
 </table>
 <h1>Details</h1>
-<table class="table table-report">
+<table class="table table-report" id = "printTable">
     <thead>
         <tr>
             <td><b>Date</b></td>
@@ -147,3 +147,17 @@
     <? } ?>
     </table>    
 </div>
+<div class="row">
+    <div class="col-xs-12 text-right">
+    <button class="btn btn-primary" onclick="printDiv()">Print</button>
+    </div>
+</div>
+<script>
+    function printDiv() {
+        var divToPrint=document.getElementById("printTable");
+        newWin= window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+    }
+</script>

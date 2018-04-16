@@ -24,8 +24,8 @@ class Item_Model extends CI_Model{
         $out =  $data3->row()->total; 
         return $in-$out;
     }
-    function insertDraft(){
-         $this->db->insert('journals',['date'=>date('Y-m-d')]);
+    function insertDraft($user){
+         $this->db->insert('journals',['date'=>date('Y-m-d'),'user'=>$user]);
         //$this->db->insert('journals',['status'=>0]);
         return $this->db->insert_id();
     }
@@ -261,8 +261,8 @@ class Item_Model extends CI_Model{
         $query =  $this->db->where('id', $id)->get('stock');
         return $query->row();
     }
-    function getUnsavedItem() {
-        $query =  $this->db->where('status',0)->get('journals');
+    function getUnsavedItem($user) {
+        $query =  $this->db->where('user',$user)->where('status',0)->get('journals');
         return $query->row();  
     }
     function getDiscount($id) {

@@ -1,6 +1,6 @@
 <div class="modal-body" style="max-height:400px; overflow-y:scroll;">
     <h1>Daily Purchase Report By Item</h1>        
-    <table class="table table-report">
+    <table id = "printTable" class="table table-report">
         <thead>
             <tr>
                <td>No</td>
@@ -28,3 +28,17 @@
         </tr>   
     </table>  
 </div>
+<div class="row">
+    <div class="col-xs-12 text-right">
+    <button class="btn btn-primary" onclick="printDiv()">Print</button>
+    </div>
+</div>
+<script>
+    function printDiv() {
+        var divToPrint=document.getElementById("printTable");
+        newWin= window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+    }
+</script>

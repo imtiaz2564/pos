@@ -61,7 +61,7 @@
            </fieldset>   
         </div>
         <div id = "reportdetails" ></div>
-        <div class="panel-footer submit">
+        <div id ="buttonGroup" class="panel-footer submit">
             <div class="btn-group submit">
             <? if( $this->uri->segment(3) == 'supplierhistory' || $this->uri->segment(3) == 'supplierstatement') { ?>
                 <a href="<?=site_url('item/purchase')?>" class = "btn btn-primary pull-right">Close</a>

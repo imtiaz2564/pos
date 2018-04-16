@@ -51,6 +51,7 @@ class Item extends CI_Controller {
         $this->crud->set_rule('truck','required');
         $this->crud->set_rule('thela','required');
         $this->crud->set_rule('labourCost','required');
+        $this->crud->set_hidden('user',$user);
         $this->crud->set_search('name');
         $this->crud->use_modal();
         $data['content']=$this->crud->run();
@@ -92,7 +93,10 @@ class Item extends CI_Controller {
         $this->crud->set_rule('name','required');
         $this->crud->set_search('name');
         $this->crud->use_modal();
+        //$this->crud->disable_insert();
         $this->crud->hide_controls();
+        
+        $this->crud->custom_list('stock/stock_list');
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }
@@ -142,7 +146,8 @@ class Item extends CI_Controller {
         $this->crud->set_default('unloadDate',date('Y-m-d'));
  
         $this->crud->set_hidden('type','2'); // 2 for transfer
-        $this->crud->order(['10','9','8','7','6','4','5','0','2','1','3']);
+        $this->crud->set_hidden('user',$user); // 2 for transfer
+        $this->crud->order(['10','9','8','7','6','4','5','0','2','1','3','11']);
         $this->crud->custom_form('items/import_form');
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
@@ -172,20 +177,21 @@ class Item extends CI_Controller {
         $this->load->view('template',$data);
     }
     public function in(){
-       if($this->uri->segment(3) == 'insert'){
-        //     $id = $this->item_model->getUnsavedItem();
-        //     if(isset($id->id)){
-        //         $this->session->set_userdata('journal_id',$id->id);
-        //         redirect('item/in/edit/'.$id->id);
-        //     }
-        //     else{
-                $id = $this->item_model->insertDraft();
-                $this->session->set_userdata('journal_id',$id);
-                redirect('item/in/edit/'.$id);
-             }
-            
-       // }elseif($this->uri->segment(3) == 'edit'){
-        if($this->uri->segment(3) == 'edit'){
+        $user = $this->ion_auth->user()->row()->id;
+        if($this->uri->segment(3) == 'insert'){
+             $id = $this->item_model->getUnsavedItem($user);
+            if(isset($id->id)){
+                $this->session->set_userdata('journal_id',$id->id);
+                redirect('item/in/edit/'.$id->id);
+            }
+            else{
+            $id = $this->item_model->insertDraft($user);
+            $this->session->set_userdata('journal_id',$id);
+            redirect('item/in/edit/'.$id);
+            }
+        }   
+        // }elseif($this->uri->segment(3) == 'edit'){
+        elseif($this->uri->segment(3) == 'edit'){
             $this->session->set_userdata('journal_id',$this->uri->segment(4)); 
             //$sup = $this->input->post('idSupplier');
             $this->session->set_userdata('type','0'); // Stock Type: IN
@@ -233,17 +239,19 @@ class Item extends CI_Controller {
         $this->load->view('template',$data);
     }
     public function out(){
+        $user = $this->ion_auth->user()->row()->id;
+        
         if($this->uri->segment(3) == 'insert'){
-            // $id = $this->item_model->getUnsavedItem();
-            // if(isset($id->id)){
-            //     $this->session->set_userdata('journal_id',$id->id);
-            //     redirect('item/out/edit/'.$id->id);
-            // }
-            // else{
-                $id = $this->item_model->insertDraft();
+            $id = $this->item_model->getUnsavedItem($user);
+            if(isset($id->id)){
+                $this->session->set_userdata('journal_id',$id->id);
+                redirect('item/out/edit/'.$id->id);
+            }
+            else{
+                $id = $this->item_model->insertDraft($user);
                 $this->session->set_userdata('journal_id',$id);
                 redirect('item/out/edit/'.$id);
-           // }
+            }
         
         }elseif($this->uri->segment(3) == 'edit'){
             $this->session->set_userdata('journal_id',$this->uri->segment(4));        
@@ -499,6 +507,11 @@ class Item extends CI_Controller {
         return $post;
     }
     public function refund() {
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(5,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = 'Item Refund';
 
         $this->crud->init('stock',[
@@ -516,10 +529,12 @@ class Item extends CI_Controller {
         $this->crud->set_rule('item_name','required');
         $this->crud->change_type('reason','textarea');
         $this->crud->set_hidden('type','4'); // 4 for refund
+        $this->crud->set_hidden('user',$user); // 4 for refund
+        
         $this->crud->after_save($this, 'refundStockUpdate');
         $this->crud->before_save($this, 'checkRefund');
         
-        $this->crud->order(['4','5','0','1','2','3','6']);
+        $this->crud->order(['4','5','0','1','2','3','6','7']);
         $this->crud->custom_form('items/refund_form');
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);

@@ -16,6 +16,7 @@
             <u><h3>Statement of account</h3></u>
         </div>
     </div>
+    <div id = "printTable">
     <table>
         <thead>
             <? foreach($result as $details) { if( $details['type'] == "openingBalance" ) {?>
@@ -131,3 +132,20 @@
     <? } ?>
     </table>    
 </div>
+
+<div class="row">
+    <div class="col-xs-12 text-right">
+    <button class="btn btn-primary" onclick="printDiv()">Print</button>
+    </div>
+</div>
+</div>
+<script>
+$('#buttonGroup').hide();
+    function printDiv() {
+        var divToPrint=document.getElementById("printTable");
+        newWin= window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+    }
+</script>
