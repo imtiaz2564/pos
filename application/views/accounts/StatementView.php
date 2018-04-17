@@ -1,14 +1,4 @@
-
-
-
-    <? 
-//     foreach( $result as $result) { 
-// print_r($result);
-//     }
-//     die(); 
-    ?> 
-  
-  <div class="modal-body" style="max-height:450px; overflow-y:scroll;">
+<div class="modal-body" style="max-height:450px; overflow-y:scroll;">
     <div class="page-header">
         <div class='page-heading text-center'>
             <h1>Amin Brothers</h1>

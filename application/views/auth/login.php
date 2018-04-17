@@ -72,7 +72,10 @@
                    if( typeof data['error'] !== 'undefined' ){
                        $('.error').html(data['error']).slideDown();
                    }else{
-                       location.replace("<?=site_url();?>");
+                        // location.replace("<?//=site_url();?>"."/otp/");
+                        //window.location = '<?//=site_url('auth/otp/');?>';
+          
+                       location.replace("<?=site_url('auth/otp');?>");
                    }
                }
              });
