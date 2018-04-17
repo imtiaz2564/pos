@@ -111,25 +111,44 @@ class Auth extends CI_Controller {
 	}
 	function otp()
 	{
+		$user="mdmasumint";
+		$pass="ab333182";
+		$mobile='8801681961169';
+		$sms_content = rand(1000, 9999);
+		$msg=urlencode($sms_content);
 
-		$username = "mdmasumint";
-		$password = "ab333182";
-		$mobiles = '8801681961169';
-		$sms = 'Thank you for your kind purchase. For any query, please contact our hotline number: 01969604444.';
-		$originator = '01844016400';
-	 	$msg=rand(1000, 9999); 
-		$rndno = rawurlencode($msg);
-		$url = "http://clients.muthofun.com:8901/esmsgw/sendsms.jsp?user=$username&password=$password&mobiles=$mobiles&sms=$rndno&unicode=1";			
- 		$c = curl_init(); 
-		curl_setopt($c, CURLOPT_RETURNTRANSFER, 1); 
-		curl_setopt($c, CURLOPT_URL, $url); 
-		curl_exec($c);
+		function curl($url) {
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+			$data = curl_exec($ch);
+			curl_close($ch);
+
+			return $data;
+		}
+
+		$feed = "http://developer.muthofun.com/sms.php?username=$user&password=$pass&mobiles=$mobile&sms=$msg&uniccode=0";
+
+		$tweets = curl($feed);
+
+		// $username = "mdmasumint";
+		// $password = "ab333182";
+		// $mobiles = '8801681961169';
+		// $sms = 'Thank you for your kind purchase. For any query, please contact our hotline number: 01969604444.';
+		// $originator = '01844016400';
+	 	// $msg=rand(1000, 9999); 
+		// $rndno = rawurlencode($msg);
+		// $url = "http://clients.muthofun.com:8901/esmsgw/sendsms.jsp?user=$username&password=$password&mobiles=$mobiles&sms=$rndno&unicode=1";			
+ 		// $c = curl_init(); 
+		// curl_setopt($c, CURLOPT_RETURNTRANSFER, 1); 
+		// curl_setopt($c, CURLOPT_URL, $url); 
+		// curl_exec($c);
 		
 		// $response = curl_exec($c); 
 		// return $response;
 	
 		
-		$this->session->set_userdata('otp',$rndno);
+		$this->session->set_userdata('otp',$msg);
         // $this->load->view('auth/otp');
  
 		$data['title'] = ' ';
