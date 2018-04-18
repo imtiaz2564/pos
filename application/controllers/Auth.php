@@ -111,9 +111,10 @@ class Auth extends CI_Controller {
 	}
 	function otp()
 	{
+		if (!$this->ion_auth->is_admin()){
 		$user="mdmasumint";
 		$pass="ab333182";
-		$mobile='8801681961169';
+		$mobile='8801726216697';
 		$sms_content = rand(1000, 9999);
 		$msg=urlencode($sms_content);
 
@@ -131,30 +132,15 @@ class Auth extends CI_Controller {
 
 		$tweets = curl($feed);
 
-		// $username = "mdmasumint";
-		// $password = "ab333182";
-		// $mobiles = '8801681961169';
-		// $sms = 'Thank you for your kind purchase. For any query, please contact our hotline number: 01969604444.';
-		// $originator = '01844016400';
-	 	// $msg=rand(1000, 9999); 
-		// $rndno = rawurlencode($msg);
-		// $url = "http://clients.muthofun.com:8901/esmsgw/sendsms.jsp?user=$username&password=$password&mobiles=$mobiles&sms=$rndno&unicode=1";			
- 		// $c = curl_init(); 
-		// curl_setopt($c, CURLOPT_RETURNTRANSFER, 1); 
-		// curl_setopt($c, CURLOPT_URL, $url); 
-		// curl_exec($c);
-		
-		// $response = curl_exec($c); 
-		// return $response;
-	
-		
 		$this->session->set_userdata('otp',$msg);
-        // $this->load->view('auth/otp');
  
 		$data['title'] = ' ';
-		//$data['modules'] = $this->user_model->getAllModules();
 		$data['content'] = $this->load->view('auth/otp',$data,true);
 		$this->load->view('template',$data);
+	}
+	else{
+		redirect('/', 'refresh');
+	}
 	
 		
 	}
