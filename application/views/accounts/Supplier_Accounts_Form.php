@@ -40,40 +40,39 @@
     </div>
     <div><h1>Supplier Info</h1></div>
     <div>
-    <label>Supplier Name: </label>
-    <label style="color:#0000FF" id="cusName"></label>
+        <label>Supplier Name: </label>
+        <label style="color:#0000FF" id="cusName"></label>
     </div>
     <div>
-    <div>
-    <label>Business Name: </label>
-    <label style="color:#0000FF" id="businessName"></label>
+        <label>Business Name: </label>
+        <label style="color:#0000FF" id="businessName"></label>
     </div>
-    <label>Supplier Email: </label>
-    <label style="color:#0000FF" id="email"></label>
-    </div>
-    <div>
-    <label>Address: </label>
-    <label style="color:#0000FF" id="address"></label>
+        <label>Supplier Email: </label>
+        <label style="color:#0000FF" id="email"></label>
     </div>
     <div>
-    <label>Business Address: </label>
-    <label style="color:#0000FF" id="businessAddress"></label>
+        <label>Address: </label>
+        <label style="color:#0000FF" id="address"></label>
     </div>
     <div>
-    <label>Area: </label>
-    <label style="color:#0000FF" id="area"></label>
+        <label>Business Address: </label>
+        <label style="color:#0000FF" id="businessAddress"></label>
     </div>
     <div>
-    <label>District: </label>
-    <label style="color:#0000FF" id="district"></label>
+        <label>Area: </label>
+        <label style="color:#0000FF" id="area"></label>
     </div>
     <div>
-    <label>Opening Balance: </label>
-    <label style="color:#0000FF" id="openingBalance"></label>
+        <label>District: </label>
+        <label style="color:#0000FF" id="district"></label>
     </div>
     <div>
-    <label>Current Balance: </label>
-    <label style="color:#0000FF" id="currentBalance"></label>
+        <label>Opening Balance: </label>
+        <label style="color:#0000FF" id="openingBalance"></label>
+    </div>
+    <div>
+        <label>Current Balance: </label>
+        <label style="color:#0000FF" id="currentBalance"></label>
     </div>
     <div>
         <input id="pplID" name="pplID" type="hidden" value="">
@@ -85,12 +84,11 @@
         </div>
         <div class="clearfix"></div>
     </div>
-    </div>
-   <script>
-   
-$.ajaxSetup({ cache: false });
-    // $('input[name=peopleID],input[name=phone],input[name=name]').keypress(function(e) {
-    // if(e.which == 13) {
+</div>
+<script>
+    $.ajaxSetup({ cache: false });
+        // $('input[name=peopleID],input[name=phone],input[name=name]').keypress(function(e) {
+        // if(e.which == 13) {
         $('select[name=peopleID]').change(function() {    
        
         $.ajax({
@@ -98,36 +96,36 @@ $.ajaxSetup({ cache: false });
         dataType: 'json',
         url: '<?=site_url('item/getSupplierData/')?>'+'/'+$(this).val()+'/', 
         success: function (data) {
-             id = data["id"];
-             phone = data["phone"];
-             name = data["name"];
-             customer_id = data["code"];
-             businessName = data["businessName"];
-             email = data["email"];
-             address = data["address"];
-             businessAddress = data["businessAddress"];
-             area = data["area"];
-             district = data["district"];
-             openingBalance = data["openingBalance"];
-             totalBalance = data["totalBalance"];
+            id = data["id"];
+            phone = data["phone"];
+            name = data["name"];
+            customer_id = data["code"];
+            businessName = data["businessName"];
+            email = data["email"];
+            address = data["address"];
+            businessAddress = data["businessAddress"];
+            area = data["area"];
+            district = data["district"];
+            openingBalance = data["openingBalance"];
+            totalBalance = data["totalBalance"];
              
              
-             $('input[name=peopleID]').val(customer_id);
-             $('input[name=phone]').val(phone);
-             $('input[name=name]').val(name);
+            $('input[name=peopleID]').val(customer_id);
+            $('input[name=phone]').val(phone);
+            $('input[name=name]').val(name);
 
-             $('#pplID').val(id);
-             $('#cusName').html(name);
-             $('#businessName').html(businessName);
-             $('#email').html(email);
-             $('#address').html(address);
-             $('#businessAddress').html(businessAddress);
-             $('#area').html(area);
-             $('#district').html(district);
-             $('#openingBalance').html(openingBalance);
-             $('#currentBalance').html(totalBalance);
-            }
-        });
+            $('#pplID').val(id);
+            $('#cusName').html(name);
+            $('#businessName').html(businessName);
+            $('#email').html(email);
+            $('#address').html(address);
+            $('#businessAddress').html(businessAddress);
+            $('#area').html(area);
+            $('#district').html(district);
+            $('#openingBalance').html(openingBalance);
+            $('#currentBalance').html(totalBalance);
+        }
+    });
     //}
 });
  $('#supplierAccounts').submit(function() {
@@ -136,6 +134,7 @@ $.ajaxSetup({ cache: false });
     date = $('input[name=date]').val();
     amount = $('input[name=amount]').val();
     paymentType = $('select[name=paymentType]').val();
+    bankAccount = $('select[name=bankAccount]').val();
     if(paymentType == '3'){
         alert("Select Payment Type");
         return false;
@@ -150,7 +149,7 @@ $.ajaxSetup({ cache: false });
        dataType: "json",
        url: $('#supplierAccounts').attr('action'),
        //data: $('#supplierAccounts').serialize(),
-       data: { date:date , amount:amount , paymentType:paymentType , description:detail , peopleID:ppl_ID , type:type , user:user },
+       data: { date:date , amount:amount , paymentType:paymentType , description:detail , peopleID:ppl_ID ,bankAccount:bankAccount, type:type , user:user },
        success: function(data){
            if( typeof data['error'] !== 'undefined' ){
                $('.error').html(data['error']).slideDown();

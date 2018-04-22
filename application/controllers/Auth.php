@@ -24,6 +24,7 @@ class Auth extends CI_Controller {
 	//redirect if needed, otherwise display the user list
 	function index()
 	{
+		
 		if (!$this->ion_auth->logged_in())
 		{
 			//redirect them to the login page
@@ -114,7 +115,7 @@ class Auth extends CI_Controller {
 		if (!$this->ion_auth->is_admin()){
 		$user="mdmasumint";
 		$pass="ab333182";
-		$mobile='8801726216697';
+		$mobile='8801681961169';
 		$sms_content = rand(1000, 9999);
 		$msg=urlencode($sms_content);
 
@@ -151,6 +152,7 @@ class Auth extends CI_Controller {
 		if(!strcmp($rno,$urno))
 		{
 			redirect('/', 'refresh');
+			
 		}
 		else
 		{

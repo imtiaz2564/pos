@@ -90,7 +90,17 @@ class Master extends CI_Controller {
         $this->crud->use_modal();
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
-	}
+    }
+    public function bank(){
+        $data['title'] = "Bank Account List";
+        $this->crud->init('bank',[
+            'name'=>'Bank Account Name'
+        ]);
+        $this->crud->use_modal();
+        $this->crud->set_rule('name','required');
+        $data['content'] = $this->crud->run();
+        $this->load->view('template',$data);
+    }
     public function warehouse(){
         $data['title'] = 'Warehouses List';
         $this->crud->init('warehouse',[
@@ -103,29 +113,6 @@ class Master extends CI_Controller {
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
      }
-    public function sales(){
-        $data['title'] = 'Sale Price Revision';
-        $this->crud->init('items',[
-            'name' => 'Item Name',
-            // 'code' => 'Item Code',
-            //'purchase_price' => 'Purchase Price',
-            'mrp' => 'MRP',
-            // 'pack' => 'Pack',
-            'discount' => 'Discount',
-        ]);
-        //$this->crud->display_fields(['Medicine Name','Medicine Code','Pack']);
-        //$this->crud->set_hidden('type','0'); // 1 for Medicine
-        $this->crud->ci->db->where('type','1'); // 1 for Medicine
-        //$this->crud->set_rule('name','required');
-        //$this->crud->set_rule('code','required');
-        //$this->crud->set_search('name')
-        $this->crud->disable_insert();
-        $this->crud->disable_delete();
-        $this->crud->use_modal();
-        $this->crud->set_rule('name','required');
-        $data['content']=$this->crud->run();
-        $this->load->view('template',$data);
-    }
     function getDue( $people_id ){
         return $this->item_model->getDue( $people_id );
     }

@@ -79,6 +79,8 @@
     </div>
     </div>
    <script>
+       $.ajaxSetup({ cache: false });
+
     // $('input[name=peopleID],input[name=phone],input[name=name]').keypress(function(e) {
     // if(e.which == 13) {
         $('select[name=peopleID]').change(function() {    
