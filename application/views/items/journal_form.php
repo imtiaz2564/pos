@@ -143,7 +143,7 @@
             <option class="form-group delivery" value="thela">Thela</option>
         </select>
         <label class="form-group delivery">Labour Cost: </label>
-        <label class="form-group delivery"><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost"></label>
+        <label class="form-group delivery"><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost" readonly></label>
 
     <!-- </div>
     <div class="form-group" style='float: right;'> -->
@@ -169,6 +169,9 @@
     </div>
 </div>
 <script>
+   
+$.ajaxSetup({ cache: false });
+
     $(function(){
         $('#cusinfo').hide();
         $('#deliveryType').hide();
@@ -188,8 +191,6 @@ $('select[name=deliveryType]').on('change', function(){
         });
 
 });
-$.ajaxSetup({ cache: false });
-
    // var idSupplier = 2 ;
     // idSupplier =  $('input[name=idSupplier]').val();
     // //alert(idSupplier);

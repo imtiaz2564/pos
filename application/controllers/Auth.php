@@ -112,7 +112,12 @@ class Auth extends CI_Controller {
 	}
 	function otp()
 	{
-		if (!$this->ion_auth->is_admin()){
+		if(!$this->ion_auth->logged_in()){
+			
+			redirect('auth/login', 'refresh');
+
+		}
+		elseif (!$this->ion_auth->is_admin()){
 		$user="mdmasumint";
 		$pass="ab333182";
 		$mobile='8801681961169';

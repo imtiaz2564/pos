@@ -11,7 +11,7 @@
                 }?>
                 <input type="submit" style="display:none"/>
                     <?php  if( $this->session->userdata('type') == 1 ) { ?>
-                        <td><input type="text" name="discount" value="" class="form-control" placeholder="Discount"></td>
+                        <td><input type="text" name="discount" value="" class="form-control" placeholder="Discount" readonly></td>
                     <? } ?>
                 <?php  if( $this->session->userdata('type') == 0 ) { ?>
                 <td> 
@@ -38,9 +38,13 @@
 <script>
 
 $(function(){
+    $.ajaxSetup({ cache: false });
+
+    $('input[name=unit_price]').attr("readonly","true");
 <?php   // Bind this on show, to trigger it each time a modal shows. ?>
 initialize();
 <?php  if( $this->session->userdata('type') == 1 ) { ?>  
+       
          $('select[name=item_name]').on('change', function() {
             $.ajax({
                 type: 'POST',
