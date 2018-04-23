@@ -77,6 +77,7 @@ class Finance extends CI_Controller {
             'date' => 'Date',
             'amount' => 'Amount',
             'paymentType' => 'Payment Type',
+            'bankAccount' => 'Bank Account',
             'description' => 'Detail',
         ]);
         $this->crud->set_option('paymentType',['3'=>'None','0'=>'Cash','1'=>'Bank','2'=>'Cash Back']);
@@ -85,8 +86,8 @@ class Finance extends CI_Controller {
 
         $this->crud->set_hidden('type','0'); // Receive
         $this->crud->set_hidden('user',$user); 
-       
         $this->crud->join('peopleID','people','id','businessName','people.type=0');
+        $this->crud->join('bankAccount','bank','id','name');
         $this->crud->set_default('date',date('Y-m-d'));
      
         //$this->crud->before_save($this, 'checkReceives');
@@ -99,11 +100,34 @@ class Finance extends CI_Controller {
         $this->crud->set_rule('date','required');
         $this->crud->change_type('date','date');
         //$this->crud->change_type('description','textarea');
-        $this->crud->order([5,0,1,2,3,4,6,7,8]);
+        $this->crud->order([5,0,1,2,3,4,7,6,8,9]);
         
         //$this->crud->use_modal();
         $this->crud->custom_form('accounts/Customer_Accounts_Form');
         $this->crud->form_extra('id="customerAccounts"');
+        $data['content']=$this->crud->run();
+        $this->load->view('template',$data);
+    }
+    function banking() {
+        $user = $this->ion_auth->user()->row()->id;
+        $data['title'] = 'Banking/Transfer';
+        $this->crud->init('finance',[
+            'bankAccount' => 'Bank Account',
+            'type' => 'Type',
+            'date' => 'Date',
+            'amount' => 'Amount',
+            'description' => 'Detail',
+        ]);
+        $this->crud->set_rule('amount','required');
+        $this->crud->join('bankAccount','bank','id','name');
+        $this->crud->set_rule('date','required');
+        $this->crud->change_type('date','date');
+        $this->crud->change_type('description','textarea');
+        $this->crud->set_default('date',date('Y-m-d'));
+        $this->crud->set_option('type',['2'=>'Diposit','3'=>'Withdraw']);
+        $this->crud->set_hidden('user',$user); 
+        $this->crud->custom_form('accounts/Banking_Form');
+        $this->crud->order([3,0,1,2,4,5]);
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }

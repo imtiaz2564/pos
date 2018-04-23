@@ -38,7 +38,9 @@
                     <li><a href="<?=site_url('finance/receives/insert')?>">Receives( Joma )</a></li>
                     <li><a href="<?=site_url('finance/payments/insert')?>">Payments( Khoroch )</a></li>
                     <li><a href="<?=site_url('master/bank/')?>">Bank Account</a></li>
-                    <li><a href="<?=site_url('finance/customer/statement')?>">Statement</a></li>
+                    <li><a href="<?=site_url('finance/banking/insert')?>">Banking/Transfer</a></li>
+                    <li><a href="<?=site_url('finance/customer/statement')?>">Party Statement</a></li>
+                    <li><a href="#">Bank Statement</a></li>
                     <!-- <a href="<?//=site_url('finance/customer/statement')?>" class="btn btn-info" role="button">Customer Statement</a> -->
                 </ul>
             </li>

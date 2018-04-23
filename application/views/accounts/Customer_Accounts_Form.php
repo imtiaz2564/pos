@@ -78,11 +78,10 @@
         <div class="clearfix"></div>
     </div>
     </div>
-   <script>
-       $.ajaxSetup({ cache: false });
-
-    // $('input[name=peopleID],input[name=phone],input[name=name]').keypress(function(e) {
-    // if(e.which == 13) {
+    <script>
+        $.ajaxSetup({ cache: false });
+        // $('input[name=peopleID],input[name=phone],input[name=name]').keypress(function(e) {
+        // if(e.which == 13) {
         $('select[name=peopleID]').change(function() {    
         $.ajax({
         type: 'POST',
@@ -126,6 +125,7 @@ $('#customerAccounts').submit(function() {
     date = $('input[name=date]').val();
     amount = $('input[name=amount]').val();
     paymentType = $('select[name=paymentType]').val();
+    bankAccount = $('select[name=bankAccount]').val();
     type = $('input[name=type]').val();
     user = $('input[name=user]').val();
     if( paymentType == '3'){
@@ -139,7 +139,7 @@ $('#customerAccounts').submit(function() {
        dataType: "json",
        url: $('#customerAccounts').attr('action'),
        //data: $('#customerAccounts').serialize(),
-       data: {  date:date , amount:amount , paymentType:paymentType , description:description , peopleID:ppl_ID , user:user , type:type},
+       data: {  date:date , amount:amount , paymentType:paymentType , description:description , bankAccount:bankAccount, peopleID:ppl_ID , user:user , type:type},
        success: function(data){
         if( typeof data['error'] !== 'undefined' ){
             $('.error').html(data['error']).slideDown();
