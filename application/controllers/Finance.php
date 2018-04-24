@@ -38,7 +38,7 @@ class Finance extends CI_Controller {
         ]);
         $this->crud->set_option('paymentType',['3'=>'None','0'=>'Cash','1'=>'Bank']);
         $this->crud->join('peopleID','people','id','businessName','people.type=1');
-        $this->crud->join('bankAccount','bank','id','name');
+        $this->crud->join('bankAccount','banks','id','name');
         
         $this->crud->set_hidden('type','1'); // Payment
         $this->crud->set_hidden('user',$user); 
@@ -87,7 +87,7 @@ class Finance extends CI_Controller {
         $this->crud->set_hidden('type','0'); // Receive
         $this->crud->set_hidden('user',$user); 
         $this->crud->join('peopleID','people','id','businessName','people.type=0');
-        $this->crud->join('bankAccount','bank','id','name');
+        $this->crud->join('bankAccount','banks','id','name');
         $this->crud->set_default('date',date('Y-m-d'));
      
         //$this->crud->before_save($this, 'checkReceives');
@@ -110,7 +110,7 @@ class Finance extends CI_Controller {
     }
     function banking() {
         $user = $this->ion_auth->user()->row()->id;
-        $data['title'] = 'Banking/Transfer';
+        $data['title'] = 'Banking';
         $this->crud->init('finance',[
             'bankAccount' => 'Bank Account',
             'type' => 'Type',
@@ -119,10 +119,9 @@ class Finance extends CI_Controller {
             'description' => 'Detail',
         ]);
         $this->crud->set_rule('amount','required');
-        $this->crud->join('bankAccount','bank','id','name');
+        $this->crud->join('bankAccount','banks','id','name');
         $this->crud->set_rule('date','required');
         $this->crud->change_type('date','date');
-        $this->crud->change_type('description','textarea');
         $this->crud->set_default('date',date('Y-m-d'));
         $this->crud->set_option('type',['2'=>'Diposit','3'=>'Withdraw']);
         $this->crud->set_hidden('user',$user); 

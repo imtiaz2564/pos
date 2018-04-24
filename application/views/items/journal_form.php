@@ -169,18 +169,15 @@
     </div>
 </div>
 <script>
-   
-$.ajaxSetup({ cache: false });
-
+    $.ajaxSetup({ cache: false });
     $(function(){
         $('#cusinfo').hide();
         $('#deliveryType').hide();
     });
-var journalId = '<?=$this->uri->segment(4)?>';
-// var delivery = $('select[name=deliveryType]').val();
-$('select[name=deliveryType]').on('change', function(){
-
-    $.ajax({
+    var journalId = '<?=$this->uri->segment(4)?>';
+    // var delivery = $('select[name=deliveryType]').val();
+    $('select[name=deliveryType]').on('change', function(){
+        $.ajax({
             type: 'GET',
             dataType: 'json',
             url: '<?=site_url('item/getdeliverytype')?>'+'/'+$(this).val()+'/'+journalId+'/', 
@@ -189,9 +186,8 @@ $('select[name=deliveryType]').on('change', function(){
                 $('input[name=labourCost]').val(deliveryCost);
             }
         });
-
-});
-   // var idSupplier = 2 ;
+    });
+    // var idSupplier = 2 ;
     // idSupplier =  $('input[name=idSupplier]').val();
     // //alert(idSupplier);
     // if(idSupplier == undefined){
@@ -200,59 +196,55 @@ $('select[name=deliveryType]').on('change', function(){
     // }
    /// $('#transactions').load('<?//=site_url('item/ajax_itemlist')?>'+'/'+idSupplier+'/');
     
-//    $('#transactions').load('<?//=site_url('item/ajax_itemlist/')?>');
-//var journalId = '<?//=$this->uri->segment(4)?>';
-//$('#result').load('<?//=site_url('item/getStockData')?>'+'/'+journalId+'/')
+    //$('#transactions').load('<?//=site_url('item/ajax_itemlist/')?>');
+    //var journalId = '<?//=$this->uri->segment(4)?>';
+    //$('#result').load('<?//=site_url('item/getStockData')?>'+'/'+journalId+'/')
+    <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
+        $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
+        // $('input[name=idSupplier],input[name=phone],input[name=customer]').keypress(function(e) {
+        //     if(e.which == 13) {
+        //         $.ajax({
+        //         type: 'POST',
+        //         dataType: 'json',
+        //         url: '<?//=site_url('item/getSupplierData/')?>'+'/'+$(this).val()+'/', 
+        //         success: function (data) {
+        //              supplierID = data["id"];
+        //              phone = data["phone"];
+        //              name = data["name"];
+        //              customer_id = data["code"];
+        //              businessName = data["businessName"];
+        //              email = data["email"];
+        //              address = data["address"];
+        //              businessAddress = data["businessAddress"];
+        //              area = data["area"];
+        //              district = data["district"];
+        //              openingBalance = data["openingBalance"];
+        //              currentBalance = data["totalBalance"]; 
 
-<? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'in' ) { ?>
-    $('#transactions').load('<?=site_url('item/ajax_itemlist/')?>');
-// $('input[name=idSupplier],input[name=phone],input[name=customer]').keypress(function(e) {
-   
-//     if(e.which == 13) {
-  
-//         $.ajax({
-//         type: 'POST',
-//         dataType: 'json',
-//         url: '<?//=site_url('item/getSupplierData/')?>'+'/'+$(this).val()+'/', 
-//         success: function (data) {
-//              supplierID = data["id"];
-//              phone = data["phone"];
-//              name = data["name"];
-//              customer_id = data["code"];
-//              businessName = data["businessName"];
-//              email = data["email"];
-//              address = data["address"];
-//              businessAddress = data["businessAddress"];
-//              area = data["area"];
-//              district = data["district"];
-//              openingBalance = data["openingBalance"];
-//              currentBalance = data["totalBalance"]; 
+        //              $('input[name=idSupplier]').val(customer_id);
+        //              $('input[name=phone]').val(phone);
+        //              $('input[name=customer]').val(name);
 
-//              $('input[name=idSupplier]').val(customer_id);
-//              $('input[name=phone]').val(phone);
-//              $('input[name=customer]').val(name);
-
-//              $('#supId').val(supplierID);
-//              $('#supName').html(name);
-//              $('#supBusinessName').html(businessName);
-//              $('#supEmail').html(email);
-//              $('#supAddress').html(address);
-//              $('#supBusinessAddress').html(businessAddress);
-//              $('#supArea').html(area);
-//              $('#supDistrict').html(district);
-//              $('#supOpeningBalance').html(openingBalance);
-//              $('#supCurrentBalance').html(currentBalance);
+        //              $('#supId').val(supplierID);
+        //              $('#supName').html(name);
+        //              $('#supBusinessName').html(businessName);
+        //              $('#supEmail').html(email);
+        //              $('#supAddress').html(address);
+        //              $('#supBusinessAddress').html(businessAddress);
+        //              $('#supArea').html(area);
+        //              $('#supDistrict').html(district);
+        //              $('#supOpeningBalance').html(openingBalance);
+        //              $('#supCurrentBalance').html(currentBalance);
+                    
+        //             }
+        //         });
             
-//             }
-//         });
-       
-//     }
-// });
-<?}?>
+        //     }
+    // });
+    <?}?>
 
 <? $uri = $this->uri->segment(2); if( $this->uri->segment(2) == 'out' ) { ?>
-   
-// $('input[name=idCustomer],input[name=phone],input[name=customer]').keypress(function(e) {
+    // $('input[name=idCustomer],input[name=phone],input[name=customer]').keypress(function(e) {
     $('select[name=customer_id]').change(function() {         
     // if(e.which == 13) {
         $.ajax({
@@ -289,7 +281,6 @@ $('select[name=deliveryType]').on('change', function(){
             // $('#currentBalance').html(currentBalance);
         }
     });
-        
         
     // }
     text =$('select[name=customer_id]').val();

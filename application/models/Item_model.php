@@ -640,5 +640,8 @@ class Item_Model extends CI_Model{
         $this->db->update('stock');
 
     }
+    function getBankList(){
+        return $this->db->get('banks')->result_array();
+    }
     
 }

@@ -31,8 +31,8 @@
     </div> -->
     <?=$form_close?>
     <div class="form-group" style='float: right;'>
-            <label>Grand Total: </label>
-            <label class="form-group delivery"><input type="text" style="color:#0000FF" name="grandTotal" value="" class="form-control" placeholder="Grand Total" readonly></label>
+            <label>Sub Total: </label>
+            <label class="form-group delivery"><input type="text" style="color:#0000FF" name="grandTotal" value="" class="form-control" placeholder="Sub Total" readonly></label>
     </div>
 </div>
 <script>

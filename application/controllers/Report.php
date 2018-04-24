@@ -130,5 +130,15 @@ class Report extends CI_Controller {
         $data['content'] = $this->load->view('Reports/StockReport.php',$data,true);
         $this->load->view('template',$data);
     }
+    function bankStatement(){
+        $this->load->model('item_model');
+        $data['banklist'] = $this->item_model->getBankList();
+        $data['title'] = ' ';
+        $data['content'] = $this->load->view('Reports/BankStatementTemplate.php',$data,true);
+        $this->load->view('template',$data);
+    }
+    function getBankReport(){
+        
+    } 
 }
  

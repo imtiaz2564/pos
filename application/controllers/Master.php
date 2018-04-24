@@ -93,7 +93,7 @@ class Master extends CI_Controller {
     }
     public function bank(){
         $data['title'] = "Bank Account List";
-        $this->crud->init('bank',[
+        $this->crud->init('banks',[
             'name'=>'Bank Account Name'
         ]);
         $this->crud->use_modal();
