@@ -64,13 +64,13 @@
         <? if($bankDetail['type']=="0") { $balance +=$bankDetail['amount']; ?>
             <td><?=$bankDetail['amount']?></td>
             <td></td>
-        <? } if($bankDetail['type']=="1") { $balance -=$bankDetail['amount']; ?>
+        <? } else if($bankDetail['type']=="1") { $balance -=$bankDetail['amount']; ?>
             <td></td>
             <td><?=$bankDetail['amount']?></td>
-        <? } if($bankDetail['type']=="2") { $balance +=$bankDetail['amount'];?>
+        <? }else if($bankDetail['type']=="2") { $balance +=$bankDetail['amount'];?>
             <td></td>
             <td><?=$bankDetail['amount']?></td>
-        <? } if($bankDetail['type']=="3") { $balance -=$bankDetail['amount'];?>
+        <? } else if($bankDetail['type']=="3") { $balance -=$bankDetail['amount'];?>
             <td><?=$bankDetail['amount']?></td>
             <td></td>
         <? } ?>
