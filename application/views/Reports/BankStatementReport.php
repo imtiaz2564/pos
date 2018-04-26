@@ -68,11 +68,11 @@
             <td></td>
             <td><?=$bankDetail['amount']?></td>
         <? }else if($bankDetail['type']=="2") { $balance +=$bankDetail['amount'];?>
-            <td></td>
             <td><?=$bankDetail['amount']?></td>
+            <td></td>
         <? } else if($bankDetail['type']=="3") { $balance -=$bankDetail['amount'];?>
-            <td><?=$bankDetail['amount']?></td>
             <td></td>
+            <td><?=$bankDetail['amount']?></td>
         <? } ?>
         <td><?=$balance?></td>
     </tr>
