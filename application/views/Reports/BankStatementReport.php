@@ -70,7 +70,7 @@
         <? } if($bankDetail['type']=="2") { $balance +=$bankDetail['amount'];?>
             <td></td>
             <td><?=$bankDetail['amount']?></td>
-        <? } if($bankDetail['type']=="3") { $balance +=$bankDetail['amount'];?>
+        <? } if($bankDetail['type']=="3") { $balance -=$bankDetail['amount'];?>
             <td><?=$bankDetail['amount']?></td>
             <td></td>
         <? } ?>
