@@ -1,11 +1,11 @@
 <div class="modal-body" style="max-height:450px; overflow-y:scroll;">
     <h1>Daily AB Stock</h1>
+    <h3>Date: <?=Date('Y-m-d')?></h3>
     <div id = "printTable">
     <table class="table table-report">
         <thead>
             <tr>
                <td>No</td>
-               <td>Date</td> 
                <td>Item Name</td> 
                <td>OLD Stock</td>
                <td>Today IN</td>
@@ -16,7 +16,6 @@
         <? $i = 0; foreach( $previousstock as $stock ) { $i++; ?>
         <tr>
             <td><?=$i?></td>
-            <td><?=date('Y-m-d')?></td>
             <td><?=$stock['name']?></td>
             <td><?=$stock['previous']?></td>
             <td><?=$stock['import']?></td>

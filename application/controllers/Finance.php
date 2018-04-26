@@ -125,8 +125,9 @@ class Finance extends CI_Controller {
         $this->crud->set_default('date',date('Y-m-d'));
         $this->crud->set_option('type',['2'=>'Diposit','3'=>'Withdraw']);
         $this->crud->set_hidden('user',$user); 
+        $this->crud->set_hidden('peopleID',3); // 3 for AB STOCK 
         $this->crud->custom_form('accounts/Banking_Form');
-        $this->crud->order([3,0,1,2,4,5]);
+        $this->crud->order([3,0,1,2,4,5,6]);
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
     }

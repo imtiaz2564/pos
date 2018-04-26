@@ -40,7 +40,7 @@
                     <li><a href="<?=site_url('master/bank/')?>">Bank Account</a></li>
                     <li><a href="<?=site_url('finance/banking/insert')?>">Banking</a></li>
                     <li><a href="<?=site_url('finance/customer/statement')?>">Party Statement</a></li>
-                    <li><a href="<?=site_url('report/bankStatement')?>">Bank Statement</a></li>
+                    <li><a href="<?=site_url('report/bankstatement')?>">Bank Statement</a></li>
                     <!-- <a href="<?//=site_url('finance/customer/statement')?>" class="btn btn-info" role="button">Customer Statement</a> -->
                 </ul>
             </li>

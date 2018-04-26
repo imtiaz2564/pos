@@ -137,8 +137,14 @@ class Report extends CI_Controller {
         $data['content'] = $this->load->view('Reports/BankStatementTemplate.php',$data,true);
         $this->load->view('template',$data);
     }
-    function getBankReport(){
-        
+    function getBankReport($bankId , $datFrom , $datTo){
+        $this->load->model('item_model');
+        $data['previousBalance'] = $this->item_model->getPreviousBalance($bankId,$datFrom);
+        $data['bankDetails'] = $this->item_model->getBankReportDetails($bankId , $datFrom , $datTo);
+        $data['datFrom'] = $datFrom;
+        $data['bankName'] = $this->item_model->getBankName($bankId);
+        $data['datTo'] = $datTo;
+        $this->load->view('Reports/BankStatementReport.php',$data);
     } 
 }
  

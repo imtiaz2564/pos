@@ -1,5 +1,5 @@
 <div class="modal-body" style="max-height:400px; overflow-y:scroll;">
-    <h1>Details</h1>        
+    <h1>Payment Report</h1>        
     <table id = "printTable" class="table table-report">
         <thead>
             <tr>

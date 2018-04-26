@@ -12,7 +12,7 @@
                     <label>Bank Account :</label>
                     <select name = "bankId" class="form-control autocomplete">
                         <? foreach( $banklist as $banklist ){?>
-                        <option><?=$banklist['name']?></option>
+                        <option value=<?=$banklist['id']?>><?=$banklist['name']?></option>
                         <? } ?>
                     </select>
                 </div>
@@ -44,6 +44,6 @@
             alert('Insert Date');
             return false;
         }
-        $('#reportdetails').load('<?=site_url('reports/getBankReport')?>/'+bankID+'/'+datFrom+'/'+datTo+'/');
+        $('#reportdetails').load('<?=site_url('report/getbankreport')?>/'+bankID+'/'+datFrom+'/'+datTo+'/');
     }
 </script>

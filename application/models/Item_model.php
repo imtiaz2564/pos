@@ -643,5 +643,16 @@ class Item_Model extends CI_Model{
     function getBankList(){
         return $this->db->get('banks')->result_array();
     }
-    
+    function getBankReportDetails($bankId  , $datFrom , $datTo){
+        $bankDetails = $this->db->select('finance.peopleID as peopleID,finance.date as date,people.businessName as businessName,banks.name as bankName,finance.type as type, finance.paymentType as paymentType,finance.bankAccount as bankAccount,finance.amount as amount,finance.description as description')->join('people','finance.peopleID=people.id','left')->join('banks','finance.bankAccount=banks.id','left')->where('finance.bankAccount =',$bankId)->where('finance.date >=',$datFrom)->where('finance.date <=',$datTo)->get('finance')->result_array();
+        return $bankDetails;
+    }
+    function getPreviousBalance($bankId,$datFrom){
+        $previousBalance = $this->db->where('finance.bankAccount =',$bankId)->where('finance.date <=',$datFrom)->get('finance')->result_array();
+        return $previousBalance;
+    }
+    function getBankName($bankId){
+        $bankName = $this->db->select('name as name')->where('id',$bankId)->get('banks');
+        return $bankName->row()->name;
+    }
 }
