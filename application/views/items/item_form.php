@@ -36,72 +36,66 @@
     </div>
 </div>
 <script>
-
 $(function(){
     $.ajaxSetup({ cache: false });
 
-    $('input[name=unit_price]').attr("readonly","true");
-<?php   // Bind this on show, to trigger it each time a modal shows. ?>
-initialize();
-<?php  if( $this->session->userdata('type') == 1 ) { ?>  
-       
-         $('select[name=item_name]').on('change', function() {
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '<?=site_url('item/getUnitPrice')?>'+'/'+$(this).val()+'/', 
-                success: function (data) {
-                mrp = parseInt(data["mrp"]);
-                $('input[name=unit_price]').val(mrp);
-                discount = parseInt(data["discount"]);
-                }
-            });  
-        });
-        var iSum = 0;
-        $('input[name=unit_price],input[name=quantity]').on('keyup',function(){
-            
-            var quantity = $('input[name=quantity]').val();
-            var total = mrp * quantity;
-            var dis = discount * quantity;
-            $('input[name=total]').val(total);
-            $('input[name=discount]').val(dis);
-    });
-    $('input[name=total]').on('keyup',function(){
-    $('input[name=total]').each( function() {
-           iSum = iSum + parseFloat($(this).val());
-    });
-    $('input[name=grandTotal]').val(iSum);
-    });
-<?  } else { ?>
-    var purchasetotal = 0;
-    //var total = 0;
-     var iSum = 0; 
-    $('input[name=unit_price],input[name=quantity]').on('keyup',function(){
-        var quantity = $('input[name=quantity]').val();
-        var unit_price = $('input[name=unit_price]').val();
-         total = unit_price * quantity;
-        $('input[name=total]').val(total);
-       
-       
-    });
-    $('input[name=total]').on('keyup',function(){
-    $('input[name=total]').each( function() {
-           iSum = iSum + parseFloat($(this).val());
-        });
-        $('input[name=grandTotal]').val(iSum);
-    });
-    
-<? } ?>
-$('form').submit(function() {
-    var stock = $('select[name=stockType]').val();
-    if( stock == " "){
-        alert("select Stock Type");
-        return false;
-    }
-     if( stock == "2") {
-            item = $('select[name=item_name]').val();
-            quantity = $('input[name=quantity]').val();
-            $.ajax({
+    <?php   // Bind this on show, to trigger it each time a modal shows. ?>
+    initialize();
+    <?php  if( $this->session->userdata('type') == 1 ) { ?>  
+                $('input[name=unit_price]').attr("readonly","true");  
+                $('select[name=item_name]').on('change', function() {
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: '<?=site_url('item/getUnitPrice')?>'+'/'+$(this).val()+'/', 
+                        success: function (data) {
+                        mrp = parseInt(data["mrp"]);
+                        $('input[name=unit_price]').val(mrp);
+                        discount = parseInt(data["discount"]);
+                        }
+                    });  
+                });
+                var iSum = 0;
+                $('input[name=unit_price],input[name=quantity]').on('keyup',function(){
+                    var quantity = $('input[name=quantity]').val();
+                    var total = mrp * quantity;
+                    var dis = discount * quantity;
+                    $('input[name=total]').val(total);
+                    $('input[name=discount]').val(dis);
+                });
+                $('input[name=total]').on('keyup',function(){
+                $('input[name=total]').each( function() {
+                    iSum = iSum + parseFloat($(this).val());
+                });
+                $('input[name=grandTotal]').val(iSum);
+                });
+            <? } else { ?>
+                var purchasetotal = 0;
+                //var total = 0;
+                var iSum = 0;
+                $('input[name=unit_price],input[name=quantity]').on('keyup',function(){
+                    var quantity = $('input[name=quantity]').val();
+                    var unit_price = $('input[name=unit_price]').val();
+                    total = unit_price * quantity;
+                    $('input[name=total]').val(total);
+                });
+                $('input[name=total]').on('keyup',function(){
+                $('input[name=total]').each( function() {
+                    iSum = iSum + parseFloat($(this).val());
+                });
+                    $('input[name=grandTotal]').val(iSum);
+                });
+            <? } ?>
+        $('form').submit(function() {
+            var stock = $('select[name=stockType]').val();
+            if( stock == " "){
+                alert("select Stock Type");
+                return false;
+            }
+            if( stock == "2") {
+                item = $('select[name=item_name]').val();
+                quantity = $('input[name=quantity]').val();
+                $.ajax({
                     type: 'POST',
                     dataType: 'json',
                     url: '<?=site_url('item/localStockUpdate')?>'+'/'+item+'/'+quantity+'/', 
@@ -115,25 +109,24 @@ $('form').submit(function() {
                         }
                     }
                 });        
-        }
-        
-    $.ajax({
-           type: "POST",
-           dataType: "json",
-           url: $(this).attr('action'),
-           data: $(this).serialize(),
-           success: function(data){
-               if( typeof data['error'] !== 'undefined' ){
-                   $('.error').html(data['error']).slideDown();
-               }else{
-                   reloadData();
-                   clearFields();
-               }
-           }
-         });
-        return false;
-});
-});
+            }
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function(data){
+                    if( typeof data['error'] !== 'undefined' ){
+                        $('.error').html(data['error']).slideDown();
+                    }else{
+                        reloadData();
+                        clearFields();
+                    }
+                }
+            });
+            return false;
+        });
+    });
 function clearFields(){
     //$('input[name=grandTotal]').val(' ');
     // $('select[name=warehouse]').val(' ');

@@ -36,6 +36,7 @@ class Report extends CI_Controller {
     function getpaymentReport($fromDate , $toDate){
         $this->load->model('item_model');
         $data['paymentData'] = $this->item_model->getPaymentData($fromDate , $toDate); 
+        $data['openingData'] = $this->item_model->getPaymentOpening($fromDate); 
         $this->load->view('Reports/PaymentReportDetails.php',$data);
     }
     function customertransaction() {

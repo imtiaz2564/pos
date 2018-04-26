@@ -1,5 +1,5 @@
 <div class="modal-body" style="max-height:450px; overflow-y:scroll;">
-    <h1>Stock By Supplier</h1>
+    <h1>Live Supplier Stock</h1>
     <table id="printTable" class = "table table-report">
         <thead>
         <tr>

@@ -449,6 +449,11 @@ class Item_Model extends CI_Model{
         
         return $result;
     }
+    function getPaymentOpening($from){
+        $paymentType = [0,1,2];
+        $result = $this->db->select('people.businessName as businessName,finance.type as type,finance.amount as amount,finance.paymentType as paymentType,finance.description as description,finance.date as date')->join('people','people.id=peopleID','left')->where('date <',$from)->where_in('paymentType',$paymentType)->get('finance')->result_array();
+        return $result;
+    }
     function getCustomerTransaction($datfrom , $datto){
         //$salesData = $this->db->select('people.businessName , journals.date  ,journals.type ,journals.customer_id as customerID, sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - journals.totalDiscount as totalSales , "sales" as type')->join('people','journals.customer_id=people.id','left')->join('stock','stock.journal_id=journals.id','left')->where('journals.date >=',$datfrom)->where('journals.date <=',$datto)->where('people.type',0)->group_by('journals.customer_id')->group_by('journals.date')->get('journals')->result_array();
          

@@ -1,3 +1,20 @@
+<?  $oldTotalCashIn = 0; $oldTotalCashOut = 0;  $oldCashBack = 0;
+        foreach( $openingData as $openingData) { 
+		    if($openingData["type"] == 0 && $openingData["paymentType"] == 0 || $openingData["type"] == 3){ //new added
+                $oldTotalCashIn += $openingData["amount"];
+            }
+            if($openingData["type"] == 1 && $openingData["paymentType"] == 0 || $openingData["type"] == 2 ){ //new added
+                $oldTotalCashOut += $openingData["amount"];
+            }
+            if($openingData["type"] == 0 && $openingData["paymentType"] == 2){
+                $oldCashBack += $openingData["amount"];
+            }
+        } 
+        $oldHandCashCheque =  $oldTotalCashIn - $oldTotalCashOut - $oldCashBack; 
+?>
+
+
+
 <div class="modal-body" style="max-height:400px; overflow-y:scroll;">
     <h1>Payment Report</h1>        
     <table id = "printTable" class="table table-report">
@@ -100,13 +117,23 @@
             <td><?=$cashBack?></td>
         </tr>
         <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Opening Balance (Cash and Cheque):</td>
+            <td><?=$oldHandCashCheque?></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
             <? $handCashCheque = $totalCashIn - $totalCashOut - $cashBack; ?>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td>Closing Balance (Cash and Cheque):</td>
-            <td><?=$handCashCheque?></td>
+            <td><?=$handCashCheque + $oldHandCashCheque?></td>
             <td></td>
             <td></td>
         </tr>

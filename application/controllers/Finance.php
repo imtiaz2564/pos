@@ -118,7 +118,6 @@ class Finance extends CI_Controller {
             'amount' => 'Amount',
             'description' => 'Detail',
         ]);
-        $this->crud->set_rule('amount','required');
         $this->crud->join('bankAccount','banks','id','name');
         $this->crud->set_rule('date','required');
         $this->crud->change_type('date','date');
@@ -127,6 +126,8 @@ class Finance extends CI_Controller {
         $this->crud->set_hidden('user',$user); 
         $this->crud->set_hidden('peopleID',3); // 3 for AB STOCK 
         $this->crud->custom_form('accounts/Banking_Form');
+        $this->crud->before_save($this, 'beforeBanking');
+        $this->crud->after_save($this, 'afterBanking');
         $this->crud->order([3,0,1,2,4,5,6]);
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
@@ -188,18 +189,20 @@ class Finance extends CI_Controller {
         $data['statement'] = $this->item_model->getCustomerStatement( $supplierID , $datfrom , $datto );
         $this->load->view('supplierReport/SupplierStatement.php',$data);
     }
-    // function checkPayments($post){
-    //     // if(empty($post['name'])){
-    //     //     die( json_encode(['error'=>'Select Business Name']));
-        
-    //     // }
-    //     return $post;
-    // }
-    // function checkReceives($post){
-    //     if(empty($post['amount'])){
-    //         die( json_encode(['error'=>'Select Business Name']));
-        
-    //     }
-    // }
+    function afterBanking(){
+        die( json_encode(['error'=>'Saved']));
+    }
+    function beforeBanking($post){
+        if(empty($post['bankAccount'])){
+            die( json_encode(['error'=>'Select Bank Account']));
+        }
+        if(empty($post['amount'])){
+            die( json_encode(['error'=>'Insert Amount']));
+        }
+        if(empty($post['description'])){
+            die( json_encode(['error'=>'Insert Detail']));
+        }
+        return $post;
+    }
     
 }

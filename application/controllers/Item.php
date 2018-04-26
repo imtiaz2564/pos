@@ -212,7 +212,7 @@ class Item extends CI_Controller {
         }
         $this->crud->init('journals',[
             'date' => 'Posting Date',
-            'description' => 'Description',
+          //  'description' => 'Description',
         ]);
         //if($this->uri->segment(3) == 'edit'){
             //$this->crud->join('supplier_id','people','id','name','people.type=1');
@@ -227,7 +227,7 @@ class Item extends CI_Controller {
         //$this->crud->set_hidden('item_type','1'); // Item Type: Medicine
         $this->crud->set_hidden('status','1');
         //$this->crud->join('customer','people','id','name','people.type=1');
-        $this->crud->change_type('description','textarea');
+        //$this->crud->change_type('description','textarea');
         $this->crud->change_type('date','date');
         $this->crud->form_extra('id="formJournal"');
         $this->crud->after_update($this, 'updateStockDate');
@@ -270,13 +270,13 @@ class Item extends CI_Controller {
             'date' => 'Posting Date',
             //'phone' => 'Phone',
             // 'customer' => 'Customer Name',
-            'description' => 'Description',
+            //'description' => 'Description',
             //'price_type' => 'Price Type',
         ]);
         //$this->crud->set_option('price_type',['0'=>'CP Price','1'=>'TP Price']);
         //$this->crud->join('customer','people','id','name','type=0'); // Customer
         $this->crud->join('customer_id','people','id','businessName'); // Customer
-        $this->crud->order(['2','1','0','4','3']);
+        $this->crud->order(['1','0','3','2']);
 
         $this->crud->custom_form('items/journal_form');
         $this->crud->custom_view('items/journalViewOut');
@@ -286,7 +286,7 @@ class Item extends CI_Controller {
         $this->crud->set_hidden('type','1'); // Journal Type: OUT
         $this->crud->set_hidden('status','1');
         //$this->crud->set_hidden('item_type','1'); // Item Type: Medicine
-        $this->crud->change_type('description','textarea');
+        //$this->crud->change_type('description','textarea');
         $this->crud->change_type('date','date');
         
         $this->crud->form_extra('id="formJournal"');
@@ -325,17 +325,17 @@ class Item extends CI_Controller {
                  'item_name' => 'Item Name',
                  'unit_price' => 'Unit Price',
                  'quantity' => 'Quantity',
-             ]);
+            ]);
             $this->crud->display_fields(['Supplier','Item Name','Unit Price','Quantity','Stock Type','Total']);
             $this->crud->join('warehouse','people','id','businessName'); // Medicine only
             $this->crud->set_hidden('date',date('Y-m-d'));
         
 
         }
-         //$this->crud->join('item_id','items','id','code','type=0'); // Medicine only
+        //$this->crud->join('item_id','items','id','code','type=0'); // Medicine only
         
 
-         $this->crud->join('item_name','items','id','name','type=1');
+        $this->crud->join('item_name','items','id','name','type=1');
         //$this->crud->join('uom','uom','id','uom');
         //!important    
         $this->crud->where(['journal_id='.$id]);
@@ -472,7 +472,6 @@ class Item extends CI_Controller {
   
     }
     public function checkStock($post) {
-        
         if(empty($post['warehouse'])){
             die( json_encode(['error'=>'Select Business Name']));
         
