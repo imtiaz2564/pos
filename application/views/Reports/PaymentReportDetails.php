@@ -27,23 +27,34 @@
                 <td><?="Bank"?></td>
             <? }if($paymentData["paymentType"] == 2){ ?>
                 <td><?="Cash Back"?></td>
-            <? }if($paymentData["type"] == 0 && $paymentData["paymentType"] == 0 ){
+            <? }if($paymentData["type"] == 0 && $paymentData["paymentType"] == 0 || $paymentData["type"] == 3){ //new added
                     $totalCashIn += $paymentData["amount"];
                 }
                 if($paymentData["type"] == 0 && $paymentData["paymentType"] == 1 ){
                     $totalBankIn += $paymentData["amount"];
                 }
-                if($paymentData["type"] == 1 && $paymentData["paymentType"] == 0 ){
+                if($paymentData["type"] == 1 && $paymentData["paymentType"] == 0 || $paymentData["type"] == 2 ){ //new added
                     $totalCashOut += $paymentData["amount"];
                 }
                 if($paymentData["type"] == 1 && $paymentData["paymentType"] == 1){
                     $totalBankOut += $paymentData["amount"];
                 }
-                if($paymentData["type"] == 0 && $paymentData["paymentType"] != 2){
+                if($paymentData["type"] == 0  && $paymentData["paymentType"] != 2){
                     $totalIn += $paymentData["amount"]; ?>
                     <td><?=$paymentData["amount"]?></td>
                     <td><?=0?></td>
+                <? }if($paymentData["type"] == 2 ){ $totalOut += $paymentData["amount"]; //new added
+                     ?>
+                     <td><?=0?></td>
+                    <td><?=$paymentData["amount"]?></td>
+                    
                 <? }
+                 if($paymentData["type"] == 3 ){ //$totalOut += $paymentData["amount"]; //new added
+                     $totalIn += $paymentData["amount"]; ?>
+                    <td><?=$paymentData["amount"]?></td>
+                    <td><?=0?></td>
+                    
+                <? } //end
                 if($paymentData["type"] == 0 && $paymentData["paymentType"] == 2){
                     $cashBack += $paymentData["amount"];?>
                     <td><?=0?></td>
@@ -59,43 +70,43 @@
             </tr>
         <? } ?>
         <tr>
-            <td>Total Cash</td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
+            <td>Total Cash: </td>
             <td><?=$totalCashIn?></td>
             <td><?=$totalCashOut?></td>
             <td></td>
         </tr>
         <tr>
-            <td>Total Bank</td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
+            <td>Total Bank: </td>
             <td><?=$totalBankIn?></td>
             <td><?=$totalBankOut?></td>
             <td></td>
         </tr>
         <tr>
-            <td>Total</td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
+            <td>Total:</td>
             <td><?=$totalIn?></td>
             <td><?=$totalOut?></td>
             <td><?=$cashBack?></td>
         </tr>
         <tr>
             <? $handCashCheque = $totalCashIn - $totalCashOut - $cashBack; ?>
-            <td>Hand Cash and Cheque</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Closing Balance (Cash and Cheque):</td>
             <td><?=$handCashCheque?></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
             <td></td>
             <td></td>
         </tr>

@@ -445,7 +445,8 @@ class Item_Model extends CI_Model{
     }
     function getPaymentData($from , $to) {
         $paymentType = [0,1,2];
-        $result = $this->db->join('people','people.id=peopleID','left')->where('date >=',$from)->where('date <=',$to)->where_in('paymentType',$paymentType)->get('finance')->result_array();
+        $result = $this->db->select('people.businessName as businessName,finance.type as type,finance.amount as amount,finance.paymentType as paymentType,finance.description as description,finance.date as date')->join('people','people.id=peopleID','left')->where('date >=',$from)->where('date <=',$to)->where_in('paymentType',$paymentType)->get('finance')->result_array();
+        
         return $result;
     }
     function getCustomerTransaction($datfrom , $datto){
@@ -648,7 +649,7 @@ class Item_Model extends CI_Model{
         return $bankDetails;
     }
     function getPreviousBalance($bankId,$datFrom){
-        $previousBalance = $this->db->where('finance.bankAccount =',$bankId)->where('finance.date <=',$datFrom)->get('finance')->result_array();
+        $previousBalance = $this->db->where('finance.bankAccount =',$bankId)->where('finance.date < ',$datFrom)->get('finance')->result_array();
         return $previousBalance;
     }
     function getBankName($bankId){

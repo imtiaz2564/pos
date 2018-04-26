@@ -11,7 +11,7 @@
           if($previousBalance['type']=="0") { $prevBalance +=$previousBalance['amount']; 
           } if($previousBalance['type']=="1") { $prevBalance -=$previousBalance['amount']; 
           } if($previousBalance['type']=="2") { $prevBalance +=$previousBalance['amount'];
-          } if($previousBalance['type']=="3") { $prevBalance +=$previousBalance['amount'];
+          } if($previousBalance['type']=="3") { $prevBalance -=$previousBalance['amount'];
           } 
     }?>
     <? foreach($bankDetails as $bank) ?>
@@ -73,7 +73,7 @@
         <? } else if($bankDetail['type']=="3") { $balance -=$bankDetail['amount'];?>
             <td></td>
             <td><?=$bankDetail['amount']?></td>
-        <? } ?>
+        <? }?>
         <td><?=$balance?></td>
     </tr>
     <? } ?>
