@@ -664,7 +664,7 @@ class Item_Model extends CI_Model{
     function getBalanceDetails($type){
         $query =  $this->db->where('type',$type)->get('people')->result_array();
         foreach($query as $query){
-            $data['name'] = $query['name'];
+            $data['name'] = $query['businessName'];
             $data['id'] = $query['code'];
             $data['thana'] = $query['thana'];
             if( $type == 0){
