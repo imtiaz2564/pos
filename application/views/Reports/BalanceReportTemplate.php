@@ -2,8 +2,7 @@
     <div class="panel-content"> 
         <div class="panel-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="panel-title">Balance Report
-            </h4>
+            <h4 class="panel-title"></h4>
         </div>
         <div class="panel-body">
             <div class="row">

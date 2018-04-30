@@ -129,7 +129,7 @@
         alert("Select Payment Type");
         return false;
     }
-    if( paymentType == '1'){
+    if( paymentType == 1 && bankAccount == 0 ){
         alert('Select Bank Account');
         return false;
     }

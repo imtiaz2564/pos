@@ -37,7 +37,7 @@ class Finance extends CI_Controller {
             'description' => 'Detail',
         ]);
         $this->crud->set_option('paymentType',['3'=>'None','0'=>'Cash','1'=>'Bank']);
-        $this->crud->join('peopleID','people','id','businessName','people.type=1');
+        $this->crud->join('peopleID','people','id','businessName');
         $this->crud->join('bankAccount','banks','id','name');
         
         $this->crud->set_hidden('type','1'); // Payment
@@ -81,12 +81,10 @@ class Finance extends CI_Controller {
             'description' => 'Detail',
         ]);
         $this->crud->set_option('paymentType',['3'=>'None','0'=>'Cash','1'=>'Bank','2'=>'Cash Back']);
-        
         //$this->crud->join('peopleID','people','id','name','type=0'); // Customer
-
         $this->crud->set_hidden('type','0'); // Receive
         $this->crud->set_hidden('user',$user); 
-        $this->crud->join('peopleID','people','id','businessName','people.type=0');
+        $this->crud->join('peopleID','people','id','businessName');
         $this->crud->join('bankAccount','banks','id','name');
         $this->crud->set_default('date',date('Y-m-d'));
      

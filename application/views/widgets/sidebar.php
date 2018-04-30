@@ -41,6 +41,7 @@
                     <li><a href="<?=site_url('finance/banking/insert')?>">Banking</a></li>
                     <li><a href="<?=site_url('finance/customer/statement')?>">Party Statement</a></li>
                     <li><a href="<?=site_url('report/bankstatement')?>">Bank Statement</a></li>
+                    <li><a href="<?=site_url('report/balancereport')?>">Debitor/Creditor List</a></li>
                     <!-- <a href="<?//=site_url('finance/customer/statement')?>" class="btn btn-info" role="button">Customer Statement</a> -->
                 </ul>
             </li>
@@ -73,7 +74,6 @@
                         <li><a href="<?=site_url('report/paymentreport')?>">Daily Payment Report</a></li>
                         <li><a href="<?=site_url('report/stockreport')?>">Daily AB Stock Report</a></li>
                         <li><a href="<?=site_url('report/importreport')?>">Daily Import Report</a></li>
-                        <li><a href="<?=site_url('report/balancereport')?>">Debitor/Creditor List</a></li>
                     </ul> 
             </li>
             <li><a href="<?=site_url('auth/logout')?>"><i class="fa fa-sign-out"></i> Logout</a></li>

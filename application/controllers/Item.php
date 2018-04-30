@@ -543,17 +543,18 @@ class Item extends CI_Controller {
         die( json_encode(['error'=>'Updated Stock']));
     }
     function afterDelete($post) {
-            $id = $this->item_model->getUnsavedItem();
-            if(isset($id->id)){
-                $this->session->set_userdata('journal_id',$id->id);
-                if( $this->session->userdata('type') == 1 ) {
-                    redirect('item/out/edit/'.$id->id);
-                }
-                else{
-                    redirect('item/in/edit/'.$id->id);
-                }
-                
+        $user = $this->ion_auth->user()->row()->id;
+        $id = $this->item_model->getUnsavedItem($user);
+        if(isset($id->id)){
+            $this->session->set_userdata('journal_id',$id->id);
+            if( $this->session->userdata('type') == 1 ) {
+                redirect('item/out/edit/'.$id->id);
             }
+            else{
+                redirect('item/in/edit/'.$id->id);
+            }
+            
+        }
     }
     // public function localpurchase() {
     //     $data['title'] = 'Local Purchase';
