@@ -10,7 +10,7 @@
            <div class="error alert alert-danger" role="alert" style="display:none"></div>
             <?php foreach($inputs as $input){
             if($input['label'] != ''){?>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="input-group">
                     <span class="input-group-addon">
                     <?=$input['label']?> :</span>

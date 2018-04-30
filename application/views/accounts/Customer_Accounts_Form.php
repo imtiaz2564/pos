@@ -16,7 +16,7 @@
             </div> -->
             <? } ?>
                 <?php foreach($inputs as $input){
-                    ?><div class="col-md-6"><?php
+                    ?><div class="col-md-3"><?php
                         if($input['label'] !=''){?>
                         <div class="form-group">
                             <label><?=$input['label']?> :</label>
@@ -29,43 +29,34 @@
                 }?>
         </div>
     <?=$form_close?>
- 
     <div><h1>Customer Info</h1></div>
     <div>
-    <label>Customer Name: </label>
-    <label style="color:#0000FF" id="cusName"></label>
+        <label>Customer ID: </label>
+        <label style="color:#0000FF" id="cusID"></label>
     </div>
     <div>
-    <label>Business Name: </label>
-    <label style="color:#0000FF" id="businessName"></label>
+        <label>Business Name( Customer ): </label>
+        <label style="color:#0000FF" id="businessName"></label>
     </div>
     <div>
-    <label>Customer Email: </label>
-    <label style="color:#0000FF" id="email"></label>
+        <label>Customer Name: </label>
+        <label style="color:#0000FF" id="cusName"></label>
     </div>
     <div>
-    <label>Address: </label>
-    <label style="color:#0000FF" id="address"></label>
+        <label>Business Address: </label>
+        <label style="color:#0000FF" id="businessAddress"></label>
     </div>
     <div>
-    <label>Business Address: </label>
-    <label style="color:#0000FF" id="businessAddress"></label>
+        <label>Area: </label>
+        <label style="color:#0000FF" id="area"></label>
     </div>
     <div>
-    <label>Area: </label>
-    <label style="color:#0000FF" id="area"></label>
+        <label>District: </label>
+        <label style="color:#0000FF" id="district"></label>
     </div>
     <div>
-    <label>District: </label>
-    <label style="color:#0000FF" id="district"></label>
-    </div>
-    <div>
-    <label>Opening Balance: </label>
-    <label style="color:#0000FF" id="openingBalance"></label>
-    </div>
-    <div>
-    <label>Current Balance: </label>
-    <label style="color:#0000FF" id="totalBalance"></label>
+        <label>Current Balance: </label>
+        <label style="color:#0000FF" id="totalBalance"></label>
     </div>
     <div>
         <input id="pplID" name="pplID" type="hidden" value="">
@@ -88,33 +79,27 @@
         dataType: 'json',
         url: '<?=site_url('item/getCustomerData/')?>'+'/'+$(this).val()+'/', 
         success: function (data) {
-             id = data["id"];
-             phone = data["phone"];
-             name = data["name"];
-             customer_id = data["code"];
-             businessName = data["businessName"];
-             email = data["email"];
-             address = data["address"];
-             businessAddress = data["businessAddress"];
-             area = data["area"];
-             district = data["district"];
-             openingBalance = data["openingBalance"];
-             totalBalance = data["totalBalance"];
+            id = data["id"];
+            phone = data["phone"];
+            name = data["name"];
+            customer_id = data["code"];
+            businessName = data["businessName"];
+            businessAddress = data["businessAddress"];
+            area = data["area"];
+            district = data["district"];
+            totalBalance = data["totalBalance"];
 
-             $('input[name=peopleID]').val(customer_id);
-             $('input[name=phone]').val(phone);
-             $('input[name=name]').val(name);
-             
-             $('#pplID').val(id);
-             $('#cusName').html(name);
-             $('#businessName').html(businessName);
-             $('#email').html(email);
-             $('#address').html(address);
-             $('#businessAddress').html(businessAddress);
-             $('#area').html(area);
-             $('#district').html(district);
-             $('#openingBalance').html(openingBalance);
-             $('#totalBalance').html(totalBalance);
+            $('input[name=peopleID]').val(customer_id);
+            $('input[name=phone]').val(phone);
+            $('input[name=name]').val(name);
+            $('#pplID').val(id);
+            $('#cusID').html(customer_id);
+            $('#cusName').html(name);
+            $('#businessName').html(businessName);
+            $('#businessAddress').html(businessAddress);
+            $('#area').html(area);
+            $('#district').html(district);
+            $('#totalBalance').html(totalBalance);
             }
         });
     //}
@@ -130,6 +115,10 @@ $('#customerAccounts').submit(function() {
     user = $('input[name=user]').val();
     if( paymentType == '3'){
         alert('Select Payment Type');
+        return false;
+    }
+    if( paymentType == '1'){
+        alert('Select Bank Account');
         return false;
     }
     description = $('input[name=description]').val(); 

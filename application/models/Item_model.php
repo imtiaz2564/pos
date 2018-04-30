@@ -661,4 +661,22 @@ class Item_Model extends CI_Model{
         $bankName = $this->db->select('name as name')->where('id',$bankId)->get('banks');
         return $bankName->row()->name;
     }
+    function getBalanceDetails($type){
+        $query =  $this->db->where('type',$type)->get('people')->result_array();
+        foreach($query as $query){
+            $data['name'] = $query['name'];
+            $data['id'] = $query['code'];
+            $data['thana'] = $query['thana'];
+            if( $type == 0){
+                $data['balance'] = $this->getCustomerBalance($query['id']);
+                
+            }
+            if( $type == 1){
+                $data['balance'] = $this->getSupplierBalance($query['id']);
+                
+            }
+            $result[] = $data;
+        }
+        return $result;
+    }
 }

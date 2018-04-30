@@ -146,6 +146,17 @@ class Report extends CI_Controller {
         $data['bankName'] = $this->item_model->getBankName($bankId);
         $data['datTo'] = $datTo;
         $this->load->view('Reports/BankStatementReport.php',$data);
+    }
+    function balanceReport(){
+        $this->load->model('item_model');
+        $data['title'] = ' ';
+        $data['content'] = $this->load->view('Reports/BalanceReportTemplate.php',$data,true);
+        $this->load->view('template',$data);
+    }
+    function getbalancereportdata($type){
+        $this->load->model('item_model');
+        $data['balancedata']=$this->item_model->getBalanceDetails($type);
+        $this->load->view('Reports/BalanceReportDetails.php',$data);
     } 
 }
  

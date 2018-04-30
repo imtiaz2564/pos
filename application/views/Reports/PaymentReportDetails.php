@@ -12,9 +12,6 @@
         } 
         $oldHandCashCheque =  $oldTotalCashIn - $oldTotalCashOut - $oldCashBack; 
 ?>
-
-
-
 <div class="modal-body" style="max-height:400px; overflow-y:scroll;">
     <h1>Payment Report</h1>        
     <table id = "printTable" class="table table-report">
@@ -141,7 +138,7 @@
 </div>
 <div class="row">
     <div class="col-xs-12 text-right">
-    <button class="btn btn-primary" onclick="printDiv()">Print</button>
+        <button class="btn btn-primary" onclick="printDiv()">Print</button>
     </div>
 </div>
 <script>
