@@ -128,7 +128,7 @@ class Item_Model extends CI_Model{
     }
     function getSupplierData($id){
         //$query = $this->db->where('type',1)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people');
-        $query = $this->db->where('type',1)->where('id',$id)->get('people');
+        $query = $this->db->where('id',$id)->get('people');
         return $query->row();
     }
     function getUnitPrice($item){
