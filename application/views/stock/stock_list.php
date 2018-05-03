@@ -33,6 +33,8 @@
     </div>
     <br /><br />
 <?php } ?>
+<div class="modal-body" style="max-height:400px; max-width:90%; overflow-y:scroll;">
+ 
 <table class="display compact" id="crud-table">
     <thead>
         <tr>
@@ -45,36 +47,51 @@
     </thead>
     <tfoot></tfoot>
 </table>
+</div>
 <div class="row">
-    <div class="col-xs-12 text-right">
+    <div class="col-xs-11 text-right">
     <button class="btn btn-primary" onclick="printDiv()">Print</button>
     </div>
 </div> 
 
 <script>
+
 function printDiv() {
         var divToPrint=document.getElementById("crud-table");
+        var htmlToPrint = '' +
+            '<style type="text/css">' +
+            'table th, table td {' +
+            'border:1px solid #000;' +
+            'padding;0.5em;' +
+            '}' +
+            '</style>';
+        htmlToPrint += divToPrint.outerHTML;
         newWin= window.open("");
-        newWin.document.write(divToPrint.outerHTML);
+        newWin.document.write(htmlToPrint);
         newWin.print();
         newWin.close();
-    }
-
+}
 $.ajaxSetup({ cache: false });
 $(document).ready(function() {
     <?php // destroy modal?>
-    
     $('body').on('hidden.bs.modal', '.modal', function () {
       $(this).removeData('bs.modal');
     });
     
     $('#crud-table').dataTable( {
+        
         "processing": true,
         "serverSide": true,
+        
+       // "scrollY":"400px",
+       // "scrollCollapse": true,
+        "paging": false,
         "columnDefs":[{
+            //"width": "20px" ,
                 "targets": [ 0 ],
                 "visible": false
             }],
+            
         "fnDrawCallback" : function(){
             $('#crud-table tr').click( function () {
                 $('#crud-table tr').removeClass('selected');
@@ -88,6 +105,7 @@ $(document).ready(function() {
             });
         },
         "ajax": "<?=site_url($this->uri->segment(1).'/'.$this->uri->segment(2).'/ajax/');?>"
+    
     });
 });
 function reload_data(){
@@ -103,7 +121,6 @@ function reload_data(){
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                  <h4 class="modal-title">Loading...</h4>
-
             </div>
             <div class="modal-body">Loading...</div>
             <div class="modal-footer">
