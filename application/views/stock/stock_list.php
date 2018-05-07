@@ -33,7 +33,7 @@
     </div>
     <br /><br />
 <?php } ?>
-<div class="modal-body" style="max-height:400px; max-width:90%; overflow-y:scroll;">
+<div class="modal-body" style="max-height:400px; max-width:92%; overflow-y:scroll;">
  
 <table class="display compact" id="crud-table">
     <thead>

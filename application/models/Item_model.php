@@ -12,8 +12,8 @@ class Item_Model extends CI_Model{
         // $out = $query->row()->total;
         
         // return $in-$out;
-        $type = ['3','5','7'];
-        $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where_in('type',$type)->where('warehouse',3)->get('stock');
+        $type = ['-3','5','7'];
+        $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where_in('type',$type)->where('warehouse',-3)->get('stock');
         $in = $query->row()->total;
 
        // $query = $this->db->select('sum(quantity) as total')->where('item_name',$id)->where('type',1)->get('stock');
@@ -602,7 +602,7 @@ class Item_Model extends CI_Model{
         $dat = date('Y-m-d');
         $total = [];
         $data = [];
-        $type = ['3','5','7']; // import refund local purchase 
+        $type = ['-3','5','7']; // import refund local purchase 
          
         $items = $this->db->select('items.name as itemName , items.id as itemId')->where('items.type = ',1)->get('items')->result_array();
         //$items = $this->db->select('sum(stock.quantity) as importQuantity,stock.item_name as itemId,items.name as itemName')->join('items','items.id=stock.item_name','left')->where('stock.type = ',2)->where('stock.date = ',$dat)->group_by('stock.item_name')->get('stock')->result_array();
@@ -610,7 +610,7 @@ class Item_Model extends CI_Model{
             // print_r($item);
             // die();
            
-            $data1 = $this->db->select('sum(quantity) as previousQuantity')->where_in('stock.type',$type)->where('stock.warehouse',3)->where('stock.date < ',$dat)->where('stock.item_name = ',$item['itemId'])->get('stock');
+            $data1 = $this->db->select('sum(quantity) as previousQuantity')->where_in('stock.type',$type)->where('stock.warehouse',-3)->where('stock.date < ',$dat)->where('stock.item_name = ',$item['itemId'])->get('stock');
             //$query = $this->db->select('sum(quantity) as total')->where('item_name',$item['itemId'])->where('type',1)->where('stock.date < ',$dat)->get('stock');
             $query = $this->db->select('sum(stock.quantity) as oldSold')->join('stock','stock.journal_id=journals.id','left')->where('journals.date < ',$dat)->where('stock.item_name = ',$item['itemId'])->where('journals.type = ',1)->get('journals');
       
@@ -623,7 +623,7 @@ class Item_Model extends CI_Model{
             //$data3 = $this->db->select('sum(quantity) as soldQuantity')->where('stock.item_name',$item['itemId'])->where('stock.type',1)->where('stock.date = ',$dat)->get('stock');
             
             $data3 = $this->db->select('sum(stock.quantity) as soldQuantity')->join('stock','stock.journal_id=journals.id','left')->where('journals.date =',$dat)->where('stock.item_name = ',$item['itemId'])->where('journals.type = ',1)->get('journals');
-            $refund = $this->db->select('sum(quantity) as refundQuantity')->where_in('stock.type',5)->where('stock.warehouse',3)->where('stock.date = ',$dat)->where('stock.item_name = ',$item['itemId'])->get('stock');
+            $refund = $this->db->select('sum(quantity) as refundQuantity')->where_in('stock.type',5)->where('stock.warehouse',-3)->where('stock.date = ',$dat)->where('stock.item_name = ',$item['itemId'])->get('stock');
             
             
             

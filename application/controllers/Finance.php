@@ -122,7 +122,7 @@ class Finance extends CI_Controller {
         $this->crud->set_default('date',date('Y-m-d'));
         $this->crud->set_option('type',['2'=>'Diposit','3'=>'Withdraw']);
         $this->crud->set_hidden('user',$user); 
-        $this->crud->set_hidden('peopleID',3); // 3 for AB STOCK 
+        $this->crud->set_hidden('peopleID',-3); // 3 for AB STOCK 
         $this->crud->custom_form('accounts/Banking_Form');
         $this->crud->before_save($this, 'beforeBanking');
         $this->crud->after_save($this, 'afterBanking');

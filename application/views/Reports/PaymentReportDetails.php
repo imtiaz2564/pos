@@ -146,10 +146,15 @@
         var divToPrint=document.getElementById("printTable");
         var htmlToPrint = '' +
         '<style type="text/css">' +
-        'table th, table td {' +
-        'border:1px solid #000;' +
-        'padding;0.5em;' +
+        'th,td {' +
+            'border: 1px solid #999'+
+            'padding: 0.5rem'+
+            'text-align: left'+
         '}' +
+        'table {'+
+        'border-collapse: collapse'+
+        '}'+
+        
         '</style>';
         htmlToPrint += divToPrint.outerHTML;        
         newWin= window.open("");

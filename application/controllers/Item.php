@@ -467,7 +467,7 @@ class Item extends CI_Controller {
 
     }
     public function stockUpdate($post) {
-        $this->item_model->updateStock($post['item_name'] , $post['quantity'] ,  3 , 3);
+        $this->item_model->updateStock($post['item_name'] , $post['quantity'] ,  -3 , 3);
         die( json_encode(['error'=>'Updated Stock']));
   
     }
@@ -539,7 +539,7 @@ class Item extends CI_Controller {
         $this->load->view('template',$data);
     }
     function refundStockUpdate($post) {
-        $this->item_model->updateStock($post['item_name'] , $post['quantity'] , '3' , '5');
+        $this->item_model->updateStock($post['item_name'] , $post['quantity'] , '-3' , '5');
         die( json_encode(['error'=>'Updated Stock']));
     }
     function afterDelete($post) {
@@ -578,7 +578,7 @@ class Item extends CI_Controller {
     // }
     function localStockUpdate($item_name , $quantity ) {
         
-        $this->item_model->updateStock($item_name , $quantity , 3 , 7);
+        $this->item_model->updateStock($item_name , $quantity , -3 , 7);
     }
     function getStockType($id) {
         $query = $this->item_model->getStockType($id);
