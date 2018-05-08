@@ -31,12 +31,15 @@
     function printDiv() {
         var divToPrint=document.getElementById("printTable");
         var htmlToPrint = '' +
-            '<style type="text/css">' +
+        '<style type="text/css">' +
             'table th, table td {' +
-            'border:1px solid #000;' +
-            'padding;0.5em;' +
-            '}' +
-            '</style>';
+            'border: 1px solid black;' +
+        '}' +
+        'table {' +
+            'border-collapse: collapse;' +
+            'width: 100%;' +
+        '}'+
+        '</style>';
         htmlToPrint += divToPrint.outerHTML;
         newWin= window.open("");
         newWin.document.write(htmlToPrint);

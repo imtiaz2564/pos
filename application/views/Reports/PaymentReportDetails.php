@@ -14,17 +14,17 @@
 ?>
 <div class="modal-body" style="max-height:400px; overflow-y:scroll;">
     <h1>Payment Report</h1>        
-    <table id = "printTable" class="table table-report">
+    <table id = "printTable" class="table">
         <thead>
             <tr>
-               <td>No</td>
-               <td>Date</td> 
-               <td>Business Name</td>
-               <td>Description</td>
-               <td>Type</td>
-               <td>Money IN</td>
-               <td>Money OUT</td>
-               <td>Cash Back</td> 
+               <th>No</th>
+               <th>Date</th> 
+               <th>Business Name</th>
+               <th>Description</th>
+               <th>Type</th>
+               <th>Money IN</th>
+               <th>Money OUT</th>
+               <th>Cash Back</th> 
             </tr>
         </thead>
         <? $i = 1; $totalIn = 0; $totalOut = 0; $totalCashIn = 0; $totalBankIn = 0;
@@ -83,56 +83,41 @@
                 <? } ?>
             </tr>
         <? } ?>
+        </table>
+        <table style="width: 50%" id = "printTable2" class="table" align="right">
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>Total Cash: </td>
-            <td><?=$totalCashIn?></td>
-            <td><?=$totalCashOut?></td>
+            <th></th>
+            <th>Total IN</th>
+            <th>Total Out</th>
+            <th>Total Cash Back</th>
+        </tr>
+        <tr>
+            <td style="width:155px">Total Cash: </td>
+            <td style="width:120px"><?=$totalCashIn?></td>
+            <td style="width:140px"><?=$totalCashOut?></td>
             <td></td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
             <td>Total Bank: </td>
             <td><?=$totalBankIn?></td>
             <td><?=$totalBankOut?></td>
             <td></td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
             <td>Total:</td>
             <td><?=$totalIn?></td>
             <td><?=$totalOut?></td>
             <td><?=$cashBack?></td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
             <td>Opening Balance (Cash and Cheque):</td>
             <td><?=$oldHandCashCheque?></td>
-            <td></td>
-            <td></td>
+            
         </tr>
         <tr>
             <? $handCashCheque = $totalCashIn - $totalCashOut - $cashBack; ?>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
             <td>Closing Balance (Cash and Cheque):</td>
             <td><?=$handCashCheque + $oldHandCashCheque?></td>
-            <td></td>
-            <td></td>
         </tr>
     </table>    
 </div>
@@ -144,19 +129,19 @@
 <script>
     function printDiv() {
         var divToPrint=document.getElementById("printTable");
+        var divToPrint2=document.getElementById("printTable2");
         var htmlToPrint = '' +
         '<style type="text/css">' +
-        'th,td {' +
-            'border: 1px solid #999'+
-            'padding: 0.5rem'+
-            'text-align: left'+
+            'table th, table td {' +
+            'border: 1px solid black;' +
         '}' +
-        'table {'+
-        'border-collapse: collapse'+
+        'table {' +
+            'border-collapse: collapse;' +
+            'width: 100%;' +
         '}'+
-        
         '</style>';
         htmlToPrint += divToPrint.outerHTML;        
+        htmlToPrint += divToPrint2.outerHTML;
         newWin= window.open("");
         //newWin.document.write(divToPrint.outerHTML);
         newWin.document.write(htmlToPrint);

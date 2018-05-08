@@ -31,8 +31,19 @@
 <script>
     function printDiv() {
         var divToPrint=document.getElementById("printTable");
+        var htmlToPrint = '' +
+        '<style type="text/css">' +
+            'table th, table td {' +
+            'border: 1px solid black;' +
+        '}' +
+        'table {' +
+            'border-collapse: collapse;' +
+            'width: 100%;' +
+        '}'+
+        '</style>';
+        htmlToPrint += divToPrint.outerHTML;
         newWin= window.open("");
-        newWin.document.write(divToPrint.outerHTML);
+        newWin.document.write(htmlToPrint);
         newWin.print();
         newWin.close();
     }
