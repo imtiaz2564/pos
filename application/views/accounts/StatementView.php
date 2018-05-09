@@ -104,7 +104,7 @@ $oldpaid = 0; foreach($oldbalance as $prebalance) {
             <!-- <td></td> -->
             <td><?=$oldpaid?></td>
         </tr>
-    <? $paid =0; foreach( $result as $result) { ?>
+    <? $paid = $oldpaid; foreach( $result as $result) { ?>
   
     <tr>
         <td><?=$result["date"]?></td>
