@@ -406,14 +406,14 @@ class Item_Model extends CI_Model{
         
         //return $salesData;
         
-        $openingBalance = $this->db->select(' "00-00-0000" as date,people.code as code,people.name as name,people.businessName as businessName,people.address as address,people.businessAddress as businessAddress,people.area as area,people.thana as thana,people.district as district,people.phone as phone,people.email as email,people.openingBalance as openingBalance, "openingBalance" as type')->where('id',$customerID)->get('people')->result_array();
-        $final[] = $openingBalance;
+        // $openingBalance = $this->db->select(' " " as date,people.code as code,people.name as name,people.businessName as businessName,people.address as address,people.businessAddress as businessAddress,people.area as area,people.thana as thana,people.district as district,people.phone as phone,people.email as email,people.openingBalance as openingBalance, "openingBalance" as type')->where('id',$customerID)->get('people')->result_array();
+        // $final[] = $openingBalance;
         //return $data;
         
-        $refund = $this->db->select('stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,stock.reason as refundDescription,"refund" as type')->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('stock')->result_array();
+        $refund = $this->db->select('stock.date as date,items.name as itemName,stock.unit_price as unit_price,stock.quantity as quantity,stock.reason as refundDescription,"refund" as type')->join('items','items.id=item_name','left')->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('stock')->result_array();
         $final[] = $refund;
         
-        $purchaseData = $this->db->select('stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,journals.description as purchaseDescription,"purchase" as type')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('warehouse', $customerID)->where('stock.date >=',$datfrom)->where('stock.date <=',$datto)->get('stock')->result_array();
+        $purchaseData = $this->db->select('stock.date as date,items.name as itemName,stock.unit_price as unit_price,stock.quantity as quantity,journals.description as purchaseDescription,"purchase" as type')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('warehouse', $customerID)->where('stock.date >=',$datfrom)->where('stock.date <=',$datto)->get('stock')->result_array();
         $final[]  = $purchaseData; 
         
         $salesData = $this->db->select('people.name as cusName ,people.businessName as businessName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('journals')->result_array();
@@ -678,5 +678,39 @@ class Item_Model extends CI_Model{
             $result[] = $data;
         }
         return $result;
+    }
+    function getPreviousStatement( $customerID , $datfrom ){
+        $final = [];
+        $type = ['0','1'];
+
+        $openingBalance = $this->db->select('people.code as code,people.name as name,people.businessName as businessName,people.address as address,people.businessAddress as businessAddress,people.area as area,people.thana as thana,people.district as district,people.phone as phone,people.email as email,people.openingBalance as openingBalance, "openingBalance" as type')->where('id',$customerID)->get('people')->result_array();
+        $final[] = $openingBalance;
+
+        
+        $statements = $this->db->select('finance.date as date,finance.amount as depositAmount,finance.type as paymentType,finance.description as depositDescription ,"deposit" as type')->where('peopleID', $customerID)->where('date < ',$datfrom)->where_in('paymentType',$type)->get('finance')->result_array();
+        $final[] = $statements;
+        
+        $cashBack = $this->db->select('finance.date as date,finance.amount as backAmount,finance.description as backDescription ,"cashBack" as type')->where('peopleID', $customerID)->where('date < ',$datfrom)->where('paymentType',2)->get('finance')->result_array();
+        $final[] = $cashBack;
+        
+       
+        $refund = $this->db->select('stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,stock.reason as refundDescription,"refund" as type')->where('customer_id', $customerID)->where('date < ',$datfrom)->get('stock')->result_array();
+        $final[] = $refund;
+        
+        $purchaseData = $this->db->select('stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,journals.description as purchaseDescription,"purchase" as type')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('warehouse', $customerID)->where('stock.date < ',$datfrom)->get('stock')->result_array();
+        $final[]  = $purchaseData; 
+        
+        $salesData = $this->db->select('people.name as cusName ,people.businessName as businessName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('customer_id', $customerID)->where('date < ',$datfrom)->get('journals')->result_array();
+        $totalSales = [];
+        foreach( $salesData as $salesData ) {
+            $sales = $this->db->select('journals.date as date,stock.journal_id as journalID,sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total, "sales" as type')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->result_array();
+            $final[] = $sales; 
+        }
+        foreach( $final as $data)
+        foreach( $data as $data){
+            $preresult[] =$data;
+         
+        }
+        return $preresult;
     }
 }

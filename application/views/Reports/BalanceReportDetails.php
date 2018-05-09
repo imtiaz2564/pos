@@ -27,7 +27,7 @@
             <td></td>
             <td></td>
             <td>Total Outstanding Balance</td>
-            <td><?=number_format($totalOutstanding)?></td>
+            <td><?=number_format($totalOutstanding,2)?></td>
             <td></td>
         </tr>   
     </table>    

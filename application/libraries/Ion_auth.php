@@ -407,6 +407,7 @@ class Ion_auth
 		}
 		else
 		{
+			session_start(); //new added
 			$this->session->sess_regenerate(TRUE);
 		}
 

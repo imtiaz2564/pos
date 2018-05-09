@@ -159,7 +159,11 @@ class Finance extends CI_Controller {
         }
         $this->load->model('item_model');
         $data['title'] = '';
+        $data['datFrom'] =$datfrom;
+        $data['datTo'] =$datto;
+        $data['oldbalance'] = $this->item_model->getPreviousStatement($customerID , $datfrom);
         $data['result'] = $this->item_model->getCustomerStatement($customerID , $datfrom , $datto);
+        
         //die();
         // $data['salesData'] = $this->item_model->getSalesData( $customerID , $datfrom , $datto );
        
