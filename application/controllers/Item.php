@@ -52,7 +52,7 @@ class Item extends CI_Controller {
         $this->crud->set_rule('thela','required');
         $this->crud->set_rule('labourCost','required');
         $this->crud->set_hidden('user',$user);
-        $this->crud->set_search('name');
+        $this->crud->set_search('items.name'); # You've to mention the table name when name is ambigous.
         $this->crud->use_modal();
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);

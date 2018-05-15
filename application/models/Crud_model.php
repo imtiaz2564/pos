@@ -38,22 +38,11 @@ class Crud_Model extends CI_Model{
 				
 			}	
 		}
-		 // new search
-		 //if(is_array($search)){
-			
-			if( isset( $_GET['search']['value'] ) && $_GET['search']['value'] != '' ){
-			//	if( isset( $this->config['search'] ) && $this->config['search'] != '' ){
-					// $rows = $rows->where( $this->config['search']." LIKE '%".$_POST['search']['value']."%'" );
-					//$this->db->where( $this->config['search']." LIKE '%".$_POST['search']['value']."%'" );
-					print_r($_GET['search']['value']);
-					//die();
-					$this->db->like($search,$_GET['search']['value']);
-					
-			//	}
-			}
-				
-		//}
-        // limit
+		if( isset( $_GET['search']['value'] ) && $_GET['search']['value'] != '' ){
+			$this->db->like('LOWER('.$search.')', strtolower($_GET['search']['value']));
+		}
+
+		// limit
         $limit = null;
         if($this->input->get('length')!= null && $this->input->get('length')!= -1){
             $limit = $this->input->get('length');
