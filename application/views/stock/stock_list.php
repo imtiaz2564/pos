@@ -34,7 +34,7 @@
     <br /><br />
 <?php } ?>
 <div class="modal-body" style="max-height:400px; max-width:92%; overflow-y:scroll;">
- 
+<h1 id = "header" >Live AB Stock</h1> 
 <table class="display compact" id="crud-table">
     <thead>
         <tr>
@@ -53,26 +53,26 @@
     <button class="btn btn-primary" onclick="printDiv()">Print</button>
     </div>
 </div> 
-
 <script>
-
 function printDiv() {
-        var divToPrint=document.getElementById("crud-table");
-        var htmlToPrint = '' +
+    var divToPrint=document.getElementById("crud-table");
+    var header=document.getElementById("header");
+    var htmlToPrint = '' +
         '<style type="text/css">' +
-            'table th, table td {' +
-            'border: 1px solid black;' +
-        '}' +
-        'table {' +
-            'border-collapse: collapse;' +
-            'width: 100%;' +
-        '}'+
-        '</style>';
-        htmlToPrint += divToPrint.outerHTML;
-        newWin= window.open("");
-        newWin.document.write(htmlToPrint);
-        newWin.print();
-        newWin.close();
+        'table th, table td {' +
+        'border: 1px solid black;' +
+    '}' +
+    'table {' +
+        'border-collapse: collapse;' +
+        'width: 100%;' +
+    '}'+
+    '</style>';
+    htmlToPrint += divToPrint.outerHTML;
+    newWin= window.open("");
+    newWin.document.write(header.outerHTML);
+    newWin.document.write(htmlToPrint);
+    newWin.print();
+    newWin.close();
 }
 $.ajaxSetup({ cache: false });
 $(document).ready(function() {
@@ -90,7 +90,7 @@ $(document).ready(function() {
        // "scrollCollapse": true,
         "paging": false,
         "columnDefs":[{
-            //"width": "20px" ,
+            "width": "20%" ,
                 "targets": [ 0 ],
                 "visible": false
             }],

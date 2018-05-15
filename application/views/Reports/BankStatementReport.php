@@ -6,7 +6,6 @@
             <u><h3>Statement of bank account</h3></u>
         </div>
     </div>
-    <div id = "printTable">
     <? $prevBalance = 0; foreach($previousBalance as $previousBalance) {
           if($previousBalance['type']=="0") { $prevBalance +=$previousBalance['amount']; 
           } if($previousBalance['type']=="1") { $prevBalance -=$previousBalance['amount']; 
@@ -15,7 +14,7 @@
           } 
     }?>
     <? foreach($bankDetails as $bank) ?>
-    <table>
+    <table id = "printInfo">
         <thead>
             <tr>
                 <th>Account Name: </th>
@@ -31,22 +30,21 @@
             </tr>
         </thead>
     </table>
-    <h1></h1>
-    <table class="table table-report">
+    <table id = "printTable" class="table table-report">
     <thead>
         <tr>
-            <td><b>Date</b></td>
-            <td><b>Party(Business Name)</b></td>
-            <td><b>Descriptions</b></td>
-            <td><b>Paid In</b></td>
-            <td><b>Paid Out</b></td>
-            <td><b>Balance</b></td>
+            <th>Date</th>
+            <th>Party(Business Name)</th>
+            <th>Descriptions</th>
+            <th>Paid In</th>
+            <th>Paid Out</th>
+            <th>Balance</th>
         </tr>
     </thead>
     <tr>
         <td></td>
         <td></td>
-        <td>Balance Forward</td>
+        <td>Balance Brought Forward</td>
         <td></td>
         <td></td>
         <td><?=$prevBalance?></td>
@@ -77,8 +75,15 @@
         <td><?=$balance?></td>
     </tr>
     <? } ?>
+    <tr>
+        <td></td>
+        <td></td>
+        <td>Balance Carried Forward</td>
+        <td></td>
+        <td></td>
+        <td><?=$balance?></td>
+    </tr>
    </table>    
-</div>
 <div class="row">
     <div class="col-xs-12 text-right">
     <button class="btn btn-primary" onclick="printDiv()">Print</button>
@@ -88,19 +93,21 @@
 <script>
 $('#buttonGroup').hide();
     function printDiv() {
+        var divToPrintInfo=document.getElementById("printInfo");
         var divToPrint=document.getElementById("printTable");
         var htmlToPrint = '' +
         '<style type="text/css">' +
-            'table th, table td {' +
+            'table#printTable th, table#printTable  td {' +
             'border: 1px solid black;' +
         '}' +
-        'table {' +
+        'table#printTable {' +
             'border-collapse: collapse;' +
             'width: 100%;' +
         '}'+
         '</style>';
         htmlToPrint += divToPrint.outerHTML;
         newWin= window.open("");
+        newWin.document.write(divToPrintInfo.outerHTML);
         newWin.document.write(htmlToPrint);
         newWin.print();
         newWin.close();

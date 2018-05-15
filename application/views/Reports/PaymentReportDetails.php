@@ -13,7 +13,7 @@
         $oldHandCashCheque =  $oldTotalCashIn - $oldTotalCashOut - $oldCashBack; 
 ?>
 <div class="modal-body" style="max-height:400px; overflow-y:scroll;">
-    <h1>Payment Report</h1>        
+    <h1 id = "printHeader">Payment Report</h1>        
     <table id = "printTable" class="table">
         <thead>
             <tr>
@@ -129,6 +129,7 @@
 <script>
     function printDiv() {
         var divToPrint=document.getElementById("printTable");
+        var divToPrintHeader=document.getElementById("printHeader");
         var divToPrint2=document.getElementById("printTable2");
         var htmlToPrint = '' +
         '<style type="text/css">' +
@@ -143,7 +144,7 @@
         htmlToPrint += divToPrint.outerHTML;        
         htmlToPrint += divToPrint2.outerHTML;
         newWin= window.open("");
-        //newWin.document.write(divToPrint.outerHTML);
+        newWin.document.write(divToPrintHeader.outerHTML);
         newWin.document.write(htmlToPrint);
         newWin.print();
         newWin.close();

@@ -81,7 +81,7 @@ class Item extends CI_Controller {
         if(!in_array(3,$privilege)){
             redirect('auth', 'refresh');
         }
-        $data['title'] = 'Live AB Stock';
+        $data['title'] = ' ';
         $this->crud->init('items',[
             'name' => 'Item Name',
         ]);
@@ -240,7 +240,6 @@ class Item extends CI_Controller {
     }
     public function out(){
         $user = $this->ion_auth->user()->row()->id;
-        
         if($this->uri->segment(3) == 'insert'){
             $id = $this->item_model->getUnsavedItem($user);
             if(isset($id->id)){
@@ -260,20 +259,15 @@ class Item extends CI_Controller {
         }elseif($this->uri->segment(3) == 'ajax'){
             $this->crud->ci->db->where('journals.type','1'); // Journal Type: OUT
             //$this->crud->ci->db->where('item_type','1'); // Item Type: Medicine
+        
         }elseif($this->uri->segment(3) == 'update'){
 
         }
-        
         $this->crud->init('journals',[
+            //'id' => 'Invoice',
             'customer_id' => 'Business Name ( Customer) ',
-            
             'date' => 'Posting Date',
-            //'phone' => 'Phone',
-            // 'customer' => 'Customer Name',
-            //'description' => 'Description',
-            //'price_type' => 'Price Type',
         ]);
-        //$this->crud->set_option('price_type',['0'=>'CP Price','1'=>'TP Price']);
         //$this->crud->join('customer','people','id','name','type=0'); // Customer
         $this->crud->join('customer_id','people','id','businessName'); // Customer
         $this->crud->order(['1','0','3','2']);
@@ -285,6 +279,9 @@ class Item extends CI_Controller {
         $this->crud->set_rule('date','required');
         $this->crud->set_hidden('type','1'); // Journal Type: OUT
         $this->crud->set_hidden('status','1');
+        $this->crud->after_update($this, 'updateStockDate');
+        $this->crud->before_delete($this, 'deleteStockData');
+        
         //$this->crud->set_hidden('item_type','1'); // Item Type: Medicine
         //$this->crud->change_type('description','textarea');
         $this->crud->change_type('date','date');
@@ -293,7 +290,7 @@ class Item extends CI_Controller {
         $data = [
             'title' => 'Sales Register',
         ];
-        $data['deliveryType'] = $this->item_model->getDeliveryType();    
+        //$data['deliveryType'] = $this->item_model->getDeliveryType();    
         //$data['people'] = $this->item_model->getPeople();
         $data['content']=$this->crud->run();
         $this->load->view('template',$data);
@@ -383,6 +380,16 @@ class Item extends CI_Controller {
     
     // }
     public function beforeSave($post) {
+        // if($post['stockType'] == " "){
+        //     die( json_encode(['error'=>'Insert the Stock Type']));
+        // }
+        if($post['quantity'] == 0 || empty($post['quantity'])){
+            die( json_encode(['error'=>'Insert the Quantity']));
+        }
+        if($post['unit_price'] == 0 || empty($post['unit_price'])){
+            die( json_encode(['error'=>'Insert the Unit Price']));
+        }
+       
         unset($post['total']); return $post;
         //unset($post['stockType']); return $post;
     }
@@ -461,10 +468,6 @@ class Item extends CI_Controller {
        $query = $this->item_model->getRemainingBySupplier($id);
        return $query->customer;
     
-    }
-    function insertSupplierId($sup_id , $journalid) {
-        $this->item_model->insertSupplier($sup_id , $journalid);
-
     }
     public function stockUpdate($post) {
         $this->item_model->updateStock($post['item_name'] , $post['quantity'] ,  -3 , 3);
@@ -556,26 +559,6 @@ class Item extends CI_Controller {
             
         }
     }
-    // public function localpurchase() {
-    //     $data['title'] = 'Local Purchase';
-    //     $this->crud->init('stock',[
-    //         'warehouse' => 'Customer / Supplier',
-    //         'item_name' => 'Item Name',
-    //         'quantity' => 'Quantity',
-    //         'unit_price' => 'Unit Price',
-    //         'date' => 'Date',
-    //     ]);
-    //     $this->crud->join('item_name','items','id','name','type=1');
-    //     $this->crud->change_type('date','date');
-    //     $this->crud->join('warehouse','people','id','businessName');
-    //     $this->crud->set_rule('item_name','required');
-    //     $this->crud->set_hidden('type','6'); // 6 for local purchase
-    //     $this->crud->after_save($this, 'localStockUpdate');
-    //     $this->crud->order(['4','3','0','1','2','5']);
-    //     $this->crud->custom_form('items/localpurchase_form');
-    //     $data['content']=$this->crud->run();
-    //     $this->load->view('template',$data);
-    // }
     function localStockUpdate($item_name , $quantity ) {
         
         $this->item_model->updateStock($item_name , $quantity , -3 , 7);
@@ -619,6 +602,18 @@ class Item extends CI_Controller {
         $id = $this->session->userdata('journal_id');
         $this->item_model->updateStockDate($post['date'] , $id );
         return $post;
+    }
+    function getGrandTotal($deliveryType,$journalId){
+        $query = $this->item_model->getDeliveryCost($deliveryType,$journalId);
+        $grand = $this->item_model->getGrandTotal($journalId);
+        $data['grandtotal'] = $grand + $query->deliveryCost;
+        echo json_encode($data);
+    }
+    function deleteStockData($post){
+        print_r($id);
+        die();
+        $this->item_model->deleteInvoice($post['id']);
+        die( json_encode(['error'=>'Invoice Deleted']));
     }
 
 }

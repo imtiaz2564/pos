@@ -135,7 +135,7 @@ function clearFields(){
     $('input[name=unit_price]').val(0);
     $('input[name=total]').val(' ');
     $('input[name=item_name]').val(' ');
-    $('input[name=uom]').val(' ');
+    //$('input[name=uom]').val(' ');
     $('input[name=discount]').val(' ');
 }    
 </script>

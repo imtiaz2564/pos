@@ -108,6 +108,10 @@ class Finance extends CI_Controller {
     }
     function banking() {
         $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(20,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $data['title'] = 'Banking';
         $this->crud->init('finance',[
             'bankAccount' => 'Bank Account',

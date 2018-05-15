@@ -14,7 +14,7 @@
                     
                         <label>Business Name ( Customer ) :</label>
                         <select name = "customerId" class="form-control autocomplete">
-                        <option  value = "0" >ALL</option>
+                        <!-- <option  value = "0" >ALL</option> -->
                         <? foreach($people as $people) {?>
                         <option  value = <?=$people['id']?>><?=$people['businessName']?></option>
                         <? } ?>
@@ -33,7 +33,7 @@
                     
                     <label>Compnay Name ( Supplier ):</label>
                     <select name = "supplierId" class="form-control autocomplete">
-                    <option  value = "0" >ALL</option>
+                    <!-- <option  value = "0" >ALL</option> -->
                     <? foreach($people as $people) {?>
                     <option  value = <?=$people['id']?>><?=$people['businessName']?></option>
                     <? } ?>

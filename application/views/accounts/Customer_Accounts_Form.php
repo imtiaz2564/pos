@@ -133,7 +133,6 @@ $('#customerAccounts').submit(function() {
         if( typeof data['error'] !== 'undefined' ){
             $('.error').html(data['error']).slideDown();
         }else{
-            // alert('Saved');
             window.location = '<?=site_url('finance/receives/insert');?>';
         }
     }

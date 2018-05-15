@@ -32,9 +32,9 @@ class Master extends CI_Controller {
         $this->crud->set_default('code',$default);
         
         $this->crud->init('people',[
-            'code' => 'Company ID/Supplier ID',
-            'name' => 'Suplier Name/Contact Person',
+            'code' => 'Supplier ID',
             'businessName' => 'Business Name( Supplier )',
+            'name' => 'Contact Person',
             'businessAddress' => 'Business Address',
             'openingBalance' => 'Opening Balance',
             'district' => 'District',
@@ -62,9 +62,9 @@ class Master extends CI_Controller {
         $default = $this->item_model->getCustomerId();
         $this->crud->set_default('code',$default); 
         $this->crud->init('people',[
-            'code' => 'Customer Code',
-            'name' => 'Customer Name / Contact Person',
+            'code' => 'Customer ID',
             'businessName' => 'Business Name( Customer )',
+            'name' => 'Contact Person',
             'address' => 'Home Address',
             'businessAddress' => 'Business Address',
             'area' => 'Area',
@@ -93,11 +93,17 @@ class Master extends CI_Controller {
     }
     public function bank(){
         $data['title'] = "Bank Account List";
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(19,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $this->crud->init('banks',[
             'name'=>'Bank Account Name'
         ]);
         $this->crud->use_modal();
         $this->crud->set_rule('name','required');
+        $this->crud->set_hidden('user',$user);
         $data['content'] = $this->crud->run();
         $this->load->view('template',$data);
     }

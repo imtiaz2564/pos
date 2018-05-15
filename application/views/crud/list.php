@@ -47,6 +47,7 @@
 </table>
 <script>
 $.ajaxSetup({ cache: false });
+
 $(document).ready(function() {
     <?php // destroy modal?>
     
@@ -69,7 +70,11 @@ $(document).ready(function() {
                 var data = datatable.fnGetData( this );
                 if(data!==null)
                 $('#crud-edit').prop('href','<?=get_edit_url('')?>/'+data[0]);
-                $('#crud-delete').prop('href','<?=get_delete_url('')?>/'+data[0]);
+                $('#crud-delete').on('click',function() {
+                if (confirm("Are you sure you want to delete this?") == true) {
+                    $('#crud-delete').prop('href','<?=get_delete_url('')?>/'+data[0]);
+                }
+                });
                 $('#crud-view').prop('href','<?=get_view_url('')?>/'+data[0]);
             });
         },

@@ -1,6 +1,6 @@
 <div class="modal-body" style="max-height:450px; overflow-y:scroll;">
-    <h1>Daily AB Stock</h1>
-    <h3>Date: <?=Date('Y-m-d')?></h3>
+    <h1 id = "printHeader">Daily AB Stock</h1>
+    <h3 id = "printDate">Date: <?=Date('Y-m-d')?></h3>
     <div id = "printTable">
     <table class="table table-report">
         <thead>
@@ -34,6 +34,8 @@
 <script>
     function printDiv() {
         var divToPrint=document.getElementById("printTable");
+        var divToPrintHeader=document.getElementById("printHeader");
+        var divToPrintDate=document.getElementById("printDate");
         var htmlToPrint = '' +
         '<style type="text/css">' +
             'table th, table td {' +
@@ -46,6 +48,8 @@
         '</style>';
         htmlToPrint += divToPrint.outerHTML;
         newWin= window.open("");
+        newWin.document.write(divToPrintHeader.outerHTML);
+        newWin.document.write(divToPrintDate.outerHTML);
         newWin.document.write(htmlToPrint);
         newWin.print();
         newWin.close();

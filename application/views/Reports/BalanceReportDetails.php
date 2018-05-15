@@ -1,5 +1,5 @@
 <div class="modal-body" style="max-height:400px; overflow-y:scroll;">
-    <h1>Debitors/Creditors List</h1>
+    <h1 id="header">Debitors/Creditors List</h1>
     <table id = "printTable" class="table table-report">
         <thead>
             <tr>
@@ -40,6 +40,7 @@
         $('#submitButton').hide();
         function printDiv() {
             var divToPrint=document.getElementById("printTable");
+            var divToPrintHead=document.getElementById("header");
             var htmlToPrint = '' +
             '<style type="text/css">' +
                 'table th, table td {' +
@@ -52,6 +53,7 @@
             '</style>';
             htmlToPrint += divToPrint.outerHTML;
             newWin= window.open("");
+            newWin.document.write(divToPrintHead.outerHTML);
             newWin.document.write(htmlToPrint);
             newWin.print();
             newWin.close();

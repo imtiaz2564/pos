@@ -20,59 +20,46 @@ $oldpaid = 0; foreach($oldbalance as $prebalance) {
     } 
 ?>
 <div class="modal-body" style="max-height:450px; overflow-y:scroll;">
-    <div class="page-header">
+    <div id = "printTitle" class="page-header">
         <div class='page-heading text-center'>
             <h1>Amin Brothers</h1>
             <h3>Mohajonpotti road,khalighat Sylhet</h3>
-            <u><h3>Statement of account</h3></u>
+            <u><h3>Party statement of account</h3></u>
         </div>
     </div>
-    <div id = "printTable">
-    <table>
+    <table id = "printInfo" cellspacing="5">
         <thead>
-            <? foreach($oldbalance as $details) { if( $details['type'] == "openingBalance" ) {?>
+            <?  $openingBalance = 0;foreach($oldbalance as $details) { if( $details['type'] == "openingBalance" ) { $openingBalance = $details['openingBalance'];?>
             <tr>
-                <th>Customer Code: </th>
+                <th>Party ID: </th>
                 <td><?=$details['code']?></td>
-            </tr>
-            <tr>
-                <th>Customer Name: </th>
+                <th>Party Name: </th>
                 <td><?=$details['name']?></td>
+           
             </tr>
             <tr>
                 <th>Business Name: </th>
                 <td><?=$details['businessName']?></td>
-            </tr>
-            <tr>
-                <th>Home Address: </th>
-                <td><?=$details['address']?></td>
-            </tr>
-            <tr>
                 <th>Business Address: </th>
                 <td><?=$details['businessAddress']?></td>
             </tr>
             <tr>
                 <th>Area: </th>
                 <td><?=$details['area']?></td>
-            </tr>
-            <tr>
                 <th>Thana: </th>
                 <? $thana = [''=>'','0'=>'Kanaighat','1'=>'Companiganj','2'=>'Gowainghat','3'=>'Golabganj','4'=>'Zakiganj','5'=>'Jaintiapur','6'=>'Dakshin Surma','7'=>'Fenchuganj','8'=>'Balaganj','9'=>'Beanibazar','10'=>'Bishwanath','11'=>'Sylhet Sadar']; ?>
                 <td><?=$thana[$details['thana']]?></td>
+           
             </tr>
             <tr>
                 <th>District: </th>
                 <td><?=$details['district']?></td>
-            </tr>
-            <tr>
                 <th>Phone: </th>
                 <td><?=$details['phone']?></td>
             </tr>
             <tr>
                 <th>Email: </th>
                 <td><?=$details['email']?></td>
-            </tr>
-            <tr>
                 <th>Period: </th>
                 <td><?=$this->uri->segment(4)." "."to"." ".$this->uri->segment(4)?></td>
             </tr>
@@ -84,8 +71,7 @@ $oldpaid = 0; foreach($oldbalance as $prebalance) {
         <? } }?>
         </thead>
     </table>
-<h1>Party Statement</h1>
-<table class="table table-report">
+<table id = "printTable" class="table table-report">
     <thead>
         <tr>
             <th>Date</th>
@@ -102,6 +88,7 @@ $oldpaid = 0; foreach($oldbalance as $prebalance) {
             <td></td>
             <td></td>
             <!-- <td></td> -->
+            <? $oldpaid += $openingBalance; ?>
             <td><?=$oldpaid?></td>
         </tr>
     <? $paid = $oldpaid; foreach( $result as $result) { ?>
@@ -158,7 +145,7 @@ $oldpaid = 0; foreach($oldbalance as $prebalance) {
         <td><?=$paid?></td>
     </tr>
     </table>    
-</div>
+<!-- </div> -->
 <div class="row">
     <div class="col-xs-12 text-right">
     <button class="btn btn-primary" onclick="printDiv()">Print</button>
@@ -169,18 +156,23 @@ $oldpaid = 0; foreach($oldbalance as $prebalance) {
 $('#buttonGroup').hide();
     function printDiv() {
         var divToPrint=document.getElementById("printTable");
+        var divToPrintInfo=document.getElementById("printInfo");
+        var divToPrintTitle=document.getElementById("printTitle");
+        newWin = window.open("");
+        newWin.document.write(divToPrintTitle.outerHTML);
+        newWin.document.write(divToPrintInfo.outerHTML);
+       
         var htmlToPrint = '' +
         '<style type="text/css">' +
-            'table th, table td {' +
+            'table#printTable th, table#printTable td {' +
             'border: 1px solid black;' +
         '}' +
-        'table {' +
+        'table#printTable {' +
             'border-collapse: collapse;' +
             'width: 100%;' +
         '}'+
         '</style>';
         htmlToPrint += divToPrint.outerHTML;
-        newWin= window.open("");
         newWin.document.write(htmlToPrint);
         newWin.print();
         newWin.close();

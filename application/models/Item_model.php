@@ -273,10 +273,10 @@ class Item_Model extends CI_Model{
         $query =  $this->db->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('journal_id',$journalId)->get('stock');
         return $query->result_array();
     }
-    function getDeliveryType(){
-        $query =  $this->db->get('uom');
-        return $query->result();
-    }
+    // function getDeliveryType(){
+    //     $query =  $this->db->get('uom');
+    //     return $query->result();
+    // }
     function getDeliveryCost($deliveryType,$journalId){
         //$deliveryType = $deliveryType =='truck':'thela';
         //echo $deliveryType;
@@ -301,11 +301,6 @@ class Item_Model extends CI_Model{
         }
         return $total;
     }
-    // function insertSupplier($sup_id , $journalid){
-    //     $this->db->set('warehouse', $sup_id); //value that used to update column  
-    //     $this->db->where('journal_id', $journalid); //which row want to upgrade  
-    //     $this->db->update('stock');
-    // } 
     function updateStock( $item_name , $quantity, $warehouse , $type ){
         $date = date('Y-m-d');
         // $query = $this->db->select('sum(quantity) as totalquantity')->where('warehouse',$warehouse)->where('item_name',$item_name)->get('stock')->row();
@@ -555,7 +550,7 @@ class Item_Model extends CI_Model{
             $data[0]['name'] = $salesData['cusName'];
             $data[0]['businessName'] = $salesData['businessName'];
             $data[0]['code'] = $salesData['cusID'];
-            // $data[0]['journalID'] = $salesData['journalID'];
+            $data[0]['journalID'] = $salesData['journalId'];
 
             $total[] = $data;
             
@@ -712,5 +707,19 @@ class Item_Model extends CI_Model{
          
         }
         return $preresult;
+    }
+    function getGrandTotal($journalId){
+        $stockData = $this->db->where('journal_id',$journalId)->get('stock')->result_array();
+        $price =0;
+        foreach($stockData as $stockData){
+            $price += $stockData['quantity']*$stockData['unit_price']-$stockData['discount'];
+        }
+        return $price; 
+
+    }
+    function deleteInvoice($invoice){
+        $this->db->where('id', $invoice);
+        $this->db->delete('mytable');
+        return true; 
     }
 }

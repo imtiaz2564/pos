@@ -17,7 +17,8 @@ class Home extends CI_Controller {
         //$this->output->enable_profiler(TRUE);
     }
 	public function index(){
-        $data['title'] = 'WELCOME TO AMIN BROTHERS ';
+        $identity = $this->session->userdata('identity');
+        $data['title'] = 'Hello'." ".$identity."."."Welcome to Amin Brothers.";
         $data['content'] = ' ';
         $this->load->view('template',$data);
     }

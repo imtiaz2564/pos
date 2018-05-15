@@ -1,5 +1,5 @@
 <div class="modal-body" style="max-height:450px; overflow-y:scroll;">
-    <h1>Live Supplier Stock</h1>
+    <h1 id="printHeader">Live Supplier Stock</h1>
     <table id="printTable" class = "table table-report">
         <thead>
         <tr>
@@ -8,7 +8,8 @@
             <td><b>Available Quantity</b></td>
         </tr>
         </thead>    
-        <?php foreach($supplierInfo as $info) { ?>
+        <?php foreach($supplierInfo as $info) {
+            if($info['avail'] > 0 )?>
     
         <tr>
             <td><?=$info['businessName']?></td>
@@ -27,6 +28,7 @@
 <script>
     function printDiv() {
         var divToPrint=document.getElementById("printTable");
+        var divToPrintHeader=document.getElementById("printHeader");
         var htmlToPrint = '' +
         '<style type="text/css">' +
             'table th, table td {' +
@@ -39,6 +41,7 @@
         '</style>';
         htmlToPrint += divToPrint.outerHTML;
         newWin= window.open("");
+        newWin.document.write(divToPrintHeader.outerHTML);
         newWin.document.write(htmlToPrint);
         newWin.print();
         newWin.close();

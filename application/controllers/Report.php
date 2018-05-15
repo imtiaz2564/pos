@@ -132,6 +132,11 @@ class Report extends CI_Controller {
         $this->load->view('template',$data);
     }
     function bankStatement(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(21,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $this->load->model('item_model');
         $data['banklist'] = $this->item_model->getBankList();
         $data['title'] = ' ';
@@ -148,6 +153,11 @@ class Report extends CI_Controller {
         $this->load->view('Reports/BankStatementReport.php',$data);
     }
     function balanceReport(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(22,$privilege)){
+            redirect('auth', 'refresh');
+        }
         $this->load->model('item_model');
         $data['title'] = ' ';
         $data['content'] = $this->load->view('Reports/BalanceReportTemplate.php',$data,true);

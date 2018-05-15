@@ -1,11 +1,12 @@
 <div class="modal-body" style="max-height:400px; overflow-y:scroll;">
-    <h1>Daily Sales Report By Customer</h1>        
+    <h1 id="printHeader">Daily Sales Report By Customer</h1>        
     <table id="printTable" class="table table-report">
         <thead>
             <tr>
                <td>No</td>
                <td>Date</td> 
                <!-- <td>Customer ID</td> -->
+               <td>Invoice</td>
                <td>Business Name</td>
                <td>Sales Labour Charge</td>
                <td>Amount</td>
@@ -23,6 +24,7 @@
             <td><?=$i++?></td>
             <td><?=$salesData["journalDate"]?></td>
             <!-- <td><?//=$salesData["customerID"]?></td> -->
+            <td><?=$salesData["journalID"]?></td>
             <td><?=$salesData["businessName"]?></td>
             <td><?=$salesData["labourCost"]?></td>
             <td><?=$salesData["totalSales"]?></td>
@@ -33,6 +35,7 @@
         <? //} ?>
         <tr>
             <td><b>Total</b></td>
+            <td></td>
             <td></td>
             <td></td>
             <td><?=$totalLabourCost?></td>
@@ -48,6 +51,7 @@
 <script>
     function printDiv() {
         var divToPrint=document.getElementById("printTable");
+        var divToPrintHeader=document.getElementById("printHeader");
         var htmlToPrint = '' +
         '<style type="text/css">' +
             'table th, table td {' +
@@ -60,6 +64,7 @@
         '</style>';
         htmlToPrint += divToPrint.outerHTML;
         newWin= window.open("");
+        newWin.document.write(divToPrintHeader.outerHTML);
         newWin.document.write(htmlToPrint);
         newWin.print();
         newWin.close();
