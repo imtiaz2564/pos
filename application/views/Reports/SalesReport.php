@@ -7,7 +7,7 @@
                <td>Date</td> 
                <!-- <td>Customer ID</td> -->
                <td>Invoice</td>
-               <td>Business Name</td>
+               <td>Party(Business Name)</td>
                <td>Sales Labour Charge</td>
                <td>Amount</td>
             </tr>

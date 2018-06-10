@@ -45,11 +45,11 @@
             <label style="color:#0000FF" id="supID"></label>
         </div>
         <div>
-            <label>Business Name: </label>
+            <label>Party( Business Name ): </label>
             <label style="color:#0000FF" id="businessName"></label>
         </div>
         <div>
-            <label>Supplier Name( Supplier ): </label>
+            <label>Supplier Name: </label>
             <label style="color:#0000FF" id="cusName"></label>
         </div>
         <div>
@@ -81,44 +81,51 @@
     </div>
 <script>
     $.ajaxSetup({ cache: false });
+        var businessId = 0;
         // $('input[name=peopleID],input[name=phone],input[name=name]').keypress(function(e) {
         // if(e.which == 13) {
-        $('select[name=peopleID]').change(function() {    
-        $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: '<?=site_url('item/getSupplierData/')?>'+'/'+$(this).val()+'/', 
-        success: function (data) {
-            id = data["id"];
-            phone = data["phone"];
-            name = data["name"];
-            supplier_id = data["code"];
-            businessName = data["businessName"];
-            
-            businessAddress = data["businessAddress"];
-            area = data["area"];
-            district = data["district"];
-            totalBalance = data["totalBalance"];
-             
-             
-            $('input[name=peopleID]').val(supplier_id);
-            $('input[name=phone]').val(phone);
-            $('input[name=name]').val(name);
+        $('select[name=peopleID]').change(function() { 
+            businessId = $('select[name=peopleID]').val();
+                
+            $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '<?=site_url('item/getSupplierData/')?>'+'/'+$(this).val()+'/', 
+            success: function (data) {
+                id = data["id"];
+                phone = data["phone"];
+                name = data["name"];
+                supplier_id = data["code"];
+                businessName = data["businessName"];
+                
+                businessAddress = data["businessAddress"];
+                area = data["area"];
+                district = data["district"];
+                totalBalance = data["totalBalance"];
+                
+                
+                $('input[name=peopleID]').val(supplier_id);
+                $('input[name=phone]').val(phone);
+                $('input[name=name]').val(name);
 
-            $('#pplID').val(id);
-            $('#supID').html(supplier_id);
-            $('#cusName').html(name);
-            $('#businessName').html(businessName);
-            
-            $('#businessAddress').html(businessAddress);
-            $('#area').html(area);
-            $('#district').html(district);
-            $('#currentBalance').html(totalBalance);
-        }
-    });
+                $('#pplID').val(id);
+                $('#supID').html(supplier_id);
+                $('#cusName').html(name);
+                $('#businessName').html(businessName);
+                
+                $('#businessAddress').html(businessAddress);
+                $('#area').html(area);
+                $('#district').html(district);
+                $('#currentBalance').html(totalBalance);
+            }
+        });
     //}
 });
  $('#supplierAccounts').submit(function() {
+    if(businessId == 0){
+        alert('Select Business Name');
+        return false;
+    } 
     // name = $('input[name=name]').val();
     // phone = $('input[name=phone]').val();
     date = $('input[name=date]').val();
@@ -133,7 +140,16 @@
         alert('Select Bank Account');
         return false;
     }
+   
     detail = $('input[name=description]').val();
+    if( amount == "" ){
+        alert('Insert Amount');
+        return false;
+    }
+    if( detail == "" ){
+        alert('Insert Description');
+        return false;
+    }
     ppl_ID = parseInt($('#pplID').val());
     type =  $('input[name=type]').val();
     user =  $('input[name=user]').val();

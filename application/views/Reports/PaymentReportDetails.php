@@ -13,13 +13,13 @@
         $oldHandCashCheque =  $oldTotalCashIn - $oldTotalCashOut - $oldCashBack; 
 ?>
 <div class="modal-body" style="max-height:400px; overflow-y:scroll;">
-    <h1 id = "printHeader">Payment Report</h1>        
+    <h1 id = "printHeader">Balance Report</h1>        
     <table id = "printTable" class="table">
         <thead>
             <tr>
                <th>No</th>
                <th>Date</th> 
-               <th>Business Name</th>
+               <th>Party(Business Name)</th>
                <th>Description</th>
                <th>Type</th>
                <th>Money IN</th>

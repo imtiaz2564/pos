@@ -120,7 +120,7 @@ class Auth extends CI_Controller {
 		elseif (!$this->ion_auth->is_admin()){
 		$user="mdmasumint";
 		$pass="ab333182";
-		$mobile='8801717468307';
+		$mobile='8801681961169'; //8801717468307
 		$sms_content = rand(1000, 9999);
 		$msg=urlencode($sms_content);
 
@@ -133,22 +133,18 @@ class Auth extends CI_Controller {
 
 			return $data;
 		}
-
 		$feed = "http://developer.muthofun.com/sms.php?username=$user&password=$pass&mobiles=$mobile&sms=$msg&uniccode=0";
-
 		$tweets = curl($feed);
 
 		$this->session->set_userdata('otp',$msg);
- 
-		$data['title'] = ' ';
-		$data['content'] = $this->load->view('auth/otp',$data,true);
-		$this->load->view('template',$data);
-	}
-	else{
-		redirect('/', 'refresh');
-	}
-	
-		
+		$this->load->view('auth/otp');
+		// $data['title'] = ' ';
+		// $data['content'] = $this->load->view('auth/otp',$data,true);
+		// $this->load->view('template',$data);
+		}
+		else{
+			redirect('/', 'refresh');
+		}
 	}
 	function verifyotp(){
 		$rno=$this->session->userdata('otp');

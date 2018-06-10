@@ -33,7 +33,7 @@ class Master extends CI_Controller {
         
         $this->crud->init('people',[
             'code' => 'Supplier ID',
-            'businessName' => 'Business Name( Supplier )',
+            'businessName' => 'Party( Business Name )',
             'name' => 'Contact Person',
             'businessAddress' => 'Business Address',
             'openingBalance' => 'Opening Balance',
@@ -46,6 +46,7 @@ class Master extends CI_Controller {
         $this->crud->set_hidden('user',$user); 
         $this->crud->ci->db->where('type','1'); // Supplier
         $this->crud->before_save($this , 'checkSupplier');
+        $this->crud->set_search('businessName');
 
         $this->crud->set_rule('name','required');
         $this->crud->use_modal();
@@ -63,7 +64,7 @@ class Master extends CI_Controller {
         $this->crud->set_default('code',$default); 
         $this->crud->init('people',[
             'code' => 'Customer ID',
-            'businessName' => 'Business Name( Customer )',
+            'businessName' => 'Party( Business Name )',
             'name' => 'Contact Person',
             'address' => 'Home Address',
             'businessAddress' => 'Business Address',
@@ -84,7 +85,7 @@ class Master extends CI_Controller {
         $this->crud->ci->db->where('type','0'); // Customer
         $this->crud->set_rule('name','required');
         $this->crud->before_save($this , 'beforeSave');
-        $this->crud->set_search('name');
+        $this->crud->set_search('businessName');
         //$this->crud->extra_fields($this, ['getDue'=>'Current Due']);
         
         $this->crud->use_modal();

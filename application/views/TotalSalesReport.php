@@ -4,7 +4,7 @@
     <thead>
         <tr>
             <td><b>Date</b></td>
-            <td><b>Customer Name</b></td>
+            <td><b>Party( Business Name )</b></td>
             <td><b>Customer ID</b></td>
             <td><b>Invoice No</b></td>
             <td><b>Amonuts</b></td>

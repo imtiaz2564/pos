@@ -35,7 +35,7 @@
         <label style="color:#0000FF" id="cusID"></label>
     </div>
     <div>
-        <label>Business Name( Customer ): </label>
+        <label>Party( Business Name ): </label>
         <label style="color:#0000FF" id="businessName"></label>
     </div>
     <div>
@@ -71,40 +71,46 @@
     </div>
     <script>
         $.ajaxSetup({ cache: false });
+        var businessId = 0;
         // $('input[name=peopleID],input[name=phone],input[name=name]').keypress(function(e) {
         // if(e.which == 13) {
         $('select[name=peopleID]').change(function() {    
-        $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: '<?=site_url('item/getCustomerData/')?>'+'/'+$(this).val()+'/', 
-        success: function (data) {
-            id = data["id"];
-            phone = data["phone"];
-            name = data["name"];
-            customer_id = data["code"];
-            businessName = data["businessName"];
-            businessAddress = data["businessAddress"];
-            area = data["area"];
-            district = data["district"];
-            totalBalance = data["totalBalance"];
+            businessId = $('select[name=peopleID]').val();
+            $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '<?=site_url('item/getCustomerData/')?>'+'/'+$(this).val()+'/', 
+            success: function (data) {
+                id = data["id"];
+                phone = data["phone"];
+                name = data["name"];
+                customer_id = data["code"];
+                businessName = data["businessName"];
+                businessAddress = data["businessAddress"];
+                area = data["area"];
+                district = data["district"];
+                totalBalance = data["totalBalance"];
 
-            $('input[name=peopleID]').val(customer_id);
-            $('input[name=phone]').val(phone);
-            $('input[name=name]').val(name);
-            $('#pplID').val(id);
-            $('#cusID').html(customer_id);
-            $('#cusName').html(name);
-            $('#businessName').html(businessName);
-            $('#businessAddress').html(businessAddress);
-            $('#area').html(area);
-            $('#district').html(district);
-            $('#totalBalance').html(totalBalance);
-            }
-        });
+                $('input[name=peopleID]').val(customer_id);
+                $('input[name=phone]').val(phone);
+                $('input[name=name]').val(name);
+                $('#pplID').val(id);
+                $('#cusID').html(customer_id);
+                $('#cusName').html(name);
+                $('#businessName').html(businessName);
+                $('#businessAddress').html(businessAddress);
+                $('#area').html(area);
+                $('#district').html(district);
+                $('#totalBalance').html(totalBalance);
+                }
+            });
     //}
-});
+    });
 $('#customerAccounts').submit(function() {
+    if(businessId == 0){
+        alert('Select Business Name');
+        return false;
+    }
     name = $('input[name=name]').val();
     phone = $('input[name=phone]').val();
     date = $('input[name=date]').val();
@@ -122,6 +128,14 @@ $('#customerAccounts').submit(function() {
         return false;
     }
     description = $('input[name=description]').val(); 
+    if( amount == "" ){
+        alert('Insert Amount');
+        return false;
+    }
+    if( description == "" ){
+        alert('Insert Description');
+        return false;
+    }
     ppl_ID = parseInt($('#pplID').val());
     $.ajax({
        type: "POST",

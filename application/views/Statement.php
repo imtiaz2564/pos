@@ -12,7 +12,7 @@
                 <div class="col-md-4 form-group">
                 <? $uri = $this->uri->segment(3); if( $this->uri->segment(3) == 'history'  ) { ?>
                     
-                        <label>Business Name ( Customer ) :</label>
+                        <label>Party ( Business Name ) :</label>
                         <select name = "customerId" class="form-control autocomplete">
                         <!-- <option  value = "0" >ALL</option> -->
                         <? foreach($people as $people) {?>
@@ -22,7 +22,7 @@
      
                 <? }  if(  $this->uri->segment(3) == 'statement' ) { ?>
                     
-                    <label>Business Name ( Customer ) :</label>
+                    <label>Party ( Business Name ) :</label>
                     <select name = "customerId" class="form-control autocomplete">
                     <? foreach($people as $people) {?>
                     <option  value = <?=$people['id']?>><?=$people['businessName']?></option>
@@ -31,7 +31,7 @@
  
             <? }  if( $this->uri->segment(3) == 'supplierhistory') { ?>
                     
-                    <label>Compnay Name ( Supplier ):</label>
+                    <label>Party ( Business Name ):</label>
                     <select name = "supplierId" class="form-control autocomplete">
                     <!-- <option  value = "0" >ALL</option> -->
                     <? foreach($people as $people) {?>
@@ -41,7 +41,7 @@
  
                 <? } if(  $this->uri->segment(3) == 'supplierstatement') { ?>
                     
-                    <label>Compnay Name ( Supplier ):</label>
+                    <label>Party ( Business Name ):</label>
                     <select name = "supplierId" class="form-control autocomplete">
                     <? foreach($people as $people) {?>
                     <option  value = <?=$people['id']?>><?=$people['businessName']?></option>

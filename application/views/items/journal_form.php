@@ -49,7 +49,7 @@
                         <select class="form-group delivery"  name = "deliveryType" >
                             <option class="form-group delivery" value=" ">None</option>
                             <option class="form-group delivery" value="truck">Truck</option>
-                            <option class="form-group delivery" value="thela">Thela</option>
+                            <option class="form-group delivery" value="thela">Van</option>
                         </select>
                     <label class="form-group delivery">Labour Cost: </label>
                     <label class="form-group delivery"><input type="text" name="labourCost" value="" class="form-control" placeholder="Labour Cost" readonly></label>
@@ -79,6 +79,8 @@
     var grandtotal = 0;
     var totalDiscount = 0;
     $(function(){
+        $('input[name=date]').val('<?=date('Y-m-d')?>');
+        $('input[name=id]').attr('readonly', true);
         $('#cusinfo').hide();
         $('#deliveryType').hide();
     });

@@ -37,7 +37,7 @@ class Item extends CI_Controller {
             'mrp' => 'MRP',
             'discount' => 'Discount',
             'truck' => 'Delivery By Truck',
-            'thela' => 'Delivery By Thela',
+            'thela' => 'Delivery By Van',
             'labourCost' => 'Unload Labour Cost',
         ]);
         $this->crud->set_hidden('type','1'); // 1 for item
@@ -91,7 +91,7 @@ class Item extends CI_Controller {
             ['title'=>'Move Stock', 'href'=>'#','icon'=>''],
         ]);
         $this->crud->set_rule('name','required');
-        $this->crud->set_search('name');
+        $this->crud->set_search('items.name');
         $this->crud->use_modal();
         //$this->crud->disable_insert();
         $this->crud->hide_controls();
@@ -122,7 +122,7 @@ class Item extends CI_Controller {
 
         $this->crud->init('stock',[
             'item_name' => 'Item Name',
-            'warehouse' => 'Business Name(Supplier)',
+            'warehouse' => 'Party( Business Name )',
             'quantity' => 'Quantity',
             'transportCost' => 'Transport Cost',
             'labourCost' => 'Labour Cost',
@@ -257,20 +257,24 @@ class Item extends CI_Controller {
             $this->session->set_userdata('type','1'); // Stock Type: OUT     
         
         }elseif($this->uri->segment(3) == 'ajax'){
-            $this->crud->ci->db->where('journals.type','1'); // Journal Type: OUT
+            $privilege = $this->user_model->getPrivilege($user);
+            if(!in_array(23,$privilege)){
+                redirect('auth', 'refresh');
+            }
+           $this->crud->ci->db->where('journals.type','1'); // Journal Type: OUT
             //$this->crud->ci->db->where('item_type','1'); // Item Type: Medicine
         
         }elseif($this->uri->segment(3) == 'update'){
 
         }
         $this->crud->init('journals',[
-            //'id' => 'Invoice',
-            'customer_id' => 'Business Name ( Customer) ',
+            'id' => 'Invoice',
+            'customer_id' => 'Party ( Business Name ) ',
             'date' => 'Posting Date',
         ]);
         //$this->crud->join('customer','people','id','name','type=0'); // Customer
         $this->crud->join('customer_id','people','id','businessName'); // Customer
-        $this->crud->order(['1','0','3','2']);
+        //$this->crud->order(['1','0','3','2']);
 
         $this->crud->custom_form('items/journal_form');
         $this->crud->custom_view('items/journalViewOut');
@@ -279,6 +283,7 @@ class Item extends CI_Controller {
         $this->crud->set_rule('date','required');
         $this->crud->set_hidden('type','1'); // Journal Type: OUT
         $this->crud->set_hidden('status','1');
+        $this->crud->set_search('journals.id');
         $this->crud->after_update($this, 'updateStockDate');
         $this->crud->before_delete($this, 'deleteStockData');
         
@@ -338,7 +343,6 @@ class Item extends CI_Controller {
         $this->crud->where(['journal_id='.$id]);
         $this->crud->extra_fields($this,['getDiscount'=>'Discount','getStockType'=>'Stock Type','getTotal'=>'Total' , 'getTotalLabourCost'=>'Labour Cost']);
         //$this->crud->order(['2','0','1','3','4']); // don't forget, we have a hidden field
-        // $this->crud->order(['4','0','5','1','2','3','6','7']);
         $this->crud->order(['2','3','4','0','1','5']);
         $this->crud->set_hidden('journal_id',$id);
         //$this->crud->set_hidden('warehouse',$supplier);
@@ -517,7 +521,7 @@ class Item extends CI_Controller {
         $data['title'] = 'Item Refund';
 
         $this->crud->init('stock',[
-            'customer_id' => 'Business Name(Customer)',
+            'customer_id' => 'Part( Business Name )',
             'item_name' => 'Item Name',
             'quantity' => 'Quantity',
             'unit_price' => 'Unit Price',
@@ -609,11 +613,9 @@ class Item extends CI_Controller {
         $data['grandtotal'] = $grand + $query->deliveryCost;
         echo json_encode($data);
     }
-    function deleteStockData($post){
-        print_r($id);
-        die();
-        $this->item_model->deleteInvoice($post['id']);
-        die( json_encode(['error'=>'Invoice Deleted']));
+    function deleteStockData($id){
+        $this->item_model->deleteInvoice($id);
+        return true;
     }
 
 }

@@ -5,7 +5,7 @@
             <tr>
                <td>No</td>
                <td>ID(Supplier/Customer)</td> 
-               <td>Business Name(Supplier/Customer)</td>
+               <td>Party(Business Name)</td>
                <td>Outstanding Balance</td>
                <td>Thana</td>
             </tr>

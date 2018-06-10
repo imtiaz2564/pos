@@ -75,9 +75,9 @@ class Item_Model extends CI_Model{
     function getCustomerId(){
         $query =  $this->db->where('type','0')->get('people');
         $maxID = $query->num_rows()+1;
-        while($this->CustomerIdExists(sprintf('CI%05d',$maxID)))
+        while($this->CustomerIdExists(sprintf('RC%05d',$maxID)))
         $maxID++;
-          return sprintf('CI%05d',$maxID);
+          return sprintf('RC%05d',$maxID);
 
     }
     function CustomerIdExists($code, $notID=0) {
@@ -91,9 +91,9 @@ class Item_Model extends CI_Model{
     function getSupplierId(){
         $query =  $this->db->where('type','1')->get('people');
         $maxID = $query->num_rows()+1;
-        while($this->SupplierIdExists(sprintf('SI%05d',$maxID)))
+        while($this->SupplierIdExists(sprintf('RS%05d',$maxID)))
         $maxID++;
-          return sprintf('SI%05d',$maxID);
+          return sprintf('RS%05d',$maxID);
 
     }
     function SupplierIdExists($code, $notID=0) {
@@ -405,13 +405,13 @@ class Item_Model extends CI_Model{
         // $final[] = $openingBalance;
         //return $data;
         
-        $refund = $this->db->select('stock.date as date,items.name as itemName,stock.unit_price as unit_price,stock.quantity as quantity,stock.reason as refundDescription,"refund" as type')->join('items','items.id=item_name','left')->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('stock')->result_array();
+        $refund = $this->db->select('stock.date as date,items.name as itemName,stock.unit_price as unit_price,stock.quantity as quantity,stock.reason as refundDescription,"refund" as type')->join('items','items.id=item_name','left')->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->where('stock.type =',4)->get('stock')->result_array();
         $final[] = $refund;
         
-        $purchaseData = $this->db->select('stock.date as date,items.name as itemName,stock.unit_price as unit_price,stock.quantity as quantity,journals.description as purchaseDescription,"purchase" as type')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('warehouse', $customerID)->where('stock.date >=',$datfrom)->where('stock.date <=',$datto)->get('stock')->result_array();
+        $purchaseData = $this->db->select('stock.date as date,items.name as itemName,stock.unit_price as unit_price,stock.quantity as quantity,journals.description as purchaseDescription,"purchase" as type')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('warehouse', $customerID)->where('stock.date >=',$datfrom)->where('stock.date <=',$datto)->where('stock.type =',0)->get('stock')->result_array();
         $final[]  = $purchaseData; 
         
-        $salesData = $this->db->select('people.name as cusName ,people.businessName as businessName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->get('journals')->result_array();
+        $salesData = $this->db->select('people.name as cusName ,people.businessName as businessName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('customer_id', $customerID)->where('date >=',$datfrom)->where('date <=',$datto)->where('journals.type =',1)->get('journals')->result_array();
         $totalSales = [];
         foreach( $salesData as $salesData ) {
             $sales = $this->db->select('journals.date as date,stock.journal_id as journalID,sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total, "sales" as type')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->result_array();
@@ -689,13 +689,13 @@ class Item_Model extends CI_Model{
         $final[] = $cashBack;
         
        
-        $refund = $this->db->select('stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,stock.reason as refundDescription,"refund" as type')->where('customer_id', $customerID)->where('date < ',$datfrom)->get('stock')->result_array();
+        $refund = $this->db->select('stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,stock.reason as refundDescription,"refund" as type')->where('customer_id', $customerID)->where('date < ',$datfrom)->where('stock.type =',4)->get('stock')->result_array();
         $final[] = $refund;
         
-        $purchaseData = $this->db->select('stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,journals.description as purchaseDescription,"purchase" as type')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('warehouse', $customerID)->where('stock.date < ',$datfrom)->get('stock')->result_array();
+        $purchaseData = $this->db->select('stock.date as date,stock.unit_price as unit_price,stock.quantity as quantity,journals.description as purchaseDescription,"purchase" as type')->join('people','people.id=warehouse','left')->join('items','items.id=item_name','left')->join('journals','journals.id=journal_id','left')->where('warehouse', $customerID)->where('stock.date < ',$datfrom)->where('stock.type =',0)->get('stock')->result_array();
         $final[]  = $purchaseData; 
         
-        $salesData = $this->db->select('people.name as cusName ,people.businessName as businessName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('customer_id', $customerID)->where('date < ',$datfrom)->get('journals')->result_array();
+        $salesData = $this->db->select('people.name as cusName ,people.businessName as businessName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('customer_id', $customerID)->where('date < ',$datfrom)->where('journals.type =',1)->get('journals')->result_array();
         $totalSales = [];
         foreach( $salesData as $salesData ) {
             $sales = $this->db->select('journals.date as date,stock.journal_id as journalID,sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total, "sales" as type')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->result_array();
@@ -718,8 +718,8 @@ class Item_Model extends CI_Model{
 
     }
     function deleteInvoice($invoice){
-        $this->db->where('id', $invoice);
-        $this->db->delete('mytable');
-        return true; 
+        $this->db->where('journal_id', $invoice);
+        return $this->db->delete('stock');
+        // return true; 
     }
 }

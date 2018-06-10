@@ -65,13 +65,19 @@
                     </ul> 
             </li>
             <li>
+                <a href="#"><i class="fa fa-trash fa-fw"></i> Deletion <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a href="<?=site_url('item/out/')?>">Sales Invoice Deletion</a></li>
+                    </ul> 
+            </li>
+            <li>
                 <a href="#"><i class="fa fa-list"></i> Reports <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <!-- <li><a href="<?//=site_url('report/customertransaction')?>">Customer Transaction Report</a></li>
                         <li><a href="#">Supplier Transaction Report</a></li> -->
                         <li><a href="<?=site_url('report/purchasereport')?>">Daily Purchase Report</a></li>
                         <li><a href="<?=site_url('report/salesreport')?>">Daily Sales Report</a></li>
-                        <li><a href="<?=site_url('report/paymentreport')?>">Daily Payment Report</a></li>
+                        <li><a href="<?=site_url('report/paymentreport')?>">Daily Balance Report</a></li>
                         <li><a href="<?=site_url('report/stockreport')?>">Daily AB Stock Report</a></li>
                         <li><a href="<?=site_url('report/importreport')?>">Daily Import Report</a></li>
                     </ul> 

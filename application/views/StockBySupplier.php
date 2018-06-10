@@ -3,7 +3,7 @@
     <table id="printTable" class = "table table-report">
         <thead>
         <tr>
-            <td><b>Supplier</b></td>
+            <td><b>Party( Business Name )</b></td>
             <td><b>Item Name</b></td>
             <td><b>Available Quantity</b></td>
         </tr>

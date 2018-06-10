@@ -5,7 +5,7 @@
             <tr>
                <td>No</td>
                <td>Date</td> 
-               <td>Business Name</td>
+               <td>Party(Business Name)</td>
                <td>Item Name</td>
                <td>Quantity</td>
                <td>Amount</td>

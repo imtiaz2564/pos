@@ -4,7 +4,7 @@
     <thead>
     <tr>
         <td><b>Date</b></td>
-        <td><b>Supplier Name</b></td>
+        <td><b>Party( Business Name)</b></td>
         <td><b>Supplier ID</b></td>
         <td><b>Item Name</b></td>
         <td><b>Quantity</b></td>

@@ -27,7 +27,7 @@ class Finance extends CI_Controller {
         $data['title'] = 'Payments( Khoroch )';
         
         $this->crud->init('finance',[
-            'peopleID' => 'Business Name( Supplier )',
+            'peopleID' => 'Party( Business Name )',
             'name' => 'Customer Name',
             'phone' => 'Phone',
             'date' => 'Date',
@@ -36,14 +36,13 @@ class Finance extends CI_Controller {
             'bankAccount' => 'Bank Account',
             'description' => 'Detail',
         ]);
-        $this->crud->set_option('paymentType',['3'=>'None','0'=>'Cash','1'=>'Bank']);
+        $this->crud->set_option('paymentType',['3'=>'None','0'=>'Cash','1'=>'Cheque & Bank']);
         $this->crud->join('peopleID','people','id','businessName');
         $this->crud->join('bankAccount','banks','id','name');
-        
+        $this->crud->set_rule('name','is_natural_no_zero');
+      
         $this->crud->set_hidden('type','1'); // Payment
         $this->crud->set_hidden('user',$user); 
-       
-       // $this->crud->before_save($this, 'checkPayments');
        
 
         if($this->uri->segment(3) == 'ajax')
@@ -71,31 +70,30 @@ class Finance extends CI_Controller {
         $data['title'] = 'Receives( Joma )';
         
         $this->crud->init('finance',[
-            'peopleID' => 'Business Name( Customer )',
+            'peopleID' => 'Party( Business Name )',
             'name' => 'Customer Name',
             'phone' => 'Phone',
             'date' => 'Date',
             'amount' => 'Amount',
-            'paymentType' => 'Payment Type',
+            'paymentType' => 'Receive Type',
             'bankAccount' => 'Bank Account',
             'description' => 'Detail',
         ]);
-        $this->crud->set_option('paymentType',['3'=>'None','0'=>'Cash','1'=>'Bank','2'=>'Cash Back']);
+        $this->crud->set_option('paymentType',['3'=>'None','0'=>'Cash & Cheque','1'=>'Bank','2'=>'Cash Back']);
         //$this->crud->join('peopleID','people','id','name','type=0'); // Customer
         $this->crud->set_hidden('type','0'); // Receive
         $this->crud->set_hidden('user',$user); 
         $this->crud->join('peopleID','people','id','businessName');
         $this->crud->join('bankAccount','banks','id','name');
         $this->crud->set_default('date',date('Y-m-d'));
-     
-        //$this->crud->before_save($this, 'checkReceives');
        
         if($this->uri->segment(3) == 'ajax')
             $this->crud->ci->db->where('finance.type','0'); // Receive. Apply where clause only when fetch data.
         
         //$this->crud->set_rule('peopleID','required');
-        $this->crud->set_rule('amount','required');
-        $this->crud->set_rule('date','required');
+        // $this->crud->set_rule('amount','required');
+         $this->crud->set_rule('date','required');
+       
         $this->crud->change_type('date','date');
         //$this->crud->change_type('description','textarea');
         $this->crud->order([5,0,1,2,3,4,7,6,8,9]);

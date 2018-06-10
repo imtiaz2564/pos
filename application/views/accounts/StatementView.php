@@ -7,7 +7,7 @@ $oldpaid = 0; foreach($oldbalance as $prebalance) {
             $oldsupplierpayable  = $prebalance["quantity"]*$prebalance["unit_price"];   
             $oldpaid = $oldpaid + $oldsupplierpayable; 
         } if ( $prebalance['type'] == "deposit" && $prebalance['paymentType'] == "1") { 
-            $oldpaid = $oldpaid-$oldprebalance["depositAmount"];  
+            $oldpaid = $oldpaid-$prebalance["depositAmount"];
         } if ( $prebalance['type'] == "deposit" && $prebalance['paymentType'] == "0") { 
             $oldpaid = $oldpaid+$prebalance["depositAmount"];  
         } if ( $prebalance['type'] == "refund" ) { 
@@ -17,7 +17,7 @@ $oldpaid = 0; foreach($oldbalance as $prebalance) {
             $oldcash  = $prebalance["backAmount"]; 
             $oldpaid = $oldpaid - $oldcash; 
         } 
-    } 
+   } 
 ?>
 <div class="modal-body" style="max-height:450px; overflow-y:scroll;">
     <div id = "printTitle" class="page-header">
@@ -38,7 +38,7 @@ $oldpaid = 0; foreach($oldbalance as $prebalance) {
            
             </tr>
             <tr>
-                <th>Business Name: </th>
+                <th>Party(Business Name): </th>
                 <td><?=$details['businessName']?></td>
                 <th>Business Address: </th>
                 <td><?=$details['businessAddress']?></td>

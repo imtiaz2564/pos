@@ -514,14 +514,14 @@ class Crud{
             return $upload_data['file_name'];
         }
     }
-	function delete($id){
-        if($this->ci->crud_model->deleteData($id)){
-            if($this->before_delete != null){
-                $func=$this->before_delete;
-                if(method_exists($this->child,$func)){
-                    $this->data=$this->child->$func($this->data);
-                }
+    function delete($id){
+        if($this->before_delete != null){
+            $func=$this->before_delete;
+            if(method_exists($this->child,$func)){
+                $this->data=$this->child->$func($id);
             }
+        }
+        if($this->ci->crud_model->deleteData($id)){
             if($this->after_delete != null){
                 $func=$this->after_delete;
                 if(method_exists($this->child,$func)){
