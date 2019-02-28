@@ -90,7 +90,8 @@
             $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '<?=site_url('item/getSupplierData/')?>'+'/'+$(this).val()+'/', 
+            //url: '<?//=site_url('item/getSupplierData/')?>'+'/'+$(this).val()+'/', 
+            url: '<?=site_url('item/getCustomerData/')?>'+'/'+$(this).val()+'/', 
             success: function (data) {
                 id = data["id"];
                 phone = data["phone"];

@@ -161,52 +161,64 @@ class Item_Model extends CI_Model{
         return $query->row();
     
     }
+    // function getCustomerBalance($id) {
+    //    // $subTotal = 0;
+    //     $total = 0;
+    //     $type = [0,1];
+    //     //$peopleID = $this->db->where('id',$id)->get('people')->row();
+        
+    //     //$peopleID = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row(); 
+        
+    //     //$query = $this->db->select('sum(amount) as total')->where('type',0)->where('peopleID',$id)->or_where('name',$id)->or_where('phone',$id)->get('finance')->row();
+    //     $query = $this->db->select('sum(amount) as total')->where('peopleID',$id)->where_in('paymentType',$type)->get('finance')->row();
+       
+    //     $cashback = $this->db->select('sum(amount) as cashback')->where('peopleID',$id)->where('paymentType',2)->get('finance')->row();
+    //     //$openingBalance = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row();
+    //     $openingBalance = $this->db->where('id',$id)->get('people')->row();
+    //     //$data = $this->db->where('customer_id', $id)->or_where('customer',$id)->or_where('phone',$id)->get('journals')->result();
+    //    // $data = $this->db->where('customer_id', $peopleID->id)->get('journals')->result();
+    //     $total = ($openingBalance->openingBalance+$query->total)-$cashback->cashback;
+    //     // foreach($data as $data) {
+    //     //     $stock = $this->db->where('journal_id' , $data->id)->get('stock')->result();
+    //     //     foreach($stock as $stock){
+    //     //         $subTotal += $stock->quantity*$stock->unit_price;
+    //     //     }
+            
+    //     // }
+    //     //new
+    //     $purchase = $this->db->select('sum(stock.quantity * stock.unit_price) as purchase ')->where('type', 0)->where('warehouse', $id)->get('stock')->row();
+    //     $refund = $this->db->select('sum(stock.quantity * stock.unit_price) as refund ')->where('type', 4)->where('customer_id', $id)->get('stock')->row(); 
+    //     $salesData = $this->db->select('people.name as cusName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('customer_id', $id)->get('journals')->result_array();
+    //     $totalSales = 0;
+    //     foreach( $salesData as $salesData ) {
+    //     $data = $this->db->select('sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total ')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->row();
+        
+    //         $totalSales += $data->total;
+        
+    //     }
+    //     return ($total+$refund->refund+$purchase->purchase)-$totalSales;
+        
+    //   //  return $total - $subTotal; 
+    // }
     function getCustomerBalance($id) {
-       // $subTotal = 0;
         $total = 0;
         $type = [0,1];
-        //$peopleID = $this->db->where('id',$id)->get('people')->row();
-        
-        //$peopleID = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row(); 
-        
-        //$query = $this->db->select('sum(amount) as total')->where('type',0)->where('peopleID',$id)->or_where('name',$id)->or_where('phone',$id)->get('finance')->row();
-        $query = $this->db->select('sum(amount) as total')->where('peopleID',$id)->where_in('paymentType',$type)->get('finance')->row();
-       
-        $cashback = $this->db->select('sum(amount) as cashback')->where('peopleID',$id)->where('paymentType',2)->get('finance')->row();
-        //$openingBalance = $this->db->where('type',0)->where('code',$id)->or_where('name',$id)->or_where('phone',$id)->get('people')->row();
-        $openingBalance = $this->db->where('id',$id)->get('people')->row();
-      
-        
-        
-        //$data = $this->db->where('customer_id', $id)->or_where('customer',$id)->or_where('phone',$id)->get('journals')->result();
-            
-       // $data = $this->db->where('customer_id', $peopleID->id)->get('journals')->result();
-      
-        $total = ($openingBalance->openingBalance+$query->total)-$cashback->cashback;
-      
+        $query = $this->db->select('sum(amount) as totalreceive')->where('type',0)->where('peopleID',$id)->where_in('paymentType',$type)->get('finance')->row();
+        $payment = $this->db->select('sum(amount) as totalpayment')->where('type',1)->where('peopleID',$id)->where_in('paymentType',$type)->get('finance')->row();
 
-        // foreach($data as $data) {
-        //     $stock = $this->db->where('journal_id' , $data->id)->get('stock')->result();
-        //     foreach($stock as $stock){
-        //         $subTotal += $stock->quantity*$stock->unit_price;
-        //     }
-            
-        // }
-        
+        $cashback = $this->db->select('sum(amount) as cashback')->where('peopleID',$id)->where('paymentType',2)->get('finance')->row();
+        $openingBalance = $this->db->where('id',$id)->get('people')->row();
+        $total = ($openingBalance->openingBalance+$query->totalreceive)-$payment->totalpayment-$cashback->cashback;
         //new
         $purchase = $this->db->select('sum(stock.quantity * stock.unit_price) as purchase ')->where('type', 0)->where('warehouse', $id)->get('stock')->row();
         $refund = $this->db->select('sum(stock.quantity * stock.unit_price) as refund ')->where('type', 4)->where('customer_id', $id)->get('stock')->row(); 
         $salesData = $this->db->select('people.name as cusName ,people.code as cusID, journals.id as journalId , journals.totalDiscount as totalDiscount , journals.description as salesDescription')->join('people','people.id=customer_id','left')->where('customer_id', $id)->get('journals')->result_array();
         $totalSales = 0;
         foreach( $salesData as $salesData ) {
-        $data = $this->db->select('sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total ')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->row();
-        
+            $data = $this->db->select('sum(stock.quantity * stock.unit_price) + journals.labourCost - sum(stock.discount) - '.$salesData['totalDiscount'].' as total ')->join('journals','journals.id=journal_id','left')->where('journal_id', $salesData['journalId'])->get('stock')->row();
             $totalSales += $data->total;
-        
         }
         return ($total+$refund->refund+$purchase->purchase)-$totalSales;
-        
-      //  return $total - $subTotal; 
     }
     function getSupplierBalance($id) {
         // $subTotal = 0;

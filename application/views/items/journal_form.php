@@ -124,20 +124,21 @@
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: '<?=site_url('item/getCustomerData/')?>'+'/'+$(this).val()+'/', 
+                //url: '<?//=site_url('item/getCustomerData/')?>'+'/'+$(this).val()+'/', 
+                url: '<?=site_url('item/getCustomerInfo/')?>'+'/'+$(this).val()+'/', 
                 success: function (data) {
                     customerID = data["id"]; 
-                    phone = data["phone"];
+                    //phone = data["phone"];
                     name = data["name"];
                     customer_code = data["code"];
                     businessName = data["businessName"];
-                    email = data["email"];
-                    address = data["address"];
-                    businessAddress = data["businessAddress"];
+                    // email = data["email"];
+                    // address = data["address"];
+                    //businessAddress = data["businessAddress"];
                     area = data["area"];
-                    district = data["district"];
-                    openingBalance = data["openingBalance"];
-                    currentBalance = data["totalBalance"]; 
+                    //district = data["district"];
+                    //openingBalance = data["openingBalance"];
+                    //currentBalance = data["totalBalance"]; 
                     
                     $('#cusCode').html(customer_code);
                     $('#cusId').val(customerID);

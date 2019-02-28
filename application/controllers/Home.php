@@ -18,7 +18,7 @@ class Home extends CI_Controller {
     }
 	public function index(){
         $identity = $this->session->userdata('identity');
-        $data['title'] = 'Hello'." ".$identity."."."Welcome to Amin Brothers.";
+        $data['title'] = 'Hello'." ".$identity;
         $data['content'] = ' ';
         $this->load->view('template',$data);
     }

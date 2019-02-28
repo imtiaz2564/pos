@@ -397,6 +397,15 @@ class Item extends CI_Controller {
         unset($post['total']); return $post;
         //unset($post['stockType']); return $post;
     }
+    function getCustomerInfo($cusid) {
+        $result = $this->item_model->getCustomerData($cusid);
+        $data['id'] = $result->id;
+        $data['name'] = $result->name;
+        $data['code'] = $result->code;
+        $data['businessName'] = $result->businessName;
+        $data['area'] = $result->area;
+        echo json_encode($data);
+    }
     function getCustomerData($cusid) {
         $data = [];
         $result = $this->item_model->getCustomerData($cusid);

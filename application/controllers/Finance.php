@@ -92,7 +92,7 @@ class Finance extends CI_Controller {
         
         //$this->crud->set_rule('peopleID','required');
         // $this->crud->set_rule('amount','required');
-         $this->crud->set_rule('date','required');
+        $this->crud->set_rule('date','required');
        
         $this->crud->change_type('date','date');
         //$this->crud->change_type('description','textarea');

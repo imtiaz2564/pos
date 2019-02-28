@@ -24,11 +24,12 @@ class Auth extends CI_Controller {
 	//redirect if needed, otherwise display the user list
 	function index()
 	{
-		
 		if (!$this->ion_auth->logged_in())
 		{
 			//redirect them to the login page
 			redirect('auth/login', 'refresh');
+			
+			
 		}
 		elseif (!$this->ion_auth->is_admin()) //remove this elseif if you want to enable this for non-admins
 		{
@@ -58,6 +59,7 @@ class Auth extends CI_Controller {
 	//log the user in
 	function login()
 	{
+		
 		$this->data['title'] = "Login";
 		
         // include login js
