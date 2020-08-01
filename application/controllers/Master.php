@@ -145,4 +145,32 @@ class Master extends CI_Controller {
         }
         return $post;
     }
+    public function stockTest(){
+        $user = $this->ion_auth->user()->row()->id;
+        $privilege = $this->user_model->getPrivilege($user);
+        if(!in_array(12,$privilege)){
+            redirect('auth', 'refresh');
+        }
+        $data['title'] = 'Stock';
+        $this->crud->init('test',[
+            'name' => 'Name',
+            'parent' => 'Parent',
+            'lotno' => 'Lot No',
+            'mgfyr' => 'MGF Year',
+            'expiredate' => 'Expire Date',
+            'quantity' => 'Quantity',
+            'storeno' => 'Store No',
+            'remarks' => 'Remarks',
+        ]);
+        $this->crud->change_type('mgfyr','date');
+        $this->crud->set_default('mgfyr',date('Y-m-d'));
+        $this->crud->change_type('expiredate','date');
+        $this->crud->set_default('expiredate',date('Y-m-d'));
+        $this->crud->change_type('remarks','textarea');
+        $this->crud->set_rule('name','required');
+        $this->crud->use_modal();
+        $this->crud->custom_list('Test/Test_Stock_List');
+        $data['content']=$this->crud->run();
+        $this->load->view('template',$data);
+	}
 }

@@ -48,6 +48,7 @@
             <li>
                 <a href="#"><i class="fa fa-database"></i> Master Data<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
+                    <li><a href="<?=site_url('master/stocktest')?>">Stock</a></li>
                     <li><a href="<?=site_url('item/index')?>">Items List</a></li>
                     <li><a href="<?=site_url('item/category')?>">Category List</a></li>
                     <!-- <li><a href="<?//=site_url('master/sales')?>">Sale Price Revision</a></li> -->
